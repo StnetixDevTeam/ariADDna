@@ -8,7 +8,7 @@ Desktop applications installed on your computer (Windows, Mac OS X, Linux) versi
 
 ## Application Architecture
 
-![application architecture ariADDna service](https://github.com/StnetixDevTeam/ariADDna/blob/master/doc/images/Aplication%20Architecture%20ariADDna.png)
+![application architecture ariADDna service](https://github.com/StnetixDevTeam/ariADDna/blob/master/doc/images/Aplication%20Architecture.png)
 
 On this image you see links:
 * 1 - request from client to synchronization server for get structure or last state virtual union file system, load metrics and get other system specific information (change user profile, keys, utilization strategy),
