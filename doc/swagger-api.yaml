@@ -1,0 +1,80 @@
+swagger: '2.0'
+
+# Document metadata
+info:
+  title: ariADDna API
+  description: |
+   #### This document contains the API for ariADDna project. 
+   Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point.
+   
+  contact:
+    name: API Support
+    url: http://www.ariaddna.stnetix.com/support
+    email: ariaddna.support@stnetix.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.0"
+
+host: api.ariaddna.stnetix.com
+basePath: /v1
+schemes:
+  - https
+  
+consumes:
+  - application/json
+produces:
+  - application/json
+
+paths:
+  /clouds:
+    get:
+      #tags: Shall we use it?
+      description: Returns a list of clouds which a certain user has connected to his ariADDna account.
+      operationId: getExternalCloudsList
+      responses:
+        '200':
+          description: The list is found.
+          schema:
+            type: array
+            items:
+             $ref: '#/definitions/Cloud'
+     
+    post:
+      description: Allows to add an external cloud account to an existing ariADDna's user's account.
+      operationId: addExternalCloud
+      responses:
+        '201':
+          description: New account was added successfully.
+          schema:
+            type: string
+            
+    parameters:
+      - name: user
+        in: body
+        description: A user whose cloud's accounts you are going to manipulate.
+        required: true
+        schema:
+          $ref: '#/definitions/User'
+             
+definitions:
+ #Here are the completed definitions.
+
+ #Here and after all these items are just a stubs.
+  User:
+    type: string
+    
+  Cloud:
+    type: object
+    properties:
+      uuid: 
+        type: string
+        
+ 
+        
+
+        
+        
+    
+            
+          
