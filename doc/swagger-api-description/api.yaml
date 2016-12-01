@@ -1,0 +1,237 @@
+swagger: '2.0'
+
+info:
+  title: ariADDna API
+  description: API for ariADDna project. Use this API you can management all your clouds spaces from single point.
+  contact:
+    name: API Support
+    url: http://www.ariaddna.stnetix.com/support
+    email: ariaddna.support@stnetix.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: '1.0'
+
+host: api.ariaddna.stnetix.com
+
+schemes:
+  - https
+
+consumes:
+  - application/json; charset=utf-8
+
+produces:
+  - application/json; charset=utf-8
+
+basePath: /v1
+paths:
+  #See (Using HTTP Methods for RESTful Services)[http://www.restapitutorial.com/lessons/httpmethods.html]
+  /user:
+  #Creates a new user.
+    post:
+      description: Creating a new user.
+      operationId: addUser
+      parameters:
+        - name: user
+          in: body
+          description: Add new user.
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+        '201':
+          description: User response.
+          schema:
+            $ref: '#/definitions/User'
+        '404':
+          description: Can not create new user.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #Change user password.
+    put:
+      description: Changing user password.
+      operationId: changeUserPassword
+      parameters:
+        - name: user
+          in: body
+          description: Changed user.
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+      '204':
+          description: User updated.
+      '404':
+          description: User not found.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+      default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  #Delete user.
+    delete:
+      description: Deleting user.
+      operationId: deleteUser
+      parameters:
+        - name: user
+          in: body
+          description: Deleted user.
+          required: true
+          schema:
+            $ref: '#/definitions/User'
+      responses:
+      '200':
+          description: User deleted.
+      '404':
+          description: User not found.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+      default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+  /user/{uuid}:
+  #Get user by UUID
+    get:
+      description: Returning user based on UUID.
+      operationId: findUserByUuid
+      parameters:
+        - name: uuid
+          in: path
+          description: UUID of user to fetch.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: User response.
+          schema:
+            $ref: '#/definitions/User'
+		'404':
+		  description: User not found on server.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /authorization:
+  #Create new user session.
+    post:
+      description: Creating new user session.
+      operationId: authorizationUser
+      parametrs:
+        - name: user
+          in: body
+          description: Authorization user credential.
+          required: true
+          schema:
+            $ref: "#/definitions/Credential"
+      responses:
+        '201':
+          description: User session.
+          schema:
+            $ref: '#/definitions/Session'
+        '404':
+          description: User not found on server.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /authorization/{uuid}:
+  #Logout user.
+    put:
+      description: Closing user session.
+      operationId: logoutSession
+      parameters:
+        - name: uuid
+          in: path
+          description: UUID of user session.
+          required: true
+          type: string
+      responses:
+        '204':
+          description: User updated.
+        '404':
+          description: User not found.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+definitions:
+
+  User:
+    type: object
+    description: Credentials of service users.
+    properties:
+      - uuid:
+        description: UUID user in arriADDna server.
+        type: string
+      - userCredential:
+        description: Credential of user.
+        schema:
+        $ref: "#/definitions/Credential"
+      - nickname:
+        type: string
+        description: Nickname of user.
+      - email:
+        type: string
+        description: E-mail of user.
+      - externalClouds:
+        type: array
+        items: "#/definitions/Cloud"
+
+  Credential:
+    type: object
+    description: Credential for a basic user/password authentication.
+    properties:
+      - user:
+        type: string
+        description: A login of user.
+      - password:
+        type: string
+        description: A password associated with the login.
+        format: password
+
+  Session:
+    type: object
+    description: User session object.
+    properties:
+      - user:
+        description: Authorizated user.
+        schema:
+          $ref: '#/definitions/User'
+      - uuid:
+        description: UUID user session in arriADDna server.
+        type: string
+      - loginTime:
+        description: Time of creation user session.
+        type: string
+        format: date-time
+
+  Cloud:
+    type: object
+    description: Clouds file store.
+
+  ErrorModel:
+    type: object
+    description: Information about error.
+    properties:
+      - code:
+        description: Contains information about error code massage.
+        type: integer
+        format: int32
+      - message:
+        description: Contains information about error massage.
+        type: string
