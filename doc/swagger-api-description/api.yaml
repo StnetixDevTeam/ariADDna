@@ -19,27 +19,27 @@ host: api.ariaddna.stnetix.com
 basePath: /v1
 schemes:
   - https
+#I guess using 'charset=utf-8' in consumes and produces is a mistake. See MIME types in Swagger spec.
 consumes:
-  - application/json; charset=utf-8
+  - application/json
 produces:
-  - application/json; charset=utf-8
+  - application/json
 
 paths:
-  /user:
+  /users:
   #Create a new user.
     post:
       description: Creating a new user.
       operationId: addUser
       parameters:
-        - name: user
-          in: body
-          description: Add new user.
+        - in: body
+          name: user
           required: true
           schema:
             $ref: '#/definitions/User'
       responses:
         '201':
-          description: User response.
+          description: A new user was successfully created.
           schema:
             $ref: '#/definitions/User'
         '404':
@@ -51,7 +51,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /user/{uuid}:
+  /users/{uuid}:
   #Get user by UUID
     get:
       description: Returning user based on UUID.
@@ -75,6 +75,7 @@ paths:
           description: Unexpected error.
           schema:
             $ref: '#/definitions/ErrorModel'
+
   #Change user password.
     put:
       description: Changing user password.
@@ -92,16 +93,17 @@ paths:
           schema:
             $ref: '#/definitions/User'
       responses:
-      '204':
+        '204':
           description: User updated.
-      '404':
+        '404':
           description: User not found.
           schema:
             $ref: '#/definitions/ErrorModel'
-      default:
+        default:
           description: Unexpected error.
           schema:
             $ref: '#/definitions/ErrorModel'
+
   #Delete user by UUID.
     delete:
       description: Deleting user.
@@ -123,12 +125,13 @@ paths:
            description: Unexpected error.
            schema:
              $ref: '#/definitions/ErrorModel'
+
   /auth:
   #Create new user session.
     post:
       description: Creating new user session.
       operationId: authUser
-      parametrs:
+      parameters:
         - name: user
           in: body
           description: Authorization user credential.
@@ -226,48 +229,47 @@ definitions:
     type: object
     description: User of service.
     properties:
-      - uuid:
-        description: UUID user in arriADDna server.
+      uuid:
+        #description: UUID user in arriADDna server.
         type: string
-      - userCredential:
-        description: Credential of user.
-        schema:
+      userCredential:
+        #description: Credential of user.
         $ref: "#/definitions/Credential"
-      - nickname:
+      nickname:
         type: string
-        description: Nickname of user.
-      - email:
+        #description: Nickname of user.
+      email:
         type: string
-        description: E-mail of user.
-      - externalClouds:
+        #description: E-mail of user.
+      externalClouds:
         type: array
-        items: "#/definitions/Cloud"
+        items:
+          $ref: "#/definitions/Cloud"
 
   Credential:
     type: object
     description: Credential for a basic user/password authentication.
     properties:
-      - user:
+      user:
         type: string
         description: A login of user.
-      - password:
+      password:
         type: string
         description: A password associated with the login.
         format: password
 
   Session:
-    type: object
     description: User session object.
+    type: object
     properties:
-      - user:
-        description: Authorizated user.
-        schema:
-          $ref: '#/definitions/User'
-      - uuid:
-        description: UUID user session in arriADDna server.
+      user:
+        #description: Authorizated user.
+        $ref: '#/definitions/User'
+      uuid:
+        #description: UUID user session in arriADDna server.
         type: string
-      - loginTime:
-        description: Time of creation user session.
+      loginTime:
+        #description: Time of creation user session.
         type: string
         format: date-time
 
@@ -317,15 +319,15 @@ definitions:
       - accessToken
 
   ErrorModel:
-    type: object
     description: Information about error.
+    type: object
     properties:
-      - code:
-        description: Contains information about error code massage.
+      code:
+        #description: Contains information about error code massage.
         type: integer
         format: int32
-      - message:
-        description: Contains information about error massage.
+      message:
+        #description: Contains information about error massage.
         type: string
 
 #Below all the items are just stubs.
