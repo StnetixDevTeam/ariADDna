@@ -5,7 +5,6 @@ info:
   description: |
    #### This document contains the API for ariADDna project.
    Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point.
-
   contact:
     name: API Support
     url: http://www.ariaddna.stnetix.com/support
@@ -29,7 +28,7 @@ paths:
   /users:
   #Create a new user.
     post:
-      description: Creating a new user.
+      description: Allows one to create a new user.
       operationId: addUser
       parameters:
         - in: body
@@ -42,8 +41,8 @@ paths:
           description: A new user was successfully created.
           schema:
             $ref: '#/definitions/User'
-        '404':
-          description: Can not create new user.
+        '409':
+          description: Such user already exists.
           schema:
             $ref: '#/definitions/ErrorModel'
         default:
@@ -54,21 +53,22 @@ paths:
   /users/{uuid}:
   #Get user by UUID
     get:
-      description: Returning user based on UUID.
+      description: This operation allows one to get back information about certain user providing his UUID as a path parameter.
       operationId: findUserByUuid
       parameters:
         - name: uuid
           in: path
-          description: UUID of user to fetch.
+          description: The UUID of a user to fetch.
           required: true
           type: string
+          format: uuid
       responses:
         '200':
-          description: User response.
+          description: The user was found.
           schema:
             $ref: '#/definitions/User'
         '404':
-          description: User not found on server.
+          description: The user was not found.
           schema:
             $ref: '#/definitions/ErrorModel'
         default:
@@ -187,10 +187,17 @@ paths:
            $ref: '#/definitions/Cloud'
       responses:
         '201':
-          description: New account was added successfully.
-          #It's a bad schema idea... What do we expect to get back?
+          description: New cloud account was added successfully.
           schema:
             $ref: '#/definitions/Cloud'
+        '409':
+          description: This cloud account already exists.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
 
     get:
       description: Returns a list of clouds which a certain user has connected to his ariADDna account.
@@ -209,7 +216,6 @@ paths:
             items:
               $ref: '#/definitions/Cloud'
 
-  #I see to ways: passing cloud uuid as PathParameter or in header/body. In the last case we don't need path /clouds/{cloudUuid}
   /clouds/{cloudUuid}:
     delete:
       description: Allows to delete user's external cloud account.
@@ -222,6 +228,9 @@ paths:
       responses:
         '204':
           description: The cloud account was deleted.
+          schema:
+            type: string
+            format: uuid
 
 definitions:
 #Here are the completed definitions.
@@ -230,17 +239,18 @@ definitions:
     description: User of service.
     properties:
       uuid:
-        #description: UUID user in arriADDna server.
+        description: UUID of a user at arriADDna server.
         type: string
+        format: uuid
       userCredential:
-        #description: Credential of user.
+        description: User's credential.
         $ref: "#/definitions/Credential"
       nickname:
         type: string
-        #description: Nickname of user.
+        description: User's nickname.
       email:
         type: string
-        #description: E-mail of user.
+        description: User's e-mail.
       externalClouds:
         type: array
         items:
@@ -252,24 +262,25 @@ definitions:
     properties:
       user:
         type: string
-        description: A login of user.
+        description: User's login.
       password:
         type: string
         description: A password associated with the login.
         format: password
 
   Session:
-    description: User session object.
+    description: User's session object.
     type: object
     properties:
       user:
-        #description: Authorizated user.
+        description: Authorizated user.
         $ref: '#/definitions/User'
       uuid:
-        #description: UUID user session in arriADDna server.
+        description: UUID of user's session at arriADDna server.
         type: string
+        format: uuid
       loginTime:
-        #description: Time of creation user session.
+        description: Time of creation of user's session.
         type: string
         format: date-time
 
@@ -278,10 +289,13 @@ definitions:
     type: object
     properties:
       uuid:
+        description: UUID of an external cloud.
         type: string
       cloudUrl:
+        description: A base URL of an external cloud for file managment.
         type: string
       cloudType:
+        description: Enumeration of all cloud services with which ariADDna can interact.
         enum:
           - GOOGLE_DRIVE
           - YANDEX_DISK
@@ -289,14 +303,17 @@ definitions:
       cloudAccessToken:
         $ref: '#/definitions/CloudAccessToken'
       connectionState:
+        description: Enumeration of certain connection states to an external cloud service.
         enum:
           - CONNECTED
           - DISCONNECTED
           - IN_PROGRESS
           - TERMINATED
       login:
+        description: A login name for an external cloud service where a user is already registered.
         type: string
       password:
+        description: A password for access to be granted.
         type: string
     required:
       - cloudType
@@ -308,12 +325,16 @@ definitions:
     type: object
     properties:
       accessToken:
+        description: A token recieved during OAuth authorization.
         type: string
       expiresIn:
+        description: Life-time of a token.
         type: integer
       refreshToken:
+        #Don't now what for shall we use this field.
         type: string
       rawInfo:
+        #The same.
         type: string
     required:
       - accessToken
@@ -323,11 +344,11 @@ definitions:
     type: object
     properties:
       code:
-        #description: Contains information about error code massage.
+        description: Contains error code massage.
         type: integer
         format: int32
       message:
-        #description: Contains information about error massage.
+        description: Contains short error message.
         type: string
 
 #Below all the items are just stubs.
