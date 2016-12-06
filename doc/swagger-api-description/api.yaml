@@ -3,7 +3,7 @@ swagger: '2.0'
 info:
   title: ariADDna API
   description: |
-   #### This document contains the API for ariADDna project.
+   #### This document contains the API description for ariADDna project.
    Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point.
   contact:
     name: API Support
@@ -18,7 +18,7 @@ host: api.ariaddna.stnetix.com
 basePath: /v1
 schemes:
   - https
-#I guess using 'charset=utf-8' in consumes and produces is a mistake. See MIME types in Swagger spec.
+
 consumes:
   - application/json
 produces:
@@ -33,6 +33,7 @@ paths:
       parameters:
         - in: body
           name: user
+          description: A new User-object containing all specific information that makes user profile unique.
           required: true
           schema:
             $ref: '#/definitions/User'
@@ -183,6 +184,7 @@ paths:
       parameters:
         - in: body
           name: cloud
+          description: A required information about an external cloud service that a user wants to include to his ariADDna.
           schema:
            $ref: '#/definitions/Cloud'
       responses:
@@ -205,6 +207,7 @@ paths:
       parameters:
         - in: body
           name: user
+          description: The user whose cloud list should be retrieved.
           schema:
             $ref: '#/definitions/User'
       responses:
@@ -223,6 +226,7 @@ paths:
       parameters:
         - in: path
           name: cloudUuid
+          description: An external cloud identifier which user has inside his profile. Allows to delete external cloud profile.
           required: true
           type: string
       responses:
@@ -252,9 +256,9 @@ definitions:
         type: string
         description: User's e-mail.
       externalClouds:
-        type: array
-        items:
-          $ref: "#/definitions/Cloud"
+        description: The set of external cloud accounts that user has at ariADDna server.
+        type: object
+        $ref: "#/definitions/CloudSet"
 
   Credential:
     type: object
@@ -301,6 +305,7 @@ definitions:
           - YANDEX_DISK
           - DROPBOX
       cloudAccessToken:
+        description: The token which allows ariADDna service action at an external cloud service on behalf of a user.
         $ref: '#/definitions/CloudAccessToken'
       connectionState:
         description: Enumeration of certain connection states to an external cloud service.
@@ -320,6 +325,12 @@ definitions:
       - cloudUrl
       - cloudAccessToken
 
+  CloudSet:
+    description: A representation of a cloud list that user has.
+    type: array
+    items:
+      $ref: '#/definitions/Cloud'
+
   CloudAccessToken:
     description: Stands for an external cloud access token.
     type: object
@@ -331,10 +342,8 @@ definitions:
         description: Life-time of a token.
         type: integer
       refreshToken:
-        #Don't now what for shall we use this field.
         type: string
       rawInfo:
-        #The same.
         type: string
     required:
       - accessToken
