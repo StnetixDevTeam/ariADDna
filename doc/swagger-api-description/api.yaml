@@ -51,13 +51,13 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /users/{uuid}:
+  /users/{userUuid}:
   #Get user by UUID
     get:
       description: This operation allows one to get back information about certain user providing his UUID as a path parameter.
       operationId: findUserByUuid
       parameters:
-        - name: uuid
+        - name: userUuid
           in: path
           description: The UUID of a user to fetch.
           required: true
@@ -82,7 +82,7 @@ paths:
       description: Changing user password.
       operationId: changeUserPassword
       parameters:
-        - name: uuid
+        - name: userUuid
           in: path
           description: UUID of user to fetch.
           required: true
@@ -110,7 +110,7 @@ paths:
       description: Deleting user.
       operationId: deleteUser
       parameters:
-        - name: uuid
+        - name: userUuid
           in: path
           description: UUID of user to delete.
           type: string
@@ -176,12 +176,17 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /clouds:
+  /users/{userUuid}/clouds:
     post:
-      # THE PROBLEM: we need to send an existing User and a new Cloud for him. How should we link togeather User and Cloud in the parameters???
       description: Allows one to add an external cloud account to an existing ariADDna's user. The User MUST be already registered at the cloud service to be added.
       operationId: addExternalCloudAccount
       parameters:
+        - in: path
+          name: userUuid
+          description: Providing user's UUID one can access his CloudSet and add there one more external cloud account.
+          type: string
+          format: uuid
+          required: true
         - in: body
           name: cloud
           description: A required information about an external cloud service that a user wants to include to his ariADDna.
@@ -205,36 +210,43 @@ paths:
       description: Returns a list of clouds which a certain user has connected to his ariADDna account.
       operationId: getExternalCloudsList
       parameters:
-        - in: body
-          name: user
-          description: The user whose cloud list should be retrieved.
-          schema:
-            $ref: '#/definitions/User'
+        - in: path
+          name: userUuid
+          description: Providing user's UUID one can access his CloudSet and add retrieve the list of available external cloud accounts.
+          type: string
+          format: uuid
+          required: true
       responses:
         '200':
           description: The list was found.
-          #Again here schema is just a stub. I don't know how to represent a list of clouds in the response body.
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/Cloud'
+            $ref: '#/definitions/CloudSetPages'
 
-  /clouds/{cloudUuid}:
+  /users/{userUuid}/clouds/{cloudUuid}:
     delete:
       description: Allows to delete user's external cloud account.
-      operationId: deleteExternalCloud
+      operationId: deleteExternalCloudAccount
       parameters:
+        - in: path
+          name: userUuid
+          description: Providing user's UUID one can access his CloudSet and delete desired cloud account.
+          type: string
+          format: uuid
+          required: true
         - in: path
           name: cloudUuid
           description: An external cloud identifier which user has inside his profile. Allows to delete external cloud profile.
           required: true
           type: string
+          format: uuid
       responses:
         '204':
           description: The cloud account was deleted.
           schema:
             type: string
             format: uuid
+        '404':
+          description: The specified cloud account was not found.
 
 definitions:
 #Here are the completed definitions.
@@ -344,7 +356,7 @@ definitions:
         $ref: '#/definitions/CloudSet'
 
   CloudAccessToken:
-    description: Stands for an external cloud access token.
+    description: Stands for an external cloud access token. For more info see https://tools.ietf.org/html/draft-ietf-oauth-v2-31.
     type: object
     properties:
       accessToken:
