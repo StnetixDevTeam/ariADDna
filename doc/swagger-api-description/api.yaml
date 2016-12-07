@@ -331,6 +331,18 @@ definitions:
     items:
       $ref: '#/definitions/Cloud'
 
+  CloudSetPages:
+    description: This page-object shall be used for visual representation of a list (which is inside a CloudSet) of user's external cloud accounts.
+    properties:
+      offset:
+        type: integer
+        description: Offset of the first entry.
+      limit:
+        type: integer
+        description: Quantity of entries to show.
+      entries:
+        $ref: '#/definitions/CloudSet'
+
   CloudAccessToken:
     description: Stands for an external cloud access token.
     type: object
@@ -339,11 +351,13 @@ definitions:
         description: A token recieved during OAuth authorization.
         type: string
       expiresIn:
-        description: Life-time of a token.
+        description: The life-time in seconds of the access token.
         type: integer
       refreshToken:
+        description: If an accessToken has a limited life-time a user will need to pass authorization manualy again. To prevent this a refreshToken should be returned togeather with an accessToken. Thus having a refresh token and passing it inside HTTP-request ariADDna service will be able to get new accessToken without user participation.
         type: string
-      rawInfo:
+      tokenType:
+        description: OPTIONAL. The access token type provides the client with the information required to successfully utilize the access token to make a protected resource request (along with type-specific attributes).  The client MUST NOT use an access token if it does not understand the token type. For example Yandex.Disk whats the tokenType to be "bearer".
         type: string
     required:
       - accessToken
