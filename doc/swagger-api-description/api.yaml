@@ -127,6 +127,31 @@ paths:
            schema:
              $ref: '#/definitions/ErrorModel'
 
+  /users/{userUuid}/clouds:
+    get:
+      description: Returns a list of clouds which a certain user has connected to his ariADDna account.
+      operationId: getExternalCloudAccounts
+      parameters:
+        - in: path
+          name: userUuid
+          description: Providing user's UUID one can access his CloudSet and add retrieve the list of available external cloud accounts.
+          type: string
+          format: uuid
+          required: true
+      responses:
+        '200':
+          description: The user's accounts were found.
+          schema:
+            $ref: '#/definitions/CloudSetPages'
+        '404':
+          description: User does not exist.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+           description: Unexpected error.
+           schema:
+             $ref: '#/definitions/ErrorModel'
+
   /auth:
   #Create new user session.
     post:
@@ -176,17 +201,11 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /users/{userUuid}/clouds:
+  /clouds:
     post:
       description: Allows one to add an external cloud account to an existing ariADDna's user. The User MUST be already registered at the cloud service to be added.
       operationId: addExternalCloudAccount
       parameters:
-        - in: path
-          name: userUuid
-          description: Providing user's UUID one can access his CloudSet and add there one more external cloud account.
-          type: string
-          format: uuid
-          required: true
         - in: body
           name: cloud
           description: A required information about an external cloud service that a user wants to include to his ariADDna.
@@ -206,33 +225,11 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-    get:
-      description: Returns a list of clouds which a certain user has connected to his ariADDna account.
-      operationId: getExternalCloudsList
-      parameters:
-        - in: path
-          name: userUuid
-          description: Providing user's UUID one can access his CloudSet and add retrieve the list of available external cloud accounts.
-          type: string
-          format: uuid
-          required: true
-      responses:
-        '200':
-          description: The list was found.
-          schema:
-            $ref: '#/definitions/CloudSetPages'
-
-  /users/{userUuid}/clouds/{cloudUuid}:
+  /clouds/{cloudUuid}:
     delete:
       description: Allows to delete user's external cloud account.
       operationId: deleteExternalCloudAccount
       parameters:
-        - in: path
-          name: userUuid
-          description: Providing user's UUID one can access his CloudSet and delete desired cloud account.
-          type: string
-          format: uuid
-          required: true
         - in: path
           name: cloudUuid
           description: An external cloud identifier which user has inside his profile. Allows to delete external cloud profile.
