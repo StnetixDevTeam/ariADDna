@@ -245,6 +245,55 @@ paths:
         '404':
           description: The specified cloud account was not found.
 
+  /vufs/snap/{userUuid}:
+    get:
+      description: Allows to get snapshot vufs.
+      operationId: getVUFS
+      parameters:
+        - in: path
+          name: userUuid
+          description: Current user UUID.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: VUFS snapshot of current user.
+          schema:
+            $ref: "#/definitions/Vufs"
+        '404':
+          description: Bad user UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /vufs/snap/diff/{userUuid}:
+    get:
+      description: Allows to get difference of previous snapshot and actual.
+      operationId: getDiffVUFS
+      parameters:
+        - in: path
+          name: userUuid
+          description: Current user UUID.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Difference VUFS snapshot of current user.
+          schema:
+            $ref: "#/definitions/Vufs"
+        '404':
+          description: Bad user UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+
 definitions:
 #Here are the completed definitions.
   User:
@@ -370,6 +419,62 @@ definitions:
         type: string
     required:
       - accessToken
+
+  Vufs:
+    description: Describes shapshot VUFS of user.
+    type: object
+    properties:
+      uuid:
+        type: string
+      fromDateTime:
+        type: string
+        format: date-time
+      toDateTime:
+        type: string
+        format: date-time
+      isActual:
+        type: boolean
+      virtualFileSet:
+        type: array
+        items:
+          $ref: "#/definitions/VirtualFile"
+
+  VirtualFile:
+    description: Describes virtual file in VUFS.
+    type: object
+    properties:
+      uuid:
+        type: string
+      file-properties:
+        type: array
+        items:
+          $ref: "#/definitions/FileProperty"
+      file-parts:
+        type: array
+        items:
+          $ref: "#/definitions/PartLocation"
+
+  FileProperty:
+    description: Describes all file property.
+    type: object
+    properties:
+      property-name:
+        type: string
+      property-value:
+        type: string
+
+  PartLocation:
+    description: Describes the sequence number of file part and its location.
+    type: object
+    properties:
+      uuid:
+        type: string
+      number:
+        type: integer
+        format: int32
+      location:
+        $ref: "#/definitions/Cloud"
+
 
   ErrorModel:
     description: Information about error.
