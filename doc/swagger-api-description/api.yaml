@@ -292,7 +292,147 @@ paths:
           description: Unexpected error.
           schema:
             $ref: '#/definitions/ErrorModel'
+    post:
+    #QUESTION: Can we create VUFS snapshot with changes in local file storage on client side? Or we send a 'signal' about changes and server check what exactly has changed. And as response send VUFS diff object or full VUFS object?
+      description: Allows to send changes in local file storage to server.
+      operationId: sendChangesInLFS
+      parameters:
+        - in: body
+          name: localChanges
+          description: VUFS snapshot typed object with changed in local file storage.
+          required: true
+          schema:
+           $ref: '#/definitions/Vufs'
+        - in: path
+          name: userUuid
+          description: Current user UUID.
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Checked snapshot changes.
+          schema:
+           $ref: '#/definitions/Vufs'
+        '409':
+          description: Changes was not found in clouds.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
 
+  /vufs/stat/{cloudUuid}:
+    get:
+      description: Allows to get statistic object about selected cloud.
+      operationId: getCloudStatistic
+      parameters:
+        - in: path
+          name: cloudUuid
+          description: Cloud UUID.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Cloud statistic.
+          schema:
+            $ref: "#/definitions/Statistics"
+        '404':
+          description: Bad cloud UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /vufs/stat/helth/{userUuid}:
+    get:
+      description: Allows to get helth-check statistic about users Clouds.
+      operationId: getHelthCheckStat
+      parameters:
+        - in: path
+          name: userUuid
+          description: User UUID.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Clouds helth-check statistic.
+          schema:
+            $ref: "#/definitions/HelthStatistis"
+        '404':
+          description: Bad user UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /vufs/stat:
+    post:
+      description: Allows to post statistic from client to server about cloud.
+      operationId: postCloudStat
+      parameters:
+        - in: body
+          name: cloudStatistic
+          description: Cloud statistic typed object.
+          required: true
+          schema:
+           $ref: '#/definitions/Statistics'
+      responses:
+        '201':
+          description: Statistics was send to server.
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /vufs/space/{userUuid}:
+    get:
+      description: Allows to get availability space on each cloud.
+      operationId: getAvailableSpace
+      parameters:
+        - in: path
+          name: userUuid
+          description: User UUID.
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Clouds availability space.
+          schema:
+            $ref: "#/definitions/CloudSpaseSet"
+        '404':
+          description: Bad user UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /vufs/allocation:
+    post:
+      description: Allows to post file allocate strategy from client to server.
+      operationId: postAllocateModel
+      parameters:
+        - in: body
+          name: allocateModel
+          description: File allocate strategy.
+          required: true
+          schema:
+           $ref: '#/definitions/AllocateModel'
+      responses:
+        '201':
+          description: Allocate strategy was send to server. As respose - difference VUFS object.
+          schema:
+           $ref: '#/definitions/Vufs'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
 
 definitions:
 #Here are the completed definitions.
@@ -425,15 +565,19 @@ definitions:
     type: object
     properties:
       uuid:
+        description: VUFS shapshot UUID.
         type: string
       fromDateTime:
+        description: Created date of snapshot.
         type: string
         format: date-time
       toDateTime:
+        description: Deactivation date of snapshot.
         type: string
         format: date-time
-      isActual:
-        type: boolean
+      owner:
+        description: Owner of this snapshot.
+        $ref: '#/definitions/User'
       virtualFileSet:
         type: array
         items:
@@ -445,36 +589,153 @@ definitions:
     properties:
       uuid:
         type: string
+        description: Virtual file UUID.
       file-properties:
         type: array
         items:
-          $ref: "#/definitions/FileProperty"
+          $ref: "#/definitions/Property"
       file-parts:
         type: array
         items:
           $ref: "#/definitions/PartLocation"
+      VirtualChildSet:
+        type: array
+        items:
+          $ref: "#/definitions/VirtualFile"
+      allocateModel:
+        $ref: "#/definitions/AllocationModel"
 
-  FileProperty:
+  Property:
     description: Describes all file property.
-    type: object
-    properties:
-      property-name:
-        type: string
-      property-value:
-        type: string
-
-  PartLocation:
-    description: Describes the sequence number of file part and its location.
     type: object
     properties:
       uuid:
         type: string
+        description: Property UUID.
+      property-name:
+        type: string
+        description: Property name.
+      property-value:
+        type: string
+        description: Property value.
+
+  PartLocation:
+    description: Describes sequence number of file part and its location.
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: PartLocation UUID.
       number:
         type: integer
         format: int32
+        description: Sequence number.
       location:
         $ref: "#/definitions/Cloud"
 
+  AllocationModel:
+    description: Describes allocate storage model ot file.
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: Allocation model UUID.
+      modelType:
+        description: Types of allocation model.
+        enum:
+          - UNION
+          - MORROR
+          - HIGH_AVAILABILITY
+      propertySet:
+        type: array
+        items:
+          $ref: "#/definitions/Property"
+
+  Statistics:
+    type: object
+    description: Contain statistic information about cloud.
+    properties:
+      uuid:
+        type: string
+        description: Statistic UUID.
+      cloudSet:
+        $ref: "#/definitions/Cloud"
+      uploadFiles:
+        description: Count of uploaded files.
+        type: integer
+        format: int32
+      uploadTime:
+        description: Time what files was uploaded.
+        type: integer
+        format: int64
+      downloadFiles:
+        description: Count of downloaded files.
+        type: integer
+        format: int32
+      downloadTimes:
+        description: Time what files was downloaded.
+        type: integer
+        format: int64
+
+  HelthStatistis:
+    type: object
+    description: Contain helth-check statistic information about set of clouds.
+    properties:
+      uuid:
+        type: string
+        description: HelthStatistis UUID.
+      helthCloudSet:
+        type: array
+        items:
+          $ref: "#/definitions/HelthCloud"
+
+  HelthCloud:
+    type: object
+    description:  Contain key-value information about cloud and its helth status.
+    properties:
+      cloud:
+        $ref: "#/definitions/Cloud"
+      isAvailable:
+        description: Is cloud available?
+        type: boolean
+
+  CloudSpaseSet:
+    type: object
+    description: Contain set of information about clouds availability space.
+    properties:
+      uuid:
+        type: string
+        description: CloudSpaseSet UUID.
+      cloudSpaceSet:
+        type: array
+        items:
+          $ref: "#/definitions/CloudSpase"
+
+  CloudSpase:
+    type: object
+    description: Contain information about cloud availability space.
+    properties:
+      uuid:
+        type: string
+        description: CloudSpase UUID.
+      cloud:
+        $ref: "#/definitions/Cloud"
+      availableSpace:
+        description: Cloud available spase in bytes.
+        type: integer
+        format: int64
+
+  AllocateModel:
+    type: object
+    description: Contain information about file allocate stategy.
+    properties:
+      uuid:
+        type: string
+        description: AllocateModel UUID.
+      file:
+        $ref: "#/definitions/VirtualFile"
+      allocateModel:
+        $ref: "#/definitions/AllocationModel"
 
   ErrorModel:
     description: Information about error.
