@@ -255,6 +255,7 @@ paths:
           description: Current user UUID.
           required: true
           type: string
+          format: uuid
       responses:
         '200':
           description: VUFS snapshot of current user.
@@ -269,7 +270,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /vufs/snap/diff/{userUuid}:
+  /vufs/snap/diff/{userUuid}/{lastCreationTime}:
     get:
       description: Allows to get difference of previous snapshot and actual.
       operationId: getDiffVUFS
@@ -279,6 +280,13 @@ paths:
           description: Current user UUID.
           required: true
           type: string
+          format: uuid
+        - in: path
+          name: lastCreationTime
+          description: Parametr fromDateTime of current VUFS snapshot
+          required: true
+          type: string
+          format: date-time
       responses:
         '200':
           description: Difference VUFS snapshot of current user.
@@ -292,14 +300,15 @@ paths:
           description: Unexpected error.
           schema:
             $ref: '#/definitions/ErrorModel'
+
+  /vufs/snap/diff/{userUuid}:
     post:
-    #QUESTION: Can we create VUFS snapshot with changes in local file storage on client side? Or we send a 'signal' about changes and server check what exactly has changed. And as response send VUFS diff object or full VUFS object?
-      description: Allows to send changes in local file storage to server.
+      description: Allows to send changes in local file storage to server with empty Allocation model and as response get Vufs object with Allocation model.
       operationId: sendChangesInLFS
       parameters:
         - in: body
           name: localChanges
-          description: VUFS snapshot typed object with changed in local file storage.
+          description: VUFS snapshot typed object with changed in local file storage with empty Allocation model.
           required: true
           schema:
            $ref: '#/definitions/Vufs'
@@ -308,6 +317,7 @@ paths:
           description: Current user UUID.
           required: true
           type: string
+          format: uuid
       responses:
         '201':
           description: Checked snapshot changes.
@@ -322,83 +332,17 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /vufs/stat/{cloudUuid}:
-    get:
-      description: Allows to get statistic object about selected cloud.
-      operationId: getCloudStatistic
-      parameters:
-        - in: path
-          name: cloudUuid
-          description: Cloud UUID.
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Cloud statistic.
-          schema:
-            $ref: "#/definitions/Statistics"
-        '404':
-          description: Bad cloud UUID.
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        default:
-          description: Unexpected error.
-          schema:
-            $ref: '#/definitions/ErrorModel'
-
-  /vufs/stat/helth/{userUuid}:
-    get:
-      description: Allows to get helth-check statistic about users Clouds.
-      operationId: getHelthCheckStat
-      parameters:
-        - in: path
-          name: userUuid
-          description: User UUID.
-          required: true
-          type: string
-      responses:
-        '200':
-          description: Clouds helth-check statistic.
-          schema:
-            $ref: "#/definitions/HelthStatistis"
-        '404':
-          description: Bad user UUID.
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        default:
-          description: Unexpected error.
-          schema:
-            $ref: '#/definitions/ErrorModel'
-
-  /vufs/stat:
-    post:
-      description: Allows to post statistic from client to server about cloud.
-      operationId: postCloudStat
-      parameters:
-        - in: body
-          name: cloudStatistic
-          description: Cloud statistic typed object.
-          required: true
-          schema:
-           $ref: '#/definitions/Statistics'
-      responses:
-        '201':
-          description: Statistics was send to server.
-        default:
-          description: Unexpected error.
-          schema:
-            $ref: '#/definitions/ErrorModel'
-
   /vufs/space/{userUuid}:
     get:
       description: Allows to get availability space on each cloud.
-      operationId: getAvailableSpace
+      operationId: getUserAvailableSpase
       parameters:
         - in: path
           name: userUuid
           description: User UUID.
           required: true
           type: string
+          format: uuid
       responses:
         '200':
           description: Clouds availability space.
@@ -429,6 +373,80 @@ paths:
           description: Allocate strategy was send to server. As respose - difference VUFS object.
           schema:
            $ref: '#/definitions/Vufs'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /stat/vufs/{userUuid}:
+    post:
+      description: Allows to post statistic from client to server about clouds.
+      operationId: postCloudStatSet
+      parameters:
+        - in: path
+          name: userUuid
+          description: User UUID.
+          type: string
+          required: true
+          format: uuid
+        - in: body
+          name: cloudStatisticSet
+          description: Cloud statistic set typed object.
+          required: true
+          schema:
+           $ref: '#/definitions/StatisticSet'
+      responses:
+        '201':
+          description: Statistics was send to server.
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    get:
+      description: Allows to get statistic object about clouds.
+      operationId: getCloudStatisticSet
+      parameters:
+        - in: path
+          name: userUuid
+          description: User UUID.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Clouds statistic.
+          schema:
+            $ref: "#/definitions/StatisticSet"
+        '404':
+          description: Bad cloud UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /stat/vufs/helth/{userUuid}:
+    get:
+      description: Allows to get helth-check statistic about users Clouds.
+      operationId: getHelthCheckStat
+      parameters:
+        - in: path
+          name: userUuid
+          description: User UUID.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Clouds helth-check statistic.
+          schema:
+            $ref: "#/definitions/HelthStatistis"
+        '404':
+          description: Bad user UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
         default:
           description: Unexpected error.
           schema:
@@ -567,6 +585,7 @@ definitions:
       uuid:
         description: VUFS shapshot UUID.
         type: string
+        format: uuid
       fromDateTime:
         description: Created date of snapshot.
         type: string
@@ -578,18 +597,19 @@ definitions:
       owner:
         description: Owner of this snapshot.
         $ref: '#/definitions/User'
-      virtualFileSet:
+      vufsFileSet:
         type: array
         items:
-          $ref: "#/definitions/VirtualFile"
+          $ref: "#/definitions/VufsFile"
 
-  VirtualFile:
+  VufsFile:
     description: Describes virtual file in VUFS.
     type: object
     properties:
       uuid:
         type: string
         description: Virtual file UUID.
+        format: uuid
       file-properties:
         type: array
         items:
@@ -598,10 +618,10 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/PartLocation"
-      VirtualChildSet:
+      childSet:
         type: array
         items:
-          $ref: "#/definitions/VirtualFile"
+          $ref: "#/definitions/VufsFile"
       allocateModel:
         $ref: "#/definitions/AllocationModel"
 
@@ -612,6 +632,7 @@ definitions:
       uuid:
         type: string
         description: Property UUID.
+        format: uuid
       property-name:
         type: string
         description: Property name.
@@ -626,6 +647,7 @@ definitions:
       uuid:
         type: string
         description: PartLocation UUID.
+        format: uuid
       number:
         type: integer
         format: int32
@@ -640,25 +662,36 @@ definitions:
       uuid:
         type: string
         description: Allocation model UUID.
+        format: uuid
       modelType:
         description: Types of allocation model.
         enum:
           - UNION
-          - MORROR
+          - MIRROR
           - HIGH_AVAILABILITY
       propertySet:
         type: array
         items:
           $ref: "#/definitions/Property"
 
-  Statistics:
+  StatisticSet:
+    type: object
+    description: Contain set of statistic information about cloud.
+    properties:
+      statisticSet:
+        type: array
+        items:
+          $ref: "#/definitions/Statistic"
+
+  Statistic:
     type: object
     description: Contain statistic information about cloud.
     properties:
       uuid:
         type: string
         description: Statistic UUID.
-      cloudSet:
+        format: uuid
+      cloud:
         $ref: "#/definitions/Cloud"
       uploadFiles:
         description: Count of uploaded files.
@@ -684,6 +717,7 @@ definitions:
       uuid:
         type: string
         description: HelthStatistis UUID.
+        format: uuid
       helthCloudSet:
         type: array
         items:
@@ -706,6 +740,7 @@ definitions:
       uuid:
         type: string
         description: CloudSpaseSet UUID.
+        format: uuid
       cloudSpaceSet:
         type: array
         items:
@@ -718,6 +753,7 @@ definitions:
       uuid:
         type: string
         description: CloudSpase UUID.
+        format: uuid
       cloud:
         $ref: "#/definitions/Cloud"
       availableSpace:
@@ -732,8 +768,9 @@ definitions:
       uuid:
         type: string
         description: AllocateModel UUID.
+        format: uuid
       file:
-        $ref: "#/definitions/VirtualFile"
+        $ref: "#/definitions/VufsFile"
       allocateModel:
         $ref: "#/definitions/AllocationModel"
 
