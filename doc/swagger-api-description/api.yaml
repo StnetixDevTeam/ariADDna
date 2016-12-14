@@ -363,14 +363,14 @@ paths:
       operationId: postAllocateModel
       parameters:
         - in: body
-          name: allocateModel
-          description: File allocate strategy.
+          name: initialAllocationModel
+          description: File allocation strategy.
           required: true
           schema:
-           $ref: '#/definitions/AllocateModel'
+           $ref: '#/definitions/InitialAllocationModel'
       responses:
         '201':
-          description: Allocate strategy was send to server. As respose - difference VUFS object.
+          description: Allocation strategy was send to server. As respose - difference VUFS object.
           schema:
            $ref: '#/definitions/Vufs'
         default:
@@ -674,6 +674,19 @@ definitions:
         items:
           $ref: "#/definitions/Property"
 
+  InitialAllocationModel:
+    type: object
+    description: Contain information about initial file allocation stategy.
+    properties:
+      uuid:
+        type: string
+        description: InitialAllocateModel UUID.
+        format: uuid
+      file:
+        $ref: "#/definitions/VufsFile"
+      allocateModel:
+        $ref: "#/definitions/AllocationModel"
+
   StatisticSet:
     type: object
     description: Contain set of statistic information about cloud.
@@ -760,19 +773,6 @@ definitions:
         description: Cloud available spase in bytes.
         type: integer
         format: int64
-
-  AllocateModel:
-    type: object
-    description: Contain information about file allocate stategy.
-    properties:
-      uuid:
-        type: string
-        description: AllocateModel UUID.
-        format: uuid
-      file:
-        $ref: "#/definitions/VufsFile"
-      allocateModel:
-        $ref: "#/definitions/AllocationModel"
 
   ErrorModel:
     description: Information about error.
