@@ -443,6 +443,8 @@ definitions:
         description: Object UUID.
         type: string
         format: uuid
+    required:
+      - uuid
 
   User:
     type: object
@@ -463,6 +465,10 @@ definitions:
         description: The set of external cloud accounts that user has at ariADDna server.
         type: object
         $ref: '#/definitions/CloudSet'
+    required:
+      - userCredential
+      - nickname
+      - externalClouds
 
   Credential:
     type: object
@@ -477,6 +483,9 @@ definitions:
         type: string
         description: A password associated with the login.
         format: password
+    required:
+      - user
+      - password
 
   Session:
     description: User's session object.
@@ -491,6 +500,9 @@ definitions:
         description: Time of creation of user's session.
         type: string
         format: date-time
+    required:
+      - user
+      - loginTime
 
   Cloud:
     description: A representation of an external cloud object.
@@ -597,6 +609,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/VufsFile'
+    required:
+      - fromDateTime
+      - owner
 
   VufsFile:
     description: Describes virtual file in VUFS.
@@ -618,6 +633,9 @@ definitions:
           $ref: '#/definitions/VufsFile'
       allocateModel:
         $ref: '#/definitions/AllocationModel'
+    required:
+      - file-properties
+      - file-parts
 
   Property:
     description: Describes all property.
@@ -631,6 +649,9 @@ definitions:
       property-value:
         type: string
         description: Property value.
+    required:
+      - property-name
+      - property-value
 
   PartLocation:
     description: Describes sequence number of file part and its location.
@@ -644,6 +665,9 @@ definitions:
         description: Sequence number.
       location:
         $ref: '#/definitions/Cloud'
+    required:
+      - number
+      - location
 
   AllocationModel:
     description: Describes allocate storage model ot file.
@@ -661,6 +685,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Property'
+    required:
+      - modelType
 
   InitialAllocationModel:
     type: object
@@ -670,8 +696,11 @@ definitions:
     properties:
       file:
         $ref: '#/definitions/VufsFile'
-      allocateModel:
+      allocationModel:
         $ref: '#/definitions/AllocationModel'
+    required:
+      - file
+      - allocationModel
 
   StatisticSet:
     type: object
@@ -683,6 +712,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Statistic'
+    required:
+      - statisticSet
 
   Statistic:
     type: object
@@ -696,6 +727,8 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Property'
+    required:
+      - cloud
 
   ErrorModel:
     description: Information about error.
@@ -710,5 +743,8 @@ definitions:
       message:
         description: Contains short error message.
         type: string
+    required:
+      - code
+      - message
 
 #Below all the items are just stubs.
