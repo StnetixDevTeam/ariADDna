@@ -12,7 +12,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: "1.0"
+  version: '1.0'
 
 host: api.ariaddna.stnetix.com
 basePath: /v1
@@ -163,7 +163,7 @@ paths:
           description: Authorization user credential.
           required: true
           schema:
-            $ref: "#/definitions/Credential"
+            $ref: '#/definitions/Credential'
       responses:
         '201':
           description: User session.
@@ -260,7 +260,7 @@ paths:
         '200':
           description: VUFS snapshot of current user.
           schema:
-            $ref: "#/definitions/Vufs"
+            $ref: '#/definitions/Vufs'
         '404':
           description: Bad user UUID.
           schema:
@@ -291,7 +291,7 @@ paths:
         '200':
           description: Difference VUFS snapshot of current user.
           schema:
-            $ref: "#/definitions/Vufs"
+            $ref: '#/definitions/Vufs'
         '404':
           description: Bad user UUID.
           schema:
@@ -332,10 +332,10 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /vufs/space/{userUuid}:
-    get:
-      description: Allows to get availability space on each cloud.
-      operationId: getUserAvailableSpase
+  /vufs/allocation/{userUuid}:
+    post:
+      description: Allows to post file allocate strategy from client to server.
+      operationId: postAllocateModel
       parameters:
         - in: path
           name: userUuid
@@ -343,25 +343,6 @@ paths:
           required: true
           type: string
           format: uuid
-      responses:
-        '200':
-          description: Clouds availability space.
-          schema:
-            $ref: "#/definitions/CloudSpaseSet"
-        '404':
-          description: Bad user UUID.
-          schema:
-            $ref: '#/definitions/ErrorModel'
-        default:
-          description: Unexpected error.
-          schema:
-            $ref: '#/definitions/ErrorModel'
-
-  /vufs/allocation:
-    post:
-      description: Allows to post file allocate strategy from client to server.
-      operationId: postAllocateModel
-      parameters:
         - in: body
           name: initialAllocationModel
           description: File allocation strategy.
@@ -417,7 +398,7 @@ paths:
         '200':
           description: Clouds statistic.
           schema:
-            $ref: "#/definitions/StatisticSet"
+            $ref: '#/definitions/StatisticSet'
         '404':
           description: Bad cloud UUID.
           schema:
@@ -427,10 +408,10 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /stat/vufs/helth/{userUuid}:
+  /stat/vufs/health/{userUuid}:
     get:
-      description: Allows to get helth-check statistic about users Clouds.
-      operationId: getHelthCheckStat
+      description: Allows to get health-check statistic about users Clouds.
+      operationId: getHealthCheckStat
       parameters:
         - in: path
           name: userUuid
@@ -440,9 +421,9 @@ paths:
           format: uuid
       responses:
         '200':
-          description: Clouds helth-check statistic.
+          description: Clouds health-check statistic.
           schema:
-            $ref: "#/definitions/HelthStatistis"
+            $ref: '#/definitions/StatisticSet'
         '404':
           description: Bad user UUID.
           schema:
@@ -454,17 +435,24 @@ paths:
 
 definitions:
 #Here are the completed definitions.
+  AriaddnaObj:
+    type: object
+    description: Describes abstract arriadna object.
+    properties:
+      uuid:
+        description: Object UUID.
+        type: string
+        format: uuid
+
   User:
     type: object
     description: User of service.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        description: UUID of a user at arriADDna server.
-        type: string
-        format: uuid
       userCredential:
         description: User's credential.
-        $ref: "#/definitions/Credential"
+        $ref: '#/definitions/Credential'
       nickname:
         type: string
         description: User's nickname.
@@ -474,11 +462,13 @@ definitions:
       externalClouds:
         description: The set of external cloud accounts that user has at ariADDna server.
         type: object
-        $ref: "#/definitions/CloudSet"
+        $ref: '#/definitions/CloudSet'
 
   Credential:
     type: object
     description: Credential for a basic user/password authentication.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
       user:
         type: string
@@ -491,14 +481,12 @@ definitions:
   Session:
     description: User's session object.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
       user:
         description: Authorizated user.
         $ref: '#/definitions/User'
-      uuid:
-        description: UUID of user's session at arriADDna server.
-        type: string
-        format: uuid
       loginTime:
         description: Time of creation of user's session.
         type: string
@@ -507,10 +495,9 @@ definitions:
   Cloud:
     description: A representation of an external cloud object.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        description: UUID of an external cloud.
-        type: string
       cloudUrl:
         description: A base URL of an external cloud for file managment.
         type: string
@@ -536,19 +523,28 @@ definitions:
       password:
         description: A password for access to be granted.
         type: string
+      availableSpace:
+        description: Cloud available spase in bytes.
+        type: integer
+        format: int64
     required:
       - cloudType
       - cloudUrl
       - cloudAccessToken
+      - availableSpace
 
   CloudSet:
     description: A representation of a cloud list that user has.
     type: array
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     items:
       $ref: '#/definitions/Cloud'
 
   CloudSetPages:
     description: This page-object shall be used for visual representation of a list (which is inside a CloudSet) of user's external cloud accounts.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
       offset:
         type: integer
@@ -562,6 +558,8 @@ definitions:
   CloudAccessToken:
     description: Stands for an external cloud access token. For more info see https://tools.ietf.org/html/draft-ietf-oauth-v2-31.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
       accessToken:
         description: A token recieved during OAuth authorization.
@@ -573,7 +571,7 @@ definitions:
         description: If an accessToken has a limited life-time a user will need to pass authorization manualy again. To prevent this a refreshToken should be returned togeather with an accessToken. Thus having a refresh token and passing it inside HTTP-request ariADDna service will be able to get new accessToken without user participation.
         type: string
       tokenType:
-        description: OPTIONAL. The access token type provides the client with the information required to successfully utilize the access token to make a protected resource request (along with type-specific attributes).  The client MUST NOT use an access token if it does not understand the token type. For example Yandex.Disk whats the tokenType to be "bearer".
+        description: OPTIONAL. The access token type provides the client with the information required to successfully utilize the access token to make a protected resource request (along with type-specific attributes).  The client MUST NOT use an access token if it does not understand the token type. For example Yandex.Disk whats the tokenType to be 'bearer'.
         type: string
     required:
       - accessToken
@@ -581,11 +579,9 @@ definitions:
   Vufs:
     description: Describes shapshot VUFS of user.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        description: VUFS shapshot UUID.
-        type: string
-        format: uuid
       fromDateTime:
         description: Created date of snapshot.
         type: string
@@ -600,39 +596,35 @@ definitions:
       vufsFileSet:
         type: array
         items:
-          $ref: "#/definitions/VufsFile"
+          $ref: '#/definitions/VufsFile'
 
   VufsFile:
     description: Describes virtual file in VUFS.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        type: string
-        description: Virtual file UUID.
-        format: uuid
       file-properties:
         type: array
         items:
-          $ref: "#/definitions/Property"
+          $ref: '#/definitions/Property'
       file-parts:
         type: array
         items:
-          $ref: "#/definitions/PartLocation"
+          $ref: '#/definitions/PartLocation'
       childSet:
         type: array
         items:
-          $ref: "#/definitions/VufsFile"
+          $ref: '#/definitions/VufsFile'
       allocateModel:
-        $ref: "#/definitions/AllocationModel"
+        $ref: '#/definitions/AllocationModel'
 
   Property:
-    description: Describes all file property.
+    description: Describes all property.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        type: string
-        description: Property UUID.
-        format: uuid
       property-name:
         type: string
         description: Property name.
@@ -643,26 +635,22 @@ definitions:
   PartLocation:
     description: Describes sequence number of file part and its location.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        type: string
-        description: PartLocation UUID.
-        format: uuid
       number:
         type: integer
         format: int32
         description: Sequence number.
       location:
-        $ref: "#/definitions/Cloud"
+        $ref: '#/definitions/Cloud'
 
   AllocationModel:
     description: Describes allocate storage model ot file.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        type: string
-        description: Allocation model UUID.
-        format: uuid
       modelType:
         description: Types of allocation model.
         enum:
@@ -672,111 +660,48 @@ definitions:
       propertySet:
         type: array
         items:
-          $ref: "#/definitions/Property"
+          $ref: '#/definitions/Property'
 
   InitialAllocationModel:
     type: object
     description: Contain information about initial file allocation stategy.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        type: string
-        description: InitialAllocateModel UUID.
-        format: uuid
       file:
-        $ref: "#/definitions/VufsFile"
+        $ref: '#/definitions/VufsFile'
       allocateModel:
-        $ref: "#/definitions/AllocationModel"
+        $ref: '#/definitions/AllocationModel'
 
   StatisticSet:
     type: object
-    description: Contain set of statistic information about cloud.
+    description: Contain set of statistic information about API object.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
       statisticSet:
         type: array
         items:
-          $ref: "#/definitions/Statistic"
+          $ref: '#/definitions/Statistic'
 
   Statistic:
     type: object
-    description: Contain statistic information about cloud.
+    description: Contain statistic information about API object.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        type: string
-        description: Statistic UUID.
-        format: uuid
       cloud:
-        $ref: "#/definitions/Cloud"
-      uploadFiles:
-        description: Count of uploaded files.
-        type: integer
-        format: int32
-      uploadTime:
-        description: Time what files was uploaded.
-        type: integer
-        format: int64
-      downloadFiles:
-        description: Count of downloaded files.
-        type: integer
-        format: int32
-      downloadTimes:
-        description: Time what files was downloaded.
-        type: integer
-        format: int64
-
-  HelthStatistis:
-    type: object
-    description: Contain helth-check statistic information about set of clouds.
-    properties:
-      uuid:
-        type: string
-        description: HelthStatistis UUID.
-        format: uuid
-      helthCloudSet:
+        $ref: '#/definitions/AriaddnaObj'
+      statInfo:
         type: array
         items:
-          $ref: "#/definitions/HelthCloud"
-
-  HelthCloud:
-    type: object
-    description:  Contain key-value information about cloud and its helth status.
-    properties:
-      cloud:
-        $ref: "#/definitions/Cloud"
-      isAvailable:
-        description: Is cloud available?
-        type: boolean
-
-  CloudSpaseSet:
-    type: object
-    description: Contain set of information about clouds availability space.
-    properties:
-      uuid:
-        type: string
-        description: CloudSpaseSet UUID.
-        format: uuid
-      cloudSpaceSet:
-        type: array
-        items:
-          $ref: "#/definitions/CloudSpase"
-
-  CloudSpase:
-    type: object
-    description: Contain information about cloud availability space.
-    properties:
-      uuid:
-        type: string
-        description: CloudSpase UUID.
-        format: uuid
-      cloud:
-        $ref: "#/definitions/Cloud"
-      availableSpace:
-        description: Cloud available spase in bytes.
-        type: integer
-        format: int64
+          $ref: '#/definitions/Property'
 
   ErrorModel:
     description: Information about error.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
       code:
         description: Contains error code massage.
