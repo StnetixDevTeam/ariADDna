@@ -548,15 +548,11 @@ definitions:
   CloudSet:
     description: A representation of a cloud list that user has.
     type: array
-    allOf:
-      - $ref: '#/definitions/AriaddnaObj'
     items:
       $ref: '#/definitions/Cloud'
 
   CloudSetPages:
     description: This page-object shall be used for visual representation of a list (which is inside a CloudSet) of user's external cloud accounts.
-    allOf:
-      - $ref: '#/definitions/AriaddnaObj'
     properties:
       offset:
         type: integer
@@ -705,8 +701,6 @@ definitions:
   StatisticSet:
     type: object
     description: Contain set of statistic information about API object.
-    allOf:
-      - $ref: '#/definitions/AriaddnaObj'
     properties:
       statisticSet:
         type: array
@@ -733,8 +727,6 @@ definitions:
   ErrorModel:
     description: Information about error.
     type: object
-    allOf:
-      - $ref: '#/definitions/AriaddnaObj'
     properties:
       code:
         description: Contains error code massage.
