@@ -12,7 +12,7 @@ info:
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  version: "1.0"
+  version: '1.0'
 
 host: api.ariaddna.stnetix.com
 basePath: /v1
@@ -163,7 +163,7 @@ paths:
           description: Authorization user credential.
           required: true
           schema:
-            $ref: "#/definitions/Credential"
+            $ref: '#/definitions/Credential'
       responses:
         '201':
           description: User session.
@@ -245,19 +245,216 @@ paths:
         '404':
           description: The specified cloud account was not found.
 
+  /vufs/snap/{userUuid}:
+    get:
+      description: Allows to get snapshot vufs.
+      operationId: getVUFS
+      parameters:
+        - in: path
+          name: userUuid
+          description: Current user UUID.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: VUFS snapshot of current user.
+          schema:
+            $ref: '#/definitions/Vufs'
+        '404':
+          description: Bad user UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /vufs/snap/diff/{userUuid}/{lastCreationTime}:
+    get:
+      description: Allows to get difference of previous snapshot and actual.
+      operationId: getDiffVUFS
+      parameters:
+        - in: path
+          name: userUuid
+          description: Current user UUID.
+          required: true
+          type: string
+          format: uuid
+        - in: path
+          name: lastCreationTime
+          description: Parametr fromDateTime of current VUFS snapshot
+          required: true
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Difference VUFS snapshot of current user.
+          schema:
+            $ref: '#/definitions/Vufs'
+        '404':
+          description: Bad user UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /vufs/snap/diff/{userUuid}:
+    post:
+      description: Allows to send changes in local file storage to server with empty Allocation model and as response get Vufs object with Allocation model.
+      operationId: sendChangesInLFS
+      parameters:
+        - in: body
+          name: localChanges
+          description: VUFS snapshot typed object with changed in local file storage with empty Allocation model.
+          required: true
+          schema:
+           $ref: '#/definitions/Vufs'
+        - in: path
+          name: userUuid
+          description: Current user UUID.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '201':
+          description: Checked snapshot changes.
+          schema:
+           $ref: '#/definitions/Vufs'
+        '409':
+          description: Changes was not found in clouds.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /vufs/allocation/{userUuid}:
+    post:
+      description: Allows to post file allocate strategy from client to server.
+      operationId: postAllocateModel
+      parameters:
+        - in: path
+          name: userUuid
+          description: User UUID.
+          required: true
+          type: string
+          format: uuid
+        - in: body
+          name: initialAllocationModel
+          description: File allocation strategy.
+          required: true
+          schema:
+           $ref: '#/definitions/InitialAllocationModel'
+      responses:
+        '201':
+          description: Allocation strategy was send to server. As respose - difference VUFS object.
+          schema:
+           $ref: '#/definitions/Vufs'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /stat/vufs/{userUuid}:
+    post:
+      description: Allows to post statistic from client to server about clouds.
+      operationId: postCloudStatSet
+      parameters:
+        - in: path
+          name: userUuid
+          description: User UUID.
+          type: string
+          required: true
+          format: uuid
+        - in: body
+          name: cloudStatisticSet
+          description: Cloud statistic set typed object.
+          required: true
+          schema:
+           $ref: '#/definitions/StatisticSet'
+      responses:
+        '201':
+          description: Statistics was send to server.
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+    get:
+      description: Allows to get statistic object about clouds.
+      operationId: getCloudStatisticSet
+      parameters:
+        - in: path
+          name: userUuid
+          description: User UUID.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Clouds statistic.
+          schema:
+            $ref: '#/definitions/StatisticSet'
+        '404':
+          description: Bad cloud UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
+  /stat/vufs/health/{userUuid}:
+    get:
+      description: Allows to get health-check statistic about users Clouds.
+      operationId: getHealthCheckStat
+      parameters:
+        - in: path
+          name: userUuid
+          description: User UUID.
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Clouds health-check statistic.
+          schema:
+            $ref: '#/definitions/StatisticSet'
+        '404':
+          description: Bad user UUID.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+        default:
+          description: Unexpected error.
+          schema:
+            $ref: '#/definitions/ErrorModel'
+
 definitions:
 #Here are the completed definitions.
+  AriaddnaObj:
+    type: object
+    description: Describes abstract arriadna object.
+    properties:
+      uuid:
+        description: Object UUID.
+        type: string
+        format: uuid
+    required:
+      - uuid
+
   User:
     type: object
     description: User of service.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        description: UUID of a user at arriADDna server.
-        type: string
-        format: uuid
       userCredential:
         description: User's credential.
-        $ref: "#/definitions/Credential"
+        $ref: '#/definitions/Credential'
       nickname:
         type: string
         description: User's nickname.
@@ -267,11 +464,17 @@ definitions:
       externalClouds:
         description: The set of external cloud accounts that user has at ariADDna server.
         type: object
-        $ref: "#/definitions/CloudSet"
+        $ref: '#/definitions/CloudSet'
+    required:
+      - userCredential
+      - nickname
+      - externalClouds
 
   Credential:
     type: object
     description: Credential for a basic user/password authentication.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
       user:
         type: string
@@ -280,30 +483,33 @@ definitions:
         type: string
         description: A password associated with the login.
         format: password
+    required:
+      - user
+      - password
 
   Session:
     description: User's session object.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
       user:
         description: Authorizated user.
         $ref: '#/definitions/User'
-      uuid:
-        description: UUID of user's session at arriADDna server.
-        type: string
-        format: uuid
       loginTime:
         description: Time of creation of user's session.
         type: string
         format: date-time
+    required:
+      - user
+      - loginTime
 
   Cloud:
     description: A representation of an external cloud object.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
-      uuid:
-        description: UUID of an external cloud.
-        type: string
       cloudUrl:
         description: A base URL of an external cloud for file managment.
         type: string
@@ -329,10 +535,15 @@ definitions:
       password:
         description: A password for access to be granted.
         type: string
+      availableSpace:
+        description: Cloud available spase in bytes.
+        type: integer
+        format: int64
     required:
       - cloudType
       - cloudUrl
       - cloudAccessToken
+      - availableSpace
 
   CloudSet:
     description: A representation of a cloud list that user has.
@@ -355,6 +566,8 @@ definitions:
   CloudAccessToken:
     description: Stands for an external cloud access token. For more info see https://tools.ietf.org/html/draft-ietf-oauth-v2-31.
     type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
     properties:
       accessToken:
         description: A token recieved during OAuth authorization.
@@ -366,10 +579,150 @@ definitions:
         description: If an accessToken has a limited life-time a user will need to pass authorization manualy again. To prevent this a refreshToken should be returned togeather with an accessToken. Thus having a refresh token and passing it inside HTTP-request ariADDna service will be able to get new accessToken without user participation.
         type: string
       tokenType:
-        description: OPTIONAL. The access token type provides the client with the information required to successfully utilize the access token to make a protected resource request (along with type-specific attributes).  The client MUST NOT use an access token if it does not understand the token type. For example Yandex.Disk whats the tokenType to be "bearer".
+        description: OPTIONAL. The access token type provides the client with the information required to successfully utilize the access token to make a protected resource request (along with type-specific attributes).  The client MUST NOT use an access token if it does not understand the token type. For example Yandex.Disk whats the tokenType to be 'bearer'.
         type: string
     required:
       - accessToken
+
+  Vufs:
+    description: Describes shapshot VUFS of user.
+    type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
+    properties:
+      fromDateTime:
+        description: Created date of snapshot.
+        type: string
+        format: date-time
+      toDateTime:
+        description: Deactivation date of snapshot.
+        type: string
+        format: date-time
+      owner:
+        description: Owner of this snapshot.
+        $ref: '#/definitions/User'
+      vufsFileSet:
+        type: array
+        items:
+          $ref: '#/definitions/VufsFile'
+    required:
+      - fromDateTime
+      - owner
+
+  VufsFile:
+    description: Describes virtual file in VUFS.
+    type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
+    properties:
+      file-properties:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+      file-parts:
+        type: array
+        items:
+          $ref: '#/definitions/PartLocation'
+      childSet:
+        type: array
+        items:
+          $ref: '#/definitions/VufsFile'
+      allocateModel:
+        $ref: '#/definitions/AllocationModel'
+    required:
+      - file-properties
+      - file-parts
+
+  Property:
+    description: Describes all property.
+    type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
+    properties:
+      property-name:
+        type: string
+        description: Property name.
+      property-value:
+        type: string
+        description: Property value.
+    required:
+      - property-name
+      - property-value
+
+  PartLocation:
+    description: Describes sequence number of file part and its location.
+    type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
+    properties:
+      number:
+        type: integer
+        format: int32
+        description: Sequence number.
+      location:
+        $ref: '#/definitions/Cloud'
+    required:
+      - number
+      - location
+
+  AllocationModel:
+    description: Describes allocate storage model ot file.
+    type: object
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
+    properties:
+      modelType:
+        description: Types of allocation model.
+        enum:
+          - UNION
+          - MIRROR
+          - HIGH_AVAILABILITY
+      propertySet:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+    required:
+      - modelType
+
+  InitialAllocationModel:
+    type: object
+    description: Contain information about initial file allocation stategy.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
+    properties:
+      file:
+        $ref: '#/definitions/VufsFile'
+      allocationModel:
+        $ref: '#/definitions/AllocationModel'
+    required:
+      - file
+      - allocationModel
+
+  StatisticSet:
+    type: object
+    description: Contain set of statistic information about API object.
+    properties:
+      statisticSet:
+        type: array
+        items:
+          $ref: '#/definitions/Statistic'
+    required:
+      - statisticSet
+
+  Statistic:
+    type: object
+    description: Contain statistic information about API object.
+    allOf:
+      - $ref: '#/definitions/AriaddnaObj'
+    properties:
+      cloud:
+        $ref: '#/definitions/AriaddnaObj'
+      statInfo:
+        type: array
+        items:
+          $ref: '#/definitions/Property'
+    required:
+      - cloud
 
   ErrorModel:
     description: Information about error.
@@ -382,5 +735,8 @@ definitions:
       message:
         description: Contains short error message.
         type: string
+    required:
+      - code
+      - message
 
 #Below all the items are just stubs.
