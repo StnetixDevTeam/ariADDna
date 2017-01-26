@@ -11,5 +11,6 @@
     <modules>
         <module>core</module>
         <module>rest-api-server</module>
+        <module>common-utils</module>
     </modules>
 </project>
