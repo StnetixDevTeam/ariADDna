@@ -14,4 +14,17 @@
         <module>desktop-gui</module>
         <module>desktop-core</module>
     </modules>
+    <properties>
+        <spring.version>RELEASE</spring.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+    </dependencies>
+
+
 </project>

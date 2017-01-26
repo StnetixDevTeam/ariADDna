@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>desctop-gui</artifactId>
+    <artifactId>desktop-gui</artifactId>
 
 
 </project>
