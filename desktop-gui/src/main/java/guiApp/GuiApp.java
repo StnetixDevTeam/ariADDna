@@ -27,7 +27,7 @@ public class GuiApp extends Application implements Ui {
             return controller;
         });
         Parent parent = loader.load();
-        Scene scene = new Scene(parent, 300,300);
+        Scene scene = new Scene(parent, 800,600);
         primaryStage.setScene(scene);
         primaryStage.show();
 
