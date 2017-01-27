@@ -3,17 +3,20 @@ package guiApp;
 import configs.GuiConfig;
 import controllers.GuiController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.stereotype.Component;
+import ui.Ui;
 
+import javax.annotation.PreDestroy;
 
-
-public class GuiApp extends Application {
+@Component
+public class GuiApp extends Application implements Ui {
     public void start(final Stage primaryStage) throws Exception {
         final AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(GuiConfig.class);
 
@@ -30,23 +33,18 @@ public class GuiApp extends Application {
 
     }
 
-    public void startGui(String[] args){
+    public void startUi(String[] args){
         Application.launch(this.getClass(), args);
+    }
+    @PreDestroy
+    public void stopUi() {
+        Platform.exit();
     }
 
     //javaFX native init application method
     public void init(){
 
     }
-    ///Test start method
-    public static void main(String[] args) {
-        GuiApp guiApp = new GuiApp();
-        guiApp.startGui(args);
-    }
-
-
-
-
 
 
 }
