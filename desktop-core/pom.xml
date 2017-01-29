@@ -11,6 +11,7 @@
 
     <artifactId>desktop-core</artifactId>
     <dependencies>
+
         <dependency>
             <groupId>com.stnetix.ariaddna</groupId>
             <artifactId>desktop-gui</artifactId>

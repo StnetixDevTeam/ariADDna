@@ -1,4 +1,4 @@
-package controllers;
+package com.stnetix.ariaddna.desktopgui.controllers;
 
 import javafx.stage.Stage;
 import org.springframework.stereotype.Component;
