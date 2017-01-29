@@ -2,16 +2,11 @@
 
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.MainController">
    <children>
-      <BorderPane layoutX="144.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <left>
-            <AnchorPane prefWidth="50.0" BorderPane.alignment="CENTER">
-               <children>
-                  <fx:include source="leftPane.fxml" />
-               </children></AnchorPane>
-         </left>
+      <BorderPane layoutX="144.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" style="-: ;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
             <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </bottom>
@@ -22,6 +17,13 @@
                </children>
             </AnchorPane>
          </center>
+         <left>
+            <StackPane maxWidth="50.0" minWidth="50.0" prefHeight="150.0" prefWidth="50.0" BorderPane.alignment="CENTER">
+               <children>
+                  <fx:include source="leftPane.fxml" />
+               </children>
+            </StackPane>
+         </left>
       </BorderPane>
    </children>
 </AnchorPane>

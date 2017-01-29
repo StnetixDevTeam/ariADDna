@@ -4,11 +4,31 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="50.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.LeftPaneController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="50.0" minHeight="300.0" minWidth="50.0" prefWidth="50.0" style="-: ;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button mnemonicParsing="false" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <graphic>
             <FontAwesomeIconView glyphName="NAVICON" size="28" text="" />
+         </graphic>
+      </Button>
+      <Button layoutX="5.0" layoutY="457.0" mnemonicParsing="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="GEAR" size="28" />
+         </graphic>
+      </Button>
+      <Button layoutX="5.0" layoutY="415.0" mnemonicParsing="false" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="TRASH" size="28" />
+         </graphic>
+      </Button>
+      <Button layoutX="5.0" layoutY="371.0" mnemonicParsing="false" AnchorPane.bottomAnchor="92.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="INFO" size="28" />
+         </graphic>
+      </Button>
+      <Button layoutX="6.0" layoutY="328.0" mnemonicParsing="false" AnchorPane.bottomAnchor="135.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="SEARCH" size="28" />
          </graphic>
       </Button>
    </children>
