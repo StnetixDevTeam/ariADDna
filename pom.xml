@@ -25,6 +25,7 @@
         <module>rest-api-server</module>
         <module>desktop-gui</module>
         <module>desktop-core</module>
+        <module>common-utils</module>
     </modules>
     <properties>
         <spring.version>RELEASE</spring.version>

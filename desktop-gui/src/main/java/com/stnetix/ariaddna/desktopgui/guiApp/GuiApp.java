@@ -1,5 +1,6 @@
 package com.stnetix.ariaddna.desktopgui.guiApp;
 
+import com.stnetix.ariaddna.commonutils.ui.interfaces.Ui;
 import com.stnetix.ariaddna.desktopgui.configs.GuiConfig;
 import com.stnetix.ariaddna.desktopgui.controllers.GuiController;
 import javafx.application.Application;
@@ -11,7 +12,6 @@ import javafx.stage.Stage;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
-import com.stnetix.ariaddna.desktopgui.ui.Ui;
 
 import javax.annotation.PreDestroy;
 

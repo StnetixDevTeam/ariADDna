@@ -1,4 +1,4 @@
-package com.stnetix.ariaddna.desktopgui.ui;
+package com.stnetix.ariaddna.commonutils.ui.interfaces;
 
 
 public interface Ui {
