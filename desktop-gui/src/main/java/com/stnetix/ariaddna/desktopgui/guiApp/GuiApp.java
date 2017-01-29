@@ -1,7 +1,6 @@
 package com.stnetix.ariaddna.desktopgui.guiApp;
 
 import com.stnetix.ariaddna.commonutils.ui.interfaces.Ui;
-import com.stnetix.ariaddna.desktopgui.configs.GuiConfig;
 import com.stnetix.ariaddna.desktopgui.controllers.GuiController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,16 +8,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 
 @Component
-public class GuiApp extends Application implements Ui {
+public class GuiApp extends Application implements Ui{
+
+
+    private static ApplicationContext ctx;
+
+
     public void start(final Stage primaryStage) throws Exception {
-        final AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(GuiConfig.class);
+        //final AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(GuiConfig.class);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/stentix/ariaddna/desktopgui/fxmlViews/main.fxml"));
         loader.setControllerFactory(param -> {
@@ -36,6 +41,7 @@ public class GuiApp extends Application implements Ui {
     public void startUi(String[] args){
         Application.launch(this.getClass(), args);
     }
+
     @PreDestroy
     public void stopUi() {
         Platform.exit();
@@ -46,5 +52,8 @@ public class GuiApp extends Application implements Ui {
 
     }
 
-
+    @Autowired
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        ctx = applicationContext;
+    }
 }
