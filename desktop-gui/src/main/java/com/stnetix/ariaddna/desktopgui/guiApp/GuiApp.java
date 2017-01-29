@@ -1,6 +1,6 @@
 package com.stnetix.ariaddna.desktopgui.guiApp;
 
-import com.stnetix.ariaddna.commonutils.ui.interfaces.Ui;
+import com.stnetix.ariaddna.commonutils.ui.interfaces.IUi;
 import com.stnetix.ariaddna.desktopgui.controllers.GuiController;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PreDestroy;
 
 @Component
-public class GuiApp extends Application implements Ui{
+public class GuiApp extends Application implements IUi {
 
 
     private static ApplicationContext ctx;
