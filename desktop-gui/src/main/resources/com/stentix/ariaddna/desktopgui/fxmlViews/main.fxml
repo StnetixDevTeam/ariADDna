@@ -7,7 +7,10 @@
    <children>
       <BorderPane layoutX="144.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <left>
-            <AnchorPane prefWidth="50.0" BorderPane.alignment="CENTER" />
+            <AnchorPane prefWidth="50.0" BorderPane.alignment="CENTER">
+               <children>
+                  <fx:include source="leftPane.fxml" />
+               </children></AnchorPane>
          </left>
          <bottom>
             <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
