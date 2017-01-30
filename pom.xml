@@ -8,8 +8,37 @@
     <artifactId>ariaddna-platform</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <modules>
         <module>core</module>
         <module>rest-api-server</module>
+        <module>desktop-gui</module>
+        <module>desktop-core</module>
+        <module>common-utils</module>
     </modules>
+    <properties>
+        <spring.version>4.3.6.RELEASE</spring.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+
+    </dependencies>
+
+
 </project>

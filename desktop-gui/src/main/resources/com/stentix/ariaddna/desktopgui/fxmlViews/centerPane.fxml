@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.CenterPaneController">
+   <children>
+      <VBox layoutX="325.0" layoutY="149.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="75.0" prefWidth="750.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <AnchorPane prefHeight="100.0" prefWidth="73.0">
+                           <children>
+                              <Button layoutX="24.0" layoutY="38.0" mnemonicParsing="false" text="Back" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="100.0" prefWidth="178.0">
+                           <children>
+                              <Label layoutY="27.0" text="AriADDna">
+                                 <font>
+                                    <Font name="Verdana" size="36.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutY="41.0" text="\@slonikmak">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="33.0" prefWidth="750.0">
+               <children>
+                  <Label layoutX="27.0" layoutY="4.0" text="rootFolder &gt; somrFolder &gt; immerFolder &gt; img" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="30.0" prefWidth="200.0" />
+            <AnchorPane prefWidth="200.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
