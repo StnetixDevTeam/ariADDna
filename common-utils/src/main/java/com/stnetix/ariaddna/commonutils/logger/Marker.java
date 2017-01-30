@@ -1,4 +1,4 @@
-package com.stnetix.ariaddna.common.logger;
+package com.stnetix.ariaddna.commonutils.logger;
 
 import java.util.Collections;
 import java.util.Iterator;
