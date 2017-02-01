@@ -59,6 +59,16 @@ public class AriaddnaExeption extends Exception {
      * @return errorMessage
      * */
     public String getErrorMessage() {
-        return errorMessage;
+        Throwable tmp  = getCause();
+        if(tmp!=null) {
+            Throwable t;
+            while (true) {
+                t = tmp.getCause();
+                if (t == null) break;
+                tmp = tmp.getCause();
+            }
+            return tmp.getMessage();
+        }
+        return getMessage();
     }
 }
