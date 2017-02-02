@@ -1,4 +1,4 @@
-package com.stnetix.ariaddna.commonutils.exeption;
+package com.stnetix.ariaddna.commonutils.exception;
 
 /**
  * This class is the parent of all exceptions in the Ariaddna project.
