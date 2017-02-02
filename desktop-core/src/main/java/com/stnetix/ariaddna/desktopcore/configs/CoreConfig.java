@@ -9,10 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("com.stnetix.ariaddna.commonutils")
+@ComponentScan("com.stnetix.ariaddna.desktopgui.guiApp")
 public class CoreConfig{
-    @Bean
-    public IUi getUi() {
-        return new GuiApp();
-    }
+
 
 }

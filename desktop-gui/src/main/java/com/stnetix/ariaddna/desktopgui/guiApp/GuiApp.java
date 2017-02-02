@@ -3,6 +3,8 @@ package com.stnetix.ariaddna.desktopgui.guiApp;
 import com.stnetix.ariaddna.commonutils.ui.interfaces.IUi;
 import com.stnetix.ariaddna.desktopgui.configs.GuiConfig;
 import com.stnetix.ariaddna.desktopgui.controllers.GuiController;
+import com.stnetix.ariaddna.desktopgui.views.FXMLLoaderProvider;
+import com.stnetix.ariaddna.desktopgui.views.ViewsFactory;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -36,7 +38,7 @@ public class GuiApp extends Application implements IUi {
             GuiController controller = (GuiController) ctx.getBean(param);
             return controller;
         });
-        Parent parent = loader.load();
+        Parent parent = (Parent) ViewsFactory.MAIN.getNode(ctx.getBean(FXMLLoaderProvider.class));
         Scene scene = new Scene(parent, 800,600);
         primaryStage.setScene(scene);
         primaryStage.show();
