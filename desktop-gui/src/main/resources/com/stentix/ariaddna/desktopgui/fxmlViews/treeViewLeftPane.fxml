@@ -27,7 +27,7 @@
                 <FontAwesomeIconView glyphName="GEAR" size="28"/>
             </graphic>
         </Button>
-        <Button layoutY="2.0" mnemonicParsing="false" styleClass="btn" AnchorPane.rightAnchor="5.0"
+        <Button layoutY="2.0" mnemonicParsing="false" onAction="#hidePane" styleClass="btn" AnchorPane.rightAnchor="5.0"
                 AnchorPane.topAnchor="5.0">
             <graphic>
                 <FontAwesomeIconView glyphName="NAVICON" size="28"/>
