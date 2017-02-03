@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import java.io.IOException;
 
 public enum ViewsFactory {
-    MAIN("/com/stentix/ariaddna/desktopgui/fxmlViews/main.fxml");
+    MAIN("/com/stentix/ariaddna/desktopgui/fxmlViews/main.fxml"), LEFT_TREE("/com/stentix/ariaddna/desktopgui/fxmlViews/treeViewLeftPane.fxml");
 
     public String path;
 

@@ -10,3 +10,7 @@
 .bottomPane {
     -fx-background-color: -fx-bkg-color-bottompane;
 }
+
+.btn {
+    -fx-pref-width: 40px;
+}
