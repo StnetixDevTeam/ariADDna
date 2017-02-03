@@ -2,7 +2,9 @@ package com.stnetix.ariaddna.desktopgui.controllers;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Created by Oceanos on 03.02.2017.
+ */
 @Component
-public class LeftPaneController implements IGuiController {
-
+public class BottomPaneController implements IGuiController {
 }

@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 
 
 @Component
-public class MainController implements GuiController, Initializable {
+public class MainController implements IGuiController, Initializable {
     private Stage primaryStage;
 
     @Autowired
