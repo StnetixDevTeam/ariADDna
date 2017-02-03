@@ -4,52 +4,52 @@ package com.stnetix.ariaddna.commonutils.exception;
  * This class is the parent of all exceptions in the Ariaddna project.
  */
 
-public class AriaddnaExeption extends Exception {
+public class AriaddnaException extends Exception {
 
     private String errorMessage;
 
     /**
-     * Constructor of new AriaddnaExeption with the specified cause.
+     * Constructor of new AriaddnaException with the specified cause.
      * @param cause
      * */
-    public AriaddnaExeption(Throwable cause) {
+    public AriaddnaException(Throwable cause) {
         super(cause);
     }
 
     /**
-     * Constructor of new AriaddnaExeption with traceMessage.
+     * Constructor of new AriaddnaException with traceMessage.
      * @param traceMessage
      * */
-    public AriaddnaExeption(String traceMessage) {
+    public AriaddnaException(String traceMessage) {
         super(traceMessage);
     }
 
     /**
-     * Constructor of new AriaddnaExeption with traceMessage and errorMessage.
+     * Constructor of new AriaddnaException with traceMessage and errorMessage.
      * @param traceMessage
      * @param errorMessage
      * */
-    public AriaddnaExeption(String traceMessage, String errorMessage){
+    public AriaddnaException(String traceMessage, String errorMessage){
         super(traceMessage);
         this.errorMessage = errorMessage;
     }
 
     /**
-     * Constructor of new AriaddnaExeption with traceMessage and the specified cause.
+     * Constructor of new AriaddnaException with traceMessage and the specified cause.
      * @param traceMessage
      * @param cause
      * */
-    public AriaddnaExeption(String traceMessage, Throwable cause) {
+    public AriaddnaException(String traceMessage, Throwable cause) {
         super(traceMessage, cause);
     }
 
     /**
-     * Constructor of new AriaddnaExeption with traceMessage, errorMessage and the specified cause.
+     * Constructor of new AriaddnaException with traceMessage, errorMessage and the specified cause.
      * @param traceMessage
      * @param errorMessage
      * @param cause
      * */
-    public AriaddnaExeption(String traceMessage, String errorMessage, Throwable cause) {
+    public AriaddnaException(String traceMessage, String errorMessage, Throwable cause) {
         super(traceMessage, cause);
         this.errorMessage = errorMessage;
     }
