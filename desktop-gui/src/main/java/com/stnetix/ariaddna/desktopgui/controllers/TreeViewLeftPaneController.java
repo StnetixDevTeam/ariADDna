@@ -10,13 +10,13 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class LeftPaneController implements IGuiController {
-    private MainController mainController;
-    private FXMLLoaderProvider provider;
+public class TreeViewLeftPaneController implements IGuiController {
+    MainController mainController;
+    FXMLLoaderProvider provider;
 
     @FXML
-    public void showTreeView(ActionEvent e) throws IOException {
-        mainController.setLeftBorderContent(ViewsFactory.LEFT_TREE.getNode(provider));
+    void hidePane(ActionEvent event) throws IOException {
+        mainController.setLeftBorderContent(ViewsFactory.LEFT_MAIN.getNode(provider));
     }
 
     @Autowired

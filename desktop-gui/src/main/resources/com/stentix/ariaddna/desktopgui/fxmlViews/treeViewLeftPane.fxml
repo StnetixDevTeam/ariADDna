@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="300.0" minHeight="350.0" minWidth="200.0" prefWidth="300.0"
+            styleClass="leftPane" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.stnetix.ariaddna.desktopgui.controllers.TreeViewLeftPaneController">
+    <children>
+        <Button layoutX="255.0" layoutY="300.0" mnemonicParsing="false" styleClass="btn" AnchorPane.bottomAnchor="13.0"
+                AnchorPane.leftAnchor="255.0">
+            <graphic>
+                <FontAwesomeIconView glyphName="INFO" size="28"/>
+            </graphic>
+        </Button>
+        <Button layoutX="169.0" layoutY="300.0" mnemonicParsing="false" styleClass="btn" AnchorPane.bottomAnchor="13.0"
+                AnchorPane.leftAnchor="169.0">
+            <graphic>
+                <FontAwesomeIconView glyphName="TRASH" size="28"/>
+            </graphic>
+        </Button>
+        <Button layoutX="212.0" layoutY="300.0" mnemonicParsing="false" styleClass="btn" AnchorPane.bottomAnchor="13.0"
+                AnchorPane.leftAnchor="212.0">
+            <graphic>
+                <FontAwesomeIconView glyphName="GEAR" size="28"/>
+            </graphic>
+        </Button>
+        <Button layoutY="2.0" mnemonicParsing="false" onAction="#hidePane" styleClass="btn" AnchorPane.rightAnchor="5.0"
+                AnchorPane.topAnchor="5.0">
+            <graphic>
+                <FontAwesomeIconView glyphName="NAVICON" size="28"/>
+            </graphic>
+        </Button>
+        <AnchorPane layoutX="17.0" layoutY="50.0" prefHeight="250.0" prefWidth="200.0">
+            <children>
+                <Label layoutX="4.0" layoutY="139.0" text="Favorites">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="2.0" text="Files">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="3.0" layoutY="163.0" text="Documents">
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="26.0" layoutY="35.0" text="MyFolder">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="26.0" layoutY="60.0" text="Images">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="29.0" layoutY="112.0" text="NewFolder">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+                <Label layoutX="49.0" layoutY="87.0" text="InnerFolder">
+                    <font>
+                        <Font size="18.0"/>
+                    </font>
+                </Label>
+            </children>
+        </AnchorPane>
+        <TextArea layoutX="13.0" layoutY="5.0" prefHeight="10.0" prefWidth="200.0"/>
+        <FontAwesomeIconView glyphName="SEARCH" layoutX="17.0" layoutY="33.0" size="28"/>
+    </children>
+</AnchorPane>

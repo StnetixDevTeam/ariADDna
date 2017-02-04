@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.StackPane?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.MainController">
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.MainController">
    <children>
-      <BorderPane layoutX="144.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" style="-: ;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+       <BorderPane layoutX="144.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
             <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </bottom>
@@ -18,12 +16,20 @@
             </AnchorPane>
          </center>
          <left>
-            <StackPane maxWidth="50.0" minWidth="50.0" prefHeight="150.0" prefWidth="50.0" BorderPane.alignment="CENTER">
+             <StackPane fx:id="leftBorder" minWidth="50.0" prefHeight="150.0" BorderPane.alignment="CENTER">
                <children>
-                  <fx:include source="leftPane.fxml" />
+                   <fx:include source="mainLeftPane.fxml"/>
                </children>
             </StackPane>
          </left>
+         <bottom>
+             <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0"
+                        BorderPane.alignment="CENTER">
+               <children>
+                   <fx:include source="bottomPane.fxml"/>
+               </children>
+            </StackPane>
+         </bottom>
       </BorderPane>
    </children>
 </AnchorPane>

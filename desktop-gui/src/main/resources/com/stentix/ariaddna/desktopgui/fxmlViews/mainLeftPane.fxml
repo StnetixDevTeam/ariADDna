@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="200.0" minHeight="300.0" minWidth="50.0" prefWidth="50.0"
+            styleClass="leftPane" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.stnetix.ariaddna.desktopgui.controllers.LeftPaneController">
+   <children>
+      <Button maxWidth="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#showTreeView" styleClass="btn"
+              AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="8.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="NAVICON" size="28" text="" />
+         </graphic>
+      </Button>
+      <Button layoutX="5.0" layoutY="457.0" mnemonicParsing="false" styleClass="btn" AnchorPane.bottomAnchor="5.0"
+              AnchorPane.leftAnchor="5.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="GEAR" size="28" styleClass="btn"/>
+         </graphic>
+      </Button>
+      <Button layoutX="5.0" layoutY="415.0" mnemonicParsing="false" styleClass="btn" AnchorPane.bottomAnchor="48.0"
+              AnchorPane.leftAnchor="5.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="TRASH" size="28" styleClass="btn"/>
+         </graphic>
+      </Button>
+      <Button layoutX="5.0" layoutY="371.0" mnemonicParsing="false" styleClass="btn" AnchorPane.bottomAnchor="92.0"
+              AnchorPane.leftAnchor="5.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="INFO" size="28" />
+         </graphic>
+      </Button>
+      <Button layoutX="6.0" layoutY="328.0" mnemonicParsing="false" styleClass="btn" AnchorPane.bottomAnchor="135.0"
+              AnchorPane.leftAnchor="5.0">
+         <graphic>
+            <FontAwesomeIconView glyphName="SEARCH" size="28" />
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

@@ -1,0 +1,16 @@
+* {
+    -fx-bkg-color-leftpane: #afafaf;
+    -fx-bkg-color-bottompane: #afafaf;
+}
+
+.leftPane {
+    -fx-background-color: -fx-bkg-color-leftpane;
+}
+
+.bottomPane {
+    -fx-background-color: -fx-bkg-color-bottompane;
+}
+
+.btn {
+    -fx-pref-width: 40px;
+}
