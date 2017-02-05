@@ -20,16 +20,12 @@
          <left>
              <StackPane fx:id="leftBorder" minWidth="50.0" prefHeight="150.0" BorderPane.alignment="CENTER">
                <children>
-                   <fx:include source="mainLeftPane.fxml" />
+                  <fx:include source="treeViewLeftPane.fxml" />
                </children>
             </StackPane>
          </left>
          <bottom>
-             <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="30.0" BorderPane.alignment="CENTER">
-               <children>
-                   <fx:include source="bottomPane.fxml" />
-               </children>
-            </StackPane>
+             <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
    </children>
