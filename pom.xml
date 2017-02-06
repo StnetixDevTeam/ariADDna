@@ -21,7 +21,6 @@
         </plugins>
     </build>
     <modules>
-        <module>core</module>
         <module>rest-api-server</module>
         <module>desktop-gui</module>
         <module>desktop-core</module>
