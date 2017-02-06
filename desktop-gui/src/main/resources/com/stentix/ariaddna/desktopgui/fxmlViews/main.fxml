@@ -20,7 +20,7 @@
          <left>
              <StackPane fx:id="leftBorder" minWidth="50.0" prefHeight="150.0" BorderPane.alignment="CENTER">
                <children>
-                  <fx:include source="mainLeftPane.fxml" />
+                  <fx:include source="treeViewLeftPane.fxml" />
                </children>
             </StackPane>
          </left>
