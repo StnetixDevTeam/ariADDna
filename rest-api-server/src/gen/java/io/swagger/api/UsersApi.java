@@ -7,9 +7,9 @@ import io.swagger.api.factories.UsersApiServiceFactory;
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
-import io.swagger.model.User;
-import io.swagger.model.ErrorModel;
 import io.swagger.model.CloudSetPages;
+import io.swagger.model.ErrorModel;
+import io.swagger.model.User;
 
 import java.util.List;
 import io.swagger.api.NotFoundException;
@@ -28,7 +28,7 @@ import javax.ws.rs.*;
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 @io.swagger.annotations.Api(description = "the users API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2016-12-26T14:00:48.377Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-07T13:22:44.504Z")
 public class UsersApi  {
    private final UsersApiService delegate = UsersApiServiceFactory.getUsersApi();
 
