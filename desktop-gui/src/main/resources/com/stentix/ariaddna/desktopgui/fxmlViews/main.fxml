@@ -11,7 +11,7 @@
             <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </bottom>
          <center>
-            <AnchorPane BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="centerBorder" BorderPane.alignment="CENTER">
                <children>
                   <fx:include source="centerPane.fxml" />
                </children>

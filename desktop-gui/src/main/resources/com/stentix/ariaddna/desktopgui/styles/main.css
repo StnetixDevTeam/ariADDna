@@ -21,11 +21,28 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 4, 0, 0, 0);
 }
 .fontawesome{
-    -fx-fill: white;
+    -fx-fill: black;
 }
 .tree-file-view .tree-cell {
     -fx-background-color: -fx-bkg-color-leftpane;
     -fx-border-width: 0px;
     -fx-border-style: none;
+    -fx-border-color: -fx-bkg-color-leftpane;
+}
+.sub-header {
+    -fx-font-size: 2em;
+}
+.btn-link {
+    -fx-font-size: 1.5em;
+}
+#back-btn {
+    -fx-background-color: none;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 20px;
+}
+.password-field{
+    -fx-border-radius: none;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
     -fx-border-color: -fx-bkg-color-leftpane;
 }
