@@ -13,4 +13,19 @@
 
 .btn {
     -fx-pref-width: 40px;
+    -fx-background-color: none;
+
+
+}
+.btn:hover{
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 4, 0, 0, 0);
+}
+.fontawesome{
+    -fx-fill: white;
+}
+.tree-file-view .tree-cell {
+    -fx-background-color: -fx-bkg-color-leftpane;
+    -fx-border-width: 0px;
+    -fx-border-style: none;
+    -fx-border-color: -fx-bkg-color-leftpane;
 }
