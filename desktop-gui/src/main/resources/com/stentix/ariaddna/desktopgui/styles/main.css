@@ -46,3 +46,13 @@
     -fx-border-width: 2px;
     -fx-border-color: -fx-bkg-color-leftpane;
 }
+.check-tree-view, .check-box-tree-item, .tree-cell{
+    -fx-background-color: none;
+    -fx-border-width: 0px;
+    -fx-border-color: none;
+    -fx-border-style: none;
+}
+
+.mainContainer {
+    -fx-background-color: white;
+}

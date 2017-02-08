@@ -2,86 +2,69 @@
 
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import java.net.URL?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.CenterPaneCloudsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.CloudSettingsController">
     <children>
-        <VBox layoutX="325.0" layoutY="149.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <AnchorPane prefHeight="75.0" prefWidth="750.0">
-                    <children>
-                        <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                            <children>
-                                <AnchorPane prefHeight="75.0" prefWidth="41.0">
-                                    <children>
-                                        <Button id="back-btn" layoutX="19.0" layoutY="38.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" />
-                              <FontAwesomeIconView glyphName="ANGLE_LEFT" layoutX="21.0" layoutY="60.0" size="36" />
-                                    </children>
-                                </AnchorPane>
-                                <AnchorPane prefHeight="100.0" prefWidth="178.0">
-                                    <children>
-                                        <Label layoutY="27.0" text="AriADDna">
-                                            <font>
-                                                <Font name="Verdana" size="36.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </AnchorPane>
-                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                                    <children>
-                                        <Label layoutY="41.0" text="\@slonikmak">
-                                            <font>
-                                                <Font size="18.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </AnchorPane>
-                            </children>
-                        </HBox>
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="33.0" prefWidth="750.0">
-                    <children>
-                        <Label layoutX="27.0" layoutY="4.0" text="&gt;Clouds" AnchorPane.leftAnchor="25.0" />
-                    </children>
-                </AnchorPane>
-                <AnchorPane prefHeight="30.0" prefWidth="200.0">
+        <VBox layoutX="325.0" layoutY="149.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="37.0" prefWidth="750.0">
                <children>
-                  <Label styleClass="sub-header" text="Clouds managment" AnchorPane.leftAnchor="25.0" />
-               </children></AnchorPane>
-            <AnchorPane prefHeight="24.0" prefWidth="750.0">
-               <children>
-                  <HBox prefHeight="33.0" prefWidth="214.0" AnchorPane.leftAnchor="20.0">
+                  <VBox prefHeight="79.0" prefWidth="293.0">
                      <children>
-                        <Hyperlink styleClass="btn-link" text="Sign In" />
-                        <Hyperlink styleClass="btn-link" text="Sign Up" />
-                        <Hyperlink styleClass="btn-link" text="Sign Out" />
+                        <AnchorPane prefHeight="39.0" prefWidth="202.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="DROPBOX" layoutX="10.0" layoutY="29.0" size="24" wrappingWidth="15.0" />
+                              <Label layoutX="42.0" text="Dropbox">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <FontAwesomeIconView glyphName="EDIT" layoutX="232.0" layoutY="30.0" size="24" wrappingWidth="15.0" />
+                              <FontAwesomeIconView glyphName="TRASH" layoutX="268.0" layoutY="29.0" size="24" wrappingWidth="15.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane prefHeight="39.0" prefWidth="202.0">
+                           <children>
+                              <FontAwesomeIconView glyphName="GOOGLE" layoutX="10.0" layoutY="29.0" size="24" wrappingWidth="15.0" />
+                              <Label layoutX="42.0" text="Google Drive">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                              <FontAwesomeIconView glyphName="EDIT" layoutX="233.0" layoutY="29.0" size="24" wrappingWidth="15.0" />
+                              <FontAwesomeIconView glyphName="TRASH" layoutX="266.0" layoutY="27.0" size="24" wrappingWidth="27.0" />
+                           </children>
+                        </AnchorPane>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="24.0" layoutY="14.0" styleClass="sub-header" text="Change Password" AnchorPane.leftAnchor="25.0" />
-                  <PasswordField layoutX="25.0" layoutY="68.0" />
-                  <PasswordField layoutX="25.0" layoutY="120.0" />
-                  <Label layoutX="25.0" layoutY="46.0" text="New Password" />
-                  <Label layoutX="25.0" layoutY="100.0" text="Confirm New Password" />
-                  <Button layoutX="25.0" layoutY="155.0" mnemonicParsing="false" text="Change" />
+                  <FontAwesomeIconView fill="#40bbda" glyphName="PLUS" layoutX="3.0" layoutY="26.0" size="24" />
+                  <Label layoutX="36.0" layoutY="1.0" prefHeight="17.0" prefWidth="251.0" text="Add newCloud" textFill="#40bbda">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
                </children>
             </AnchorPane>
-            </children>
+         </children>
+         <padding>
+            <Insets left="25.0" top="15.0" />
+         </padding>
         </VBox>
     </children>
-   <stylesheets>
-      <URL value="@../styles/main.css" />
-      <URL value="@../styles/jmetro.css" />
-   </stylesheets>
+    <stylesheets>
+        <URL value="@../styles/main.css" />
+        <URL value="@../styles/jmetro.css" />
+    </stylesheets>
 </AnchorPane>

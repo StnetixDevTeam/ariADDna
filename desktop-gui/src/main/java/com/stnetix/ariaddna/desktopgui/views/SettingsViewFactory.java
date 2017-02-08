@@ -1,22 +1,39 @@
 package com.stnetix.ariaddna.desktopgui.views;
 
 
+import com.stnetix.ariaddna.desktopgui.controllers.SettingsTemplateController;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
 public enum  SettingsViewFactory {
-    ACCOUNT("Account", "/com/stentix/ariaddna/desktopgui/fxmlViews/accountSettingsPane.fxml");
+    ACCOUNT("Account", "accountSettingsPane.fxml", "AriADDna account management"),
+    CLOUDS("Clouds", "cloudsSettingsPane.fxml", "Clouds management"),
+    SYNC("Sync", "syncSettingsPane.fxml", "Synchronization management");
 
     public String name;
-    public String path;
+    public String fileName;
+    public String header;
 
-    SettingsViewFactory(String name, String path){
+    public String fullPath = "/com/stentix/ariaddna/desktopgui/fxmlViews/";
+    public String template = "settingsTemplate.fxml";
+
+    SettingsViewFactory(String name, String fileName, String header){
         this.name = name;
-        this.path = path;
+        this.fileName = fileName;
+        this.header = header;
     }
 
     public Node getNode(FXMLLoaderProvider loader) throws IOException {
-        return loader.get(path).load();
+        FXMLLoader fxmlLoader = loader.get(fullPath+template);
+        AnchorPane parent = fxmlLoader.load();
+
+        SettingsTemplateController controller = fxmlLoader.getController();
+        controller.setHeaders(header, name);
+        controller.setContent(loader.get(fullPath+fileName).load());
+        return parent;
     }
 }

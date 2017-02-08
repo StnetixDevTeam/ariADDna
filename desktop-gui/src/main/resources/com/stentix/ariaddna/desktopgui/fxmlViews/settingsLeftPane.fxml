@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="250.0" minHeight="350.0" minWidth="200.0" prefWidth="300.0" styleClass="leftPane" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.SettingsPaneController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="250.0" minHeight="350.0" minWidth="200.0" prefWidth="300.0" styleClass="leftPane" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.LeftPaneSettingsController">
     <children>
         <Button layoutX="17.0" layoutY="300.0" mnemonicParsing="false" onAction="#showBrowser" styleClass="btn" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
             <graphic>
