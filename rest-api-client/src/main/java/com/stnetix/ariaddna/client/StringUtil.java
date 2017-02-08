@@ -13,7 +13,7 @@
 
 package com.stnetix.ariaddna.client;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-06T12:57:09.287Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-08T08:48:32.785Z")
 public class StringUtil {
   /**
    * Check if the given array contains the given value (with case-insensitive comparison).

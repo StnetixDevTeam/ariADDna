@@ -7,7 +7,6 @@ import io.swagger.api.factories.VufsApiServiceFactory;
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
 
-import java.util.Date;
 import io.swagger.model.ErrorModel;
 import io.swagger.model.InitialAllocationModel;
 import io.swagger.model.Vufs;
@@ -29,12 +28,12 @@ import javax.ws.rs.*;
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 @io.swagger.annotations.Api(description = "the vufs API")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-07T13:22:44.504Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
 public class VufsApi  {
    private final VufsApiService delegate = VufsApiServiceFactory.getVufsApi();
 
     @GET
-    @Path("/snap/diff/{userUuid}/{lastCreationTime}")
+    @Path("/snap/diff/{userUuid}/{year}/{month}/{day}/{hour}/{minute}/{second}/")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "", notes = "Allows to get difference of previous snapshot and actual.", response = Vufs.class, tags={  })
@@ -45,10 +44,15 @@ public class VufsApi  {
         
         @io.swagger.annotations.ApiResponse(code = 200, message = "Unexpected error.", response = Vufs.class) })
     public Response getDiffVUFS(@ApiParam(value = "Current user UUID.",required=true) @PathParam("userUuid") String userUuid
-,@ApiParam(value = "Parametr fromDateTime of current VUFS snapshot",required=true) @PathParam("lastCreationTime") Date lastCreationTime
+,@ApiParam(value = "Year of fromDateTime of current VUFS snapshot",required=true) @PathParam("year") Integer year
+,@ApiParam(value = "Month of fromDateTime of current VUFS snapshot",required=true) @PathParam("month") Integer month
+,@ApiParam(value = "Day of fromDateTime of current VUFS snapshot",required=true) @PathParam("day") Integer day
+,@ApiParam(value = "Hour of fromDateTime of current VUFS snapshot",required=true) @PathParam("hour") Integer hour
+,@ApiParam(value = "Minute of fromDateTime of current VUFS snapshot",required=true) @PathParam("minute") Integer minute
+,@ApiParam(value = "Second of fromDateTime of current VUFS snapshot",required=true) @PathParam("second") Integer second
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.getDiffVUFS(userUuid,lastCreationTime,securityContext);
+        return delegate.getDiffVUFS(userUuid,year,month,day,hour,minute,second,securityContext);
     }
     @GET
     @Path("/snap/{userUuid}")

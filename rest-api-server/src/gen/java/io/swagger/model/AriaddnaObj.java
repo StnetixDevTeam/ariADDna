@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Describes abstract arriadna object.
  */
 @ApiModel(description = "Describes abstract arriadna object.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-07T13:22:44.504Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
 public class AriaddnaObj   {
   @JsonProperty("uuid")
   private String uuid = null;

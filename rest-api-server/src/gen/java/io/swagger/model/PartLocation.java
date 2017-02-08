@@ -21,7 +21,7 @@ import io.swagger.model.AriaddnaObj;
  * Describes sequence number of file part and its location.
  */
 @ApiModel(description = "Describes sequence number of file part and its location.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-07T13:22:44.504Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
 public class PartLocation extends AriaddnaObj  {
 
   @Override

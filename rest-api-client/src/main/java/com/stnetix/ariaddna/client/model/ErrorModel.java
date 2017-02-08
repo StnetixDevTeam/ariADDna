@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Information about error.
  */
 @ApiModel(description = "Information about error.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-06T12:57:09.287Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-08T08:48:32.785Z")
 public class ErrorModel {
   @SerializedName("code")
   private Integer code = null;

@@ -24,7 +24,7 @@ import io.swagger.model.CloudSet;
  * This page-object shall be used for visual representation of a list (which is inside a CloudSet) of user&#39;s external cloud accounts.
  */
 @ApiModel(description = "This page-object shall be used for visual representation of a list (which is inside a CloudSet) of user's external cloud accounts.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-07T13:22:44.504Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
 public class CloudSetPages   {
   @JsonProperty("offset")
   private Integer offset = null;

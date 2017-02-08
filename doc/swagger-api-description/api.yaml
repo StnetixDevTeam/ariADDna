@@ -270,7 +270,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /vufs/snap/diff/{userUuid}/{lastCreationTime}:
+  /vufs/snap/diff/{userUuid}/{year}/{month}/{day}/{hour}/{minute}/{second}/:
     get:
       description: Allows to get difference of previous snapshot and actual.
       operationId: getDiffVUFS
@@ -282,11 +282,41 @@ paths:
           type: string
           format: uuid
         - in: path
-          name: lastCreationTime
-          description: Parametr fromDateTime of current VUFS snapshot
+          name: year
+          description: Year of fromDateTime of current VUFS snapshot
           required: true
-          type: string
-          format: date-time
+          type: integer
+          format: int32
+        - in: path
+          name: month
+          description: Month of fromDateTime of current VUFS snapshot
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: day
+          description: Day of fromDateTime of current VUFS snapshot
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: hour
+          description: Hour of fromDateTime of current VUFS snapshot
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: minute
+          description: Minute of fromDateTime of current VUFS snapshot
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: second
+          description: Second of fromDateTime of current VUFS snapshot
+          required: true
+          type: integer
+          format: int32
       responses:
         '200':
           description: Difference VUFS snapshot of current user.

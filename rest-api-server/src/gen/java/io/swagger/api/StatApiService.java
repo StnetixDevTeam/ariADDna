@@ -16,7 +16,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-07T13:22:44.504Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
 public abstract class StatApiService {
     public abstract Response getCloudStatisticSet(String userUuid,SecurityContext securityContext) throws NotFoundException;
     public abstract Response getHealthCheckStat(String userUuid,SecurityContext securityContext) throws NotFoundException;
