@@ -20,7 +20,7 @@ public class MainController implements IGuiController, Initializable {
     @FXML
     StackPane leftBorder;
     @FXML
-    AnchorPane centerBorder;
+    StackPane centerBorder;
 
     @Autowired
     public void setPrimaryStage(Stage primaryStage) {

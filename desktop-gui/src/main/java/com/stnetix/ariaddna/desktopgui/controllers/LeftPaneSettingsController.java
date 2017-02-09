@@ -17,6 +17,9 @@ public class LeftPaneSettingsController implements IGuiController, Initializable
     MainController mainController;
     FXMLLoaderProvider loaderProvider;
     TreeViewFactory treeViewFactory;
+    CloudSettingsFactory cloudSettingsFactory;
+
+
 
     @FXML
     AnchorPane treeViewContainer;
@@ -39,6 +42,10 @@ public class LeftPaneSettingsController implements IGuiController, Initializable
     public void setTreeViewFactory(TreeViewFactory treeViewFactory) {
         this.treeViewFactory = treeViewFactory;
     }
+    @Autowired
+    public void setCloudSettingsFactory(CloudSettingsFactory cloudSettingsFactory) {
+        this.cloudSettingsFactory = cloudSettingsFactory;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -46,11 +53,20 @@ public class LeftPaneSettingsController implements IGuiController, Initializable
         tree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null){
                 String value = newValue.getValue().getName();
-                try {
-                    mainController.setCenterBorderContent(SettingsViewFactory.valueOf(value.toUpperCase()).getNode(loaderProvider));
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (!newValue.getParent().getValue().getName().equals("root")){
+                    try {
+                        mainController.setCenterBorderContent(cloudSettingsFactory.getNode(value.toUpperCase().replace(" ","_"), loaderProvider));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        mainController.setCenterBorderContent(SettingsViewFactory.valueOf(value.toUpperCase()).getNode(loaderProvider));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         });
 

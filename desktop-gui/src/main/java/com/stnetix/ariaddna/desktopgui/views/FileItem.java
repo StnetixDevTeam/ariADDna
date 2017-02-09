@@ -12,14 +12,24 @@ import javafx.scene.layout.VBox;
 public class FileItem extends VBox {
     FontAwesomeIconView icon;
     Label fileName;
+    String name;
 
     public FileItem(String icon, String fileName) {
         super();
+        this.name = fileName;
         this.icon = new FontAwesomeIconView(FontAwesomeIcon.FOLDER_ALT);
         this.icon.setStyleClass("file-item-icon");
         this.fileName = new Label(fileName);
         this.getChildren().addAll(this.icon, this.fileName);
-        this.setPrefWidth(60);
-        this.setPadding(new Insets(0, 10, 0, 0));
+        //this.setPrefWidth(90);
+        //this.setPadding(new Insets(0, 30, 0, 0));
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public FontAwesomeIconView getIcon() {
+        return icon;
     }
 }

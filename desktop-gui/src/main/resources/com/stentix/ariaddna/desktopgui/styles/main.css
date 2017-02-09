@@ -63,7 +63,7 @@
     -fx-padding: 15px;
 }
 
-.mainContainer {
+.mainContainer, .scroll-content, .scroll-pane{
     -fx-background-color: white;
 }
 
@@ -73,4 +73,17 @@
 
 .file-item {
 
+}
+.slider .track {
+    -fx-pref-height:5;
+
+}
+
+
+
+.slider .thumb {
+    -fx-pref-height: 20;
+    -fx-pref-width: 5;
+    -fx-fill: #6dcdff;
+    -fx-background-color: #6dcdff;
 }

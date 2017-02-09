@@ -1,6 +1,7 @@
 package com.stnetix.ariaddna.desktopgui.controllers;
 
 import com.stnetix.ariaddna.desktopgui.views.FXMLLoaderProvider;
+import com.stnetix.ariaddna.desktopgui.views.SettingsViewFactory;
 import com.stnetix.ariaddna.desktopgui.views.TreeViewFactory;
 import com.stnetix.ariaddna.desktopgui.views.ViewsFactory;
 import javafx.beans.property.ReadOnlyProperty;
@@ -37,6 +38,7 @@ public class TreeViewLeftPaneController implements IGuiController, Initializable
     @FXML
     void showSettings() throws IOException {
         mainController.setLeftBorderContent(ViewsFactory.LEFT_SETTINGS.getNode(provider));
+        mainController.setCenterBorderContent(SettingsViewFactory.ACCOUNT.getNode(provider));
     }
 
     @Autowired
