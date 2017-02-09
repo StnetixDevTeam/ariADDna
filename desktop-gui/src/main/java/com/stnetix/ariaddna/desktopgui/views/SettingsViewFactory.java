@@ -15,12 +15,12 @@ public enum  SettingsViewFactory {
     ENCRIPTION("Encription", "encriptionSettingsPane.fxml", "Encription managment"),
     FILE_BROWSER("FileBrowser", "fileBrowser.fxml", "File Browser");
 
-    public String name;
-    public String fileName;
-    public String header;
+    private String name;
+    private String fileName;
+    private String header;
 
-    public String fullPath = "/com/stentix/ariaddna/desktopgui/fxmlViews/";
-    public String template = "settingsTemplate.fxml";
+    private String fullPath = "/com/stentix/ariaddna/desktopgui/fxmlViews/";
+    private String template = "settingsTemplate.fxml";
 
     SettingsViewFactory(String name, String fileName, String header){
         this.name = name;

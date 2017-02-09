@@ -1,42 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.AccountSettingsController">
-    <children>
         <VBox layoutX="325.0" layoutY="149.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
             <AnchorPane prefHeight="24.0" prefWidth="750.0">
-               <children>
                   <HBox prefHeight="33.0" prefWidth="214.0" AnchorPane.leftAnchor="20.0">
-                     <children>
                         <Hyperlink styleClass="btn-link" text="Sign In" />
                         <Hyperlink styleClass="btn-link" text="Sign Up" />
                         <Hyperlink styleClass="btn-link" text="Sign Out" />
-                     </children>
                   </HBox>
-               </children>
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
-               <children>
                   <Label layoutX="24.0" layoutY="14.0" styleClass="sub-header" text="Change Password" AnchorPane.leftAnchor="25.0" />
                   <PasswordField layoutX="25.0" layoutY="68.0" />
                   <PasswordField layoutX="25.0" layoutY="120.0" />
                   <Label layoutX="25.0" layoutY="46.0" text="New Password" />
                   <Label layoutX="25.0" layoutY="100.0" text="Confirm New Password" />
                   <Button layoutX="25.0" layoutY="155.0" mnemonicParsing="false" text="Change" />
-               </children>
             </AnchorPane>
-            </children>
         </VBox>
-    </children>
    <stylesheets>
       <URL value="@../styles/main.css" />
       <URL value="@../styles/jmetro.css" />

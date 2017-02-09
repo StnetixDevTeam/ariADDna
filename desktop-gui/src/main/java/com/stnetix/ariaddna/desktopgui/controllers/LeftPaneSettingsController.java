@@ -14,10 +14,10 @@ import java.util.ResourceBundle;
 
 @Component
 public class LeftPaneSettingsController implements IGuiController, Initializable{
-    MainController mainController;
-    FXMLLoaderProvider loaderProvider;
-    TreeViewFactory treeViewFactory;
-    CloudSettingsFactory cloudSettingsFactory;
+    private MainController mainController;
+    private FXMLLoaderProvider loaderProvider;
+    private TreeViewFactory treeViewFactory;
+    private CloudSettingsFactory cloudSettingsFactory;
 
 
 

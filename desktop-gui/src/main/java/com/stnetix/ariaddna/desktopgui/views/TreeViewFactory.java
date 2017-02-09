@@ -2,19 +2,12 @@ package com.stnetix.ariaddna.desktopgui.views;
 
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.util.Callback;
 import org.springframework.stereotype.Component;
 
-import java.util.StringJoiner;
-
-/**
- * Created by Anton on 06.02.2017.
- */
 @Component
 public class TreeViewFactory {
     public TreeView get(){
@@ -129,24 +122,20 @@ public class TreeViewFactory {
     }
 
     private void setTreeCellFactory(TreeView<SimpleTreeElement> tree){
-        tree.setCellFactory(param -> {
-            TreeCell<SimpleTreeElement> cell = new TreeCell<SimpleTreeElement>() {
-                @Override
-                public void updateItem(SimpleTreeElement item, boolean empty) {
-                    super.updateItem(item, empty);
-                    //setDisclosureNode(null);
+        tree.setCellFactory(param -> new TreeCell<SimpleTreeElement>() {
+            @Override
+            public void updateItem(SimpleTreeElement item, boolean empty) {
+                super.updateItem(item, empty);
+                //setDisclosureNode(null);
 
-                    if (empty) {
-                        setText("");
-                        setGraphic(null);
-                    } else {
-                        setText(item.getName()); // appropriate text for item
-                    }
+                if (empty) {
+                    setText("");
+                    setGraphic(null);
+                } else {
+                    setText(item.getName()); // appropriate text for item
                 }
+            }
 
-            };
-
-            return cell ;
         });
 
         tree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {

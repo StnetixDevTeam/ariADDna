@@ -4,8 +4,8 @@ package com.stnetix.ariaddna.desktopgui.views;
  * Created by Anton on 06.02.2017.
  */
 public class SimpleTreeElement {
-    public String name;
-    public int id;
+    private String name;
+    private int id;
 
     public SimpleTreeElement(String name, int id) {
         this.name = name;

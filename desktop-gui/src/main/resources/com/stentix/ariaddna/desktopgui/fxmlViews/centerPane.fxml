@@ -10,56 +10,38 @@
             prefWidth="750.0" styleClass="mainContainer" xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.stnetix.ariaddna.desktopgui.controllers.CenterPaneController">
-   <children>
       <VBox layoutX="325.0" layoutY="149.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
             <AnchorPane prefHeight="75.0" prefWidth="750.0">
-               <children>
                   <HBox prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
                          <AnchorPane prefHeight="75.0" prefWidth="41.0">
-                           <children>
                                <Button id="back-btn" layoutX="19.0" layoutY="38.0" minHeight="-Infinity"
                                        minWidth="-Infinity" mnemonicParsing="false"/>
                                <FontAwesomeIconView glyphName="ANGLE_LEFT" layoutX="21.0" layoutY="60.0" size="36"/>
-                           </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="100.0" prefWidth="178.0">
-                           <children>
                               <Label layoutY="27.0" text="AriADDna">
                                  <font>
                                     <Font name="Verdana" size="36.0" />
                                  </font>
                               </Label>
-                           </children>
                         </AnchorPane>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                           <children>
                               <Label layoutY="41.0" text="\@slonikmak">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
                               </Label>
-                           </children>
                         </AnchorPane>
-                     </children>
                   </HBox>
-               </children>
             </AnchorPane>
             <AnchorPane prefHeight="33.0" prefWidth="750.0">
-               <children>
                    <Label fx:id="historyPath" layoutX="27.0" layoutY="4.0" text="&gt;Account"
                           AnchorPane.leftAnchor="25.0"/>
-               </children>
             </AnchorPane>
              <StackPane fx:id="content" prefHeight="368.0" prefWidth="750.0">
-                 <children>
                      <fx:include source="fileBrowser.fxml"/>
-                 </children>
              </StackPane>
-         </children>
       </VBox>
-   </children>
     <stylesheets>
         <URL value="@../styles/main.css"/>
         <URL value="@../styles/jmetro.css"/>
