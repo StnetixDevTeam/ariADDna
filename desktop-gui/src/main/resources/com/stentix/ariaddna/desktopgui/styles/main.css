@@ -46,13 +46,31 @@
     -fx-border-width: 2px;
     -fx-border-color: -fx-bkg-color-leftpane;
 }
-.check-tree-view, .check-box-tree-item, .tree-cell{
+
+.tree-view, .tree-cell {
     -fx-background-color: none;
     -fx-border-width: 0px;
     -fx-border-color: none;
     -fx-border-style: none;
 }
 
+.tree-cell:selected, .check-box-tree-item:selected {
+    -fx-fill: #008287;
+    -fx-text-fill: #008287;
+}
+
+#sync-tree-view {
+    -fx-padding: 15px;
+}
+
 .mainContainer {
     -fx-background-color: white;
+}
+
+.file-item-icon {
+    -glyph-size: 48px;
+}
+
+.file-item {
+
 }

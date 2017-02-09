@@ -24,6 +24,7 @@ public class LeftPaneSettingsController implements IGuiController, Initializable
     @FXML
     public void showBrowser() throws IOException {
         mainController.setLeftBorderContent(ViewsFactory.LEFT_TREE.getNode(loaderProvider));
+        mainController.setCenterBorderContent(SettingsViewFactory.FILE_BROWSER.getNode(loaderProvider));
     }
 
     @Autowired

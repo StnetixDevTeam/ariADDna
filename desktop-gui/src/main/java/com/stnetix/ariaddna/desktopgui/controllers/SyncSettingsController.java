@@ -39,6 +39,7 @@ public class SyncSettingsController implements IGuiController, Initializable{
                 System.out.println(checkTreeView.getCheckModel().getCheckedItems());
             }
         });
+        checkTreeView.setId("sync-tree-view");
         container.getChildren().add(checkTreeView);
     }
 }
