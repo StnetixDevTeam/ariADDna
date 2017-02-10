@@ -5,7 +5,7 @@
 <AnchorPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="580.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.60"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.stnetix.ariaddna.desktopgui.controllers.EncriptionSettingsController">
+            fx:controller="com.stnetix.ariaddna.desktopgui.controllers.EncryptionSettingsController">
     <stylesheets>
         <URL value="@../styles/main.css"/>
         <URL value="@../styles/jmetro.css"/>

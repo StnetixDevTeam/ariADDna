@@ -5,37 +5,45 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.util.Callback;
 import org.controlsfx.control.GridCell;
 import org.controlsfx.control.GridView;
-import org.controlsfx.control.cell.ColorGridCell;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Random;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for file browser
+ *
+ * @author slonikmak
+ */
 @Component
 public class FileBrowserController implements IGuiController, Initializable {
     @FXML
     private StackPane container;
 
+    /**
+     * Native init method, run after FXML field injection
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         showContent();
     }
 
+
+    /**
+     * Method for generate file items for fileBrowser and add it into container(temporary realization)
+     */
     private void showContent() {
         ObservableList<FileItem> list = FXCollections.observableArrayList();
         GridView<FileItem> myGrid = new GridView<>(list);
-        myGrid.setCellFactory(gridView -> new GridCell<FileItem>(){
+        myGrid.setCellFactory(gridView -> new GridCell<FileItem>() {
             @Override
-            public void updateItem(FileItem item, boolean empty){
-                if (empty||item==null){
+            public void updateItem(FileItem item, boolean empty) {
+                if (empty || item == null) {
                     setText(null);
                     setGraphic(null);
                 } else {
@@ -50,8 +58,6 @@ public class FileBrowserController implements IGuiController, Initializable {
                 new FileItem("icon", "WorkFiles"),
                 new FileItem("icon", "Projects"));
         container.getChildren().add(myGrid);
-
-
     }
 
 }
