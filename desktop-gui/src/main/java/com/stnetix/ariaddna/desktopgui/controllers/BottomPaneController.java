@@ -2,7 +2,11 @@ package com.stnetix.ariaddna.desktopgui.controllers;
 
 import org.springframework.stereotype.Component;
 
-//Bottom pane controller(not used in version 1)
+/**
+ * Controller for bottom pane(not used)
+ *
+ * @author slonikmak
+ */
 @Component
 public class BottomPaneController implements IGuiController {
 }

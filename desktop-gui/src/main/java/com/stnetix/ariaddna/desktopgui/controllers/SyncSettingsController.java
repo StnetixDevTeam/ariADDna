@@ -12,32 +12,42 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller fore synchronization settings page
+ *
+ * @author slonikmak
+ */
 @Component
 public class SyncSettingsController implements IGuiController, Initializable{
     @FXML
     AnchorPane container;
 
+    /**
+     * Native init method.
+     * Create VUFS folders tree view
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        CheckBoxTreeItem<String> root = new CheckBoxTreeItem<String>("Root");
+        //TODO: replace to getting elements from Repository
+        CheckBoxTreeItem<String> root = new CheckBoxTreeItem<>("Root");
         root.setExpanded(true);
         CheckBoxTreeItem<String> folder1 = new CheckBoxTreeItem<>("Folder1");
         folder1.getChildren().addAll(
-                new CheckBoxTreeItem<String>("MyFoto"),
-                new CheckBoxTreeItem<String>("OtherFiles")
+                new CheckBoxTreeItem<>("MyFoto"),
+                new CheckBoxTreeItem<>("OtherFiles")
         );
         root.getChildren().addAll(
                 folder1,
-                new CheckBoxTreeItem<String>("Documents"),
-                new CheckBoxTreeItem<String>("WorkFiles"),
-                new CheckBoxTreeItem<String>("Projects"));
+                new CheckBoxTreeItem<>("Documents"),
+                new CheckBoxTreeItem<>("WorkFiles"),
+                new CheckBoxTreeItem<>("Projects"));
 
         // Create the CheckTreeView with the data
         final CheckTreeView<String> checkTreeView = new CheckTreeView<>(root);
-        checkTreeView.getCheckModel().getCheckedItems().addListener(new ListChangeListener<TreeItem<String>>() {
-            public void onChanged(ListChangeListener.Change<? extends TreeItem<String>> c) {
-                System.out.println(checkTreeView.getCheckModel().getCheckedItems());
-            }
+        checkTreeView.getCheckModel().getCheckedItems().addListener((ListChangeListener<TreeItem<String>>) c -> {
+            System.out.println(checkTreeView.getCheckModel().getCheckedItems());
         });
         checkTreeView.setId("sync-tree-view");
         container.getChildren().add(checkTreeView);

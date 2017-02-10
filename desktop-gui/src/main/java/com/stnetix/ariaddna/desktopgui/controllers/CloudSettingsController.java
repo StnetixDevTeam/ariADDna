@@ -13,7 +13,11 @@ import org.springframework.stereotype.Component;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//
+/**
+ * Controller for each cloud settings page
+ *
+ * @author slonikmak
+ */
 @Component
 public class CloudSettingsController implements IGuiController, Initializable {
     @FXML
@@ -27,11 +31,20 @@ public class CloudSettingsController implements IGuiController, Initializable {
 
     @FXML
     private AnchorPane pieChartPane;
+
+    /**
+     * Native init method
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initChart();
     }
 
+    /**
+     * Generate pipe chart
+     */
     private void initChart() {
         PieChart.Data available = new PieChart.Data("Available", 13);
         PieChart.Data used = new PieChart.Data("Used", 25);

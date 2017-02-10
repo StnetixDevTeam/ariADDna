@@ -6,7 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 /**
- * Created by Oceanos on 09.02.2017.
+ * Simple class for present VUFS item
+ * @author slonikmak
+ * TODO: replace with a real VUFS item class
  */
 public class FileItem extends VBox {
     private FontAwesomeIconView icon;

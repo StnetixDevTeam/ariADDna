@@ -2,7 +2,11 @@ package com.stnetix.ariaddna.desktopgui.controllers;
 
 import org.springframework.stereotype.Component;
 
-//Account settings controller
+/**
+ * Controller for account settings page
+ *
+ * @author slonikmak
+ */
 @Component
 public class AccountSettingsController implements IGuiController {
 }
