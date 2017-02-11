@@ -1,16 +1,11 @@
 package com.stnetix.ariaddna.desktopgui.controllers;
 
 import com.stnetix.ariaddna.desktopgui.views.FXMLLoaderProvider;
+import com.stnetix.ariaddna.desktopgui.views.SettingsViewFactory;
+import com.stnetix.ariaddna.desktopgui.views.TreeViewFactory;
 import com.stnetix.ariaddna.desktopgui.views.ViewsFactory;
-import javafx.beans.property.ReadOnlyProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.css.PseudoClass;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,83 +14,69 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for file browser left pane
+ *
+ * @author slonikmak
+ */
 @Component
 public class TreeViewLeftPaneController implements IGuiController, Initializable {
     MainController mainController;
     FXMLLoaderProvider provider;
+    TreeViewFactory treeViewFactory;
 
     @FXML
     private AnchorPane treeViewContainer;
 
+    /**
+     * Load settings pane into left and center pane
+     * @throws IOException
+     */
     @FXML
-    void hidePane(ActionEvent event) throws IOException {
-
+    void showSettings() throws IOException {
+        mainController.setLeftBorderContent(ViewsFactory.LEFT_SETTINGS.getNode(provider));
+        mainController.setCenterBorderContent(SettingsViewFactory.ACCOUNT.getNode(provider));
     }
 
+    /**
+     * inject MainController
+     * @param mainController
+     */
     @Autowired
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
     }
 
+    /**
+     * inject MFXMLLoaderProvider
+     * @param provider
+     */
     @Autowired
     public void setProvider(FXMLLoaderProvider provider) {
         this.provider = provider;
     }
 
+    /**
+     * inject TreeViewFactory
+     * @param treeViewFactory
+     */
+    @Autowired
+    public void setTreeViewFactory(TreeViewFactory treeViewFactory) {
+        this.treeViewFactory = treeViewFactory;
+    }
+
+    /**
+     * Native init method.
+     * Add tree view VUFS items into left pane
+     * @param location
+     * @param resources
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TreeView<String> tree = new TreeView<>();
-        tree.setShowRoot(false);
-        TreeItem<String> root = new TreeItem<>("");
-        tree.setRoot(root);
-
-        ChangeListener<Boolean> expandedListener = (obs, wasExpanded, isNowExpanded) -> {
-            if (isNowExpanded) {
-                ReadOnlyProperty<?> expandedProperty = (ReadOnlyProperty<?>) obs ;
-                Object itemThatWasJustExpanded = expandedProperty.getBean();
-                for (TreeItem<String> item : tree.getRoot().getChildren()) {
-                    if (item != itemThatWasJustExpanded) {
-                        item.setExpanded(false);
-                    }
-                }
-            }
-        };
-
-        for (int i=1; i<=4; i++) {
-            TreeItem<String> item = new TreeItem<>("Top level "+i);
-            item.expandedProperty().addListener(expandedListener);
-            root.getChildren().add(item);
-            for (int j=1; j<=4; j++) {
-                TreeItem<String> subItem = new TreeItem<>("Sub item "+i+":"+j);
-                item.getChildren().add(subItem);
-            }
-        }
-
-        PseudoClass subElementPseudoClass = PseudoClass.getPseudoClass("sub-tree-item");
-
-        tree.setCellFactory(tv -> {
-            TreeCell<String> cell = new TreeCell<String>() {
-                @Override
-                public void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setDisclosureNode(null);
-
-                    if (empty) {
-                        setText("");
-                        setGraphic(null);
-                    } else {
-                        setText(item); // appropriate text for item
-                    }
-                }
-
-            };
-            cell.treeItemProperty().addListener((obs, oldTreeItem, newTreeItem) -> {
-                cell.pseudoClassStateChanged(subElementPseudoClass,
-                        newTreeItem != null && newTreeItem.getParent() != cell.getTreeView().getRoot());
-            });
-            return cell ;
-        });
-        treeViewContainer.getChildren().add(tree);
+        /*
+         * TODO: replace to getting elements from Repository
+         */
+        treeViewContainer.getChildren().add(treeViewFactory.getSimple());
 
     }
 }

@@ -17,6 +17,11 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
 
+/**
+ * Main class
+ *
+ * @author slonikmak
+ */
 @Component
 public class GuiApp extends Application implements IUi {
 
@@ -24,6 +29,11 @@ public class GuiApp extends Application implements IUi {
     private static ApplicationContext parentCtx;
 
 
+    /**
+     * Native start method
+     * @param primaryStage
+     * @throws Exception
+     */
     public void start(final Stage primaryStage) throws Exception {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
         ctx.register(GuiConfig.class);
@@ -38,20 +48,34 @@ public class GuiApp extends Application implements IUi {
 
     }
 
+    /**
+     * Method for start gui from outside
+     * @param args
+     */
     public void startUi(String[] args){
         Application.launch(this.getClass(), args);
     }
 
+    /**
+     * Method run before close app
+     */
     @PreDestroy
     public void stopUi() {
         Platform.exit();
     }
 
-    //javaFX native init application method
+    /**
+     * JavaFX native init application method
+     */
     public void init(){
 
     }
 
+    /**
+     * Inject parent application context
+     * @param applicationContext parent application context
+     * @throws BeansException
+     */
     @Autowired
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         parentCtx = applicationContext;

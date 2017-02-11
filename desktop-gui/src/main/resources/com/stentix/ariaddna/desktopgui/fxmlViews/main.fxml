@@ -10,13 +10,6 @@
          <bottom>
             <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
          </bottom>
-         <center>
-            <AnchorPane BorderPane.alignment="CENTER">
-               <children>
-                  <fx:include source="centerPane.fxml" />
-               </children>
-            </AnchorPane>
-         </center>
          <left>
              <StackPane fx:id="leftBorder" minWidth="50.0" prefHeight="150.0" BorderPane.alignment="CENTER">
                <children>
@@ -27,6 +20,13 @@
          <bottom>
              <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" BorderPane.alignment="CENTER" />
          </bottom>
+         <center>
+            <StackPane fx:id="centerBorder" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <fx:include source="centerPane.fxml" />
+               </children>
+            </StackPane>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>

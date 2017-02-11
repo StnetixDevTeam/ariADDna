@@ -21,11 +21,69 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 4, 0, 0, 0);
 }
 .fontawesome{
-    -fx-fill: white;
+    -fx-fill: black;
 }
 .tree-file-view .tree-cell {
     -fx-background-color: -fx-bkg-color-leftpane;
     -fx-border-width: 0px;
     -fx-border-style: none;
     -fx-border-color: -fx-bkg-color-leftpane;
+}
+.sub-header {
+    -fx-font-size: 2em;
+}
+.btn-link {
+    -fx-font-size: 1.5em;
+}
+#back-btn {
+    -fx-background-color: none;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 20px;
+}
+.password-field{
+    -fx-border-radius: none;
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-color: -fx-bkg-color-leftpane;
+}
+
+.tree-view, .tree-cell {
+    -fx-background-color: none;
+    -fx-border-width: 0px;
+    -fx-border-color: none;
+    -fx-border-style: none;
+}
+
+.tree-cell:selected, .check-box-tree-item:selected {
+    -fx-fill: #008287;
+    -fx-text-fill: #008287;
+}
+
+#sync-tree-view {
+    -fx-padding: 15px;
+}
+
+.mainContainer, .scroll-content, .scroll-pane{
+    -fx-background-color: white;
+}
+
+.file-item-icon {
+    -glyph-size: 48px;
+}
+
+.file-item {
+
+}
+.slider .track {
+    -fx-pref-height:5;
+
+}
+
+
+
+.slider .thumb {
+    -fx-pref-height: 20;
+    -fx-pref-width: 5;
+    -fx-fill: #6dcdff;
+    -fx-background-color: #6dcdff;
 }
