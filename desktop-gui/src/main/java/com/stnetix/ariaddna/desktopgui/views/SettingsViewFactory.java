@@ -8,6 +8,12 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
+/**
+ * Center pane views factory.
+ * Generate views for center pane of main view
+ *
+ * @author slonikmak
+ */
 public enum  SettingsViewFactory {
     ACCOUNT("Account", "accountSettingsPane.fxml", "AriADDna account management"),
     CLOUDS("Clouds", "cloudsSettingsPane.fxml", "Clouds management"),
@@ -28,6 +34,12 @@ public enum  SettingsViewFactory {
         this.header = header;
     }
 
+    /**
+     * Insert into common template generated page
+     * @param loader
+     * @return Node
+     * @throws IOException
+     */
     public Node getNode(FXMLLoaderProvider loader) throws IOException {
         FXMLLoader fxmlLoader = loader.get(fullPath+template);
         Pane parent = fxmlLoader.load();

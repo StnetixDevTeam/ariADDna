@@ -4,6 +4,11 @@ import javafx.scene.Node;
 
 import java.io.IOException;
 
+/**
+ * Left pane views factory
+ *
+ * @author slonikmak
+ */
 public enum ViewsFactory {
     MAIN("/com/stentix/ariaddna/desktopgui/fxmlViews/main.fxml"),
     LEFT_TREE("/com/stentix/ariaddna/desktopgui/fxmlViews/treeViewLeftPane.fxml"),
@@ -16,6 +21,12 @@ public enum ViewsFactory {
         this.path = path;
     }
 
+    /**
+     *
+     * @param loader
+     * @return node
+     * @throws IOException
+     */
     public Node getNode(FXMLLoaderProvider loader) throws IOException {
         return loader.get(path).load();
     }

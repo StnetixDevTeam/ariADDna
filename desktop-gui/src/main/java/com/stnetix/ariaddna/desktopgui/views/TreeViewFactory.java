@@ -8,9 +8,20 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import org.springframework.stereotype.Component;
 
+/**
+ * Factory for create TreeView of file items
+ * TODO: work with VUFS item
+ *
+ * @author slonikmak
+ */
 @Component
 public class TreeViewFactory {
-    public TreeView get(){
+    /**
+     * temporary method
+     *
+     * @return
+     */
+    public TreeView get() {
         TreeView<String> tree = new TreeView<>();
         tree.setShowRoot(false);
         TreeItem<String> root = new TreeItem<>("");
@@ -19,7 +30,7 @@ public class TreeViewFactory {
         ChangeListener<Boolean> expandedListener = (obs, wasExpanded, isNowExpanded) -> {
             if (isNowExpanded) {
                 System.out.println("expand");
-                ReadOnlyProperty<?> expandedProperty = (ReadOnlyProperty<?>) obs ;
+                ReadOnlyProperty<?> expandedProperty = (ReadOnlyProperty<?>) obs;
                 Object itemThatWasJustExpanded = expandedProperty.getBean();
                 for (TreeItem<String> item : tree.getRoot().getChildren()) {
                     if (item != itemThatWasJustExpanded) {
@@ -29,19 +40,19 @@ public class TreeViewFactory {
             }
         };
 
-        for (int i=1; i<=4; i++) {
-            TreeItem<String> item = new TreeItem<>("Top level "+i);
+        for (int i = 1; i <= 4; i++) {
+            TreeItem<String> item = new TreeItem<>("Top level " + i);
             item.expandedProperty().addListener(expandedListener);
             root.getChildren().add(item);
-            for (int j=1; j<=4; j++) {
-                TreeItem<String> subItem = new TreeItem<>("Sub item "+i+":"+j);
+            for (int j = 1; j <= 4; j++) {
+                TreeItem<String> subItem = new TreeItem<>("Sub item " + i + ":" + j);
                 item.getChildren().add(subItem);
             }
         }
 
         PseudoClass subElementPseudoClass = PseudoClass.getPseudoClass("sub-tree-item");
 
-        tree.setCellFactory(tv -> {
+        tree.setCellFactory((TreeView<String> tv) -> {
             TreeCell<String> cell = new TreeCell<String>() {
                 @Override
                 public void updateItem(String item, boolean empty) {
@@ -61,19 +72,32 @@ public class TreeViewFactory {
                 cell.pseudoClassStateChanged(subElementPseudoClass,
                         newTreeItem != null && newTreeItem.getParent() != cell.getTreeView().getRoot());
             });
-            return cell ;
+            return cell;
         });
 
         return tree;
     }
 
-    private TreeItem<SimpleTreeElement> makeBranch(SimpleTreeElement element, TreeItem<SimpleTreeElement> root){
+    /**
+     * Make branch of element in root element
+     *
+     * @param element inner element
+     * @param root    root element
+     * @return new branch
+     */
+    private TreeItem<SimpleTreeElement> makeBranch(SimpleTreeElement element, TreeItem<SimpleTreeElement> root) {
         TreeItem<SimpleTreeElement> newBranch = new TreeItem<>(element);
         root.getChildren().add(newBranch);
         return newBranch;
     }
 
-    public TreeView<SimpleTreeElement> getSimple(){
+    /**
+     * Generate treeView of file items
+     * TODO: work with VUFS items
+     *
+     * @return tree view
+     */
+    public TreeView<SimpleTreeElement> getSimple() {
         TreeView<SimpleTreeElement> tree = new TreeView<>();
         TreeItem<SimpleTreeElement> root = new TreeItem<>(new SimpleTreeElement("root", 0));
 
@@ -91,13 +115,18 @@ public class TreeViewFactory {
         setTreeCellFactory(tree);
 
 
-
         tree.setShowRoot(false);
         return tree;
 
     }
 
-    public TreeView<SimpleTreeElement> getSettingsTree(){
+    /**
+     * Generate treeView of settings items
+     * TODO: work with Repository
+     *
+     * @return tree view
+     */
+    public TreeView<SimpleTreeElement> getSettingsTree() {
         TreeView<SimpleTreeElement> tree = new TreeView<>();
         TreeItem<SimpleTreeElement> root = new TreeItem<>(new SimpleTreeElement("root", 0));
 
@@ -115,13 +144,17 @@ public class TreeViewFactory {
         setTreeCellFactory(tree);
 
 
-
         tree.setShowRoot(false);
 
         return tree;
     }
 
-    private void setTreeCellFactory(TreeView<SimpleTreeElement> tree){
+    /**
+     * Customizing treeView
+     *
+     * @param tree treeView
+     */
+    private void setTreeCellFactory(TreeView<SimpleTreeElement> tree) {
         tree.setCellFactory(param -> new TreeCell<SimpleTreeElement>() {
             @Override
             public void updateItem(SimpleTreeElement item, boolean empty) {
@@ -132,14 +165,14 @@ public class TreeViewFactory {
                     setText("");
                     setGraphic(null);
                 } else {
-                    setText(item.getName()); // appropriate text for item
+                    setText(item.getName());
                 }
             }
 
         });
 
         tree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null){
+            if (newValue != null) {
                 System.out.println(newValue.getValue());
             }
         });

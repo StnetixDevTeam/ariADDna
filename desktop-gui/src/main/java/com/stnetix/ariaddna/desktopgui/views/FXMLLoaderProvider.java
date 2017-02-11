@@ -16,8 +16,8 @@ public class FXMLLoaderProvider {
     private AnnotationConfigApplicationContext ctx;
 
     /**
-     * Inject
-     * @param ctx
+     * Inject Spring context
+     * @param ctx Spring context
      */
     @Autowired
     public void setCtx(AnnotationConfigApplicationContext ctx) {

@@ -1,7 +1,9 @@
 package com.stnetix.ariaddna.desktopgui.views;
 
 /**
- * Created by Anton on 06.02.2017.
+ * Simple model for create a files tree view
+ * TODO: replace with VUFS item
+ * @author slonikmak
  */
 public class SimpleTreeElement {
     private String name;
