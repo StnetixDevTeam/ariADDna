@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiModel;
  * Describes allocate storage model ot file.
  */
 @ApiModel(description = "Describes allocate storage model ot file.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-08T08:48:32.785Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-13T15:05:22.223Z")
 public class AllocationModel extends AriaddnaObj {
 
   @Override

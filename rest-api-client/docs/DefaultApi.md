@@ -12,7 +12,7 @@ Method | HTTP request | Description
 [**deleteUser**](DefaultApi.md#deleteUser) | **DELETE** /users/{userUuid} | 
 [**findUserByUuid**](DefaultApi.md#findUserByUuid) | **GET** /users/{userUuid} | 
 [**getCloudStatisticSet**](DefaultApi.md#getCloudStatisticSet) | **GET** /stat/vufs/{userUuid} | 
-[**getDiffVUFS**](DefaultApi.md#getDiffVUFS) | **GET** /vufs/snap/diff/{userUuid}/{year}/{month}/{day}/{hour}/{minute}/{second}/ | 
+[**getDiffVUFS**](DefaultApi.md#getDiffVUFS) | **GET** /vufs/snap/diff/{userUuid}/{dateTime} | 
 [**getExternalCloudAccounts**](DefaultApi.md#getExternalCloudAccounts) | **GET** /users/{userUuid}/clouds | 
 [**getHealthCheckStat**](DefaultApi.md#getHealthCheckStat) | **GET** /stat/vufs/health/{userUuid} | 
 [**getVUFS**](DefaultApi.md#getVUFS) | **GET** /vufs/snap/{userUuid} | 
@@ -384,7 +384,7 @@ No authorization required
 
 <a name="getDiffVUFS"></a>
 # **getDiffVUFS**
-> Vufs getDiffVUFS(userUuid, year, month, day, hour, minute, second)
+> Vufs getDiffVUFS(userUuid, dateTime)
 
 
 
@@ -399,14 +399,9 @@ Allows to get difference of previous snapshot and actual.
 
 DefaultApi apiInstance = new DefaultApi();
 String userUuid = "userUuid_example"; // String | Current user UUID.
-Integer year = 56; // Integer | Year of fromDateTime of current VUFS snapshot
-Integer month = 56; // Integer | Month of fromDateTime of current VUFS snapshot
-Integer day = 56; // Integer | Day of fromDateTime of current VUFS snapshot
-Integer hour = 56; // Integer | Hour of fromDateTime of current VUFS snapshot
-Integer minute = 56; // Integer | Minute of fromDateTime of current VUFS snapshot
-Integer second = 56; // Integer | Second of fromDateTime of current VUFS snapshot
+Long dateTime = 789L; // Long | FromDateTime of current VUFS snapshot
 try {
-    Vufs result = apiInstance.getDiffVUFS(userUuid, year, month, day, hour, minute, second);
+    Vufs result = apiInstance.getDiffVUFS(userUuid, dateTime);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling DefaultApi#getDiffVUFS");
@@ -419,12 +414,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **userUuid** | **String**| Current user UUID. |
- **year** | **Integer**| Year of fromDateTime of current VUFS snapshot |
- **month** | **Integer**| Month of fromDateTime of current VUFS snapshot |
- **day** | **Integer**| Day of fromDateTime of current VUFS snapshot |
- **hour** | **Integer**| Hour of fromDateTime of current VUFS snapshot |
- **minute** | **Integer**| Minute of fromDateTime of current VUFS snapshot |
- **second** | **Integer**| Second of fromDateTime of current VUFS snapshot |
+ **dateTime** | **Long**| FromDateTime of current VUFS snapshot |
 
 ### Return type
 

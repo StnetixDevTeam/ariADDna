@@ -70,18 +70,19 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
+import com.stnetix.ariaddna.client.auth.ApiKeyAuth;
+import com.stnetix.ariaddna.client.auth.Authentication;
+import com.stnetix.ariaddna.client.auth.HttpBasicAuth;
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import okio.BufferedSink;
 import okio.Okio;
 
-import com.stnetix.ariaddna.client.auth.Authentication;
-import com.stnetix.ariaddna.client.auth.HttpBasicAuth;
-import com.stnetix.ariaddna.client.auth.ApiKeyAuth;
 import com.stnetix.ariaddna.client.auth.OAuth;
 
 public class ApiClient {
     public static final double JAVA_VERSION;
     private static final AriaddnaLogger LOGGER;
+
     static {
         JAVA_VERSION = Double.parseDouble(System.getProperty("java.specification.version"));
         LOGGER = AriaddnaLogger.getLogger(ApiClient.class);
@@ -92,8 +93,8 @@ public class ApiClient {
      */
     public static final String LENIENT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
-    // String basePath = "http://api.ariaddna.stnetix.com/v1";
-    private String basePath = "http://localhost:8080/v1";
+    //private String basePath = "https://api.ariaddna.stnetix.com/v1";
+    private String basePath = "http://127.0.0.1:8080/v1";
     private boolean lenientOnJson = false;
     private boolean debugging = false;
     private Map<String, String> defaultHeaderMap = new HashMap<String, String>();

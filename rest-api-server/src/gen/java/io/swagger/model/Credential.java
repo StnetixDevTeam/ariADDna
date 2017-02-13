@@ -21,7 +21,7 @@ import io.swagger.model.AriaddnaObj;
  * Credential for a basic user/password authentication.
  */
 @ApiModel(description = "Credential for a basic user/password authentication.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-13T15:04:21.309Z")
 public class Credential extends AriaddnaObj  {
 
   @Override

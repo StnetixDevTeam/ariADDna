@@ -21,7 +21,7 @@ import io.swagger.model.AriaddnaObj;
  * Contain information about initial file allocation stategy.
  */
 @ApiModel(description = "Contain information about initial file allocation stategy.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-13T15:04:21.309Z")
 public class InitialAllocationModel extends AriaddnaObj  {
 
   @Override

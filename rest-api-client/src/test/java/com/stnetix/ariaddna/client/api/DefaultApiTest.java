@@ -174,13 +174,8 @@ public class DefaultApiTest {
     @Test
     public void getDiffVUFSTest() throws ApiException {
         String userUuid = "userUuid";
-        Integer year = 2016;
-        Integer month = 2;
-        Integer day = 8;
-        Integer hour = 11;
-        Integer minute = 52;
-        Integer second = 00;
-        Vufs response = api.getDiffVUFS(userUuid, year, month, day, hour, minute, second);
+        Long dateTime = System.currentTimeMillis();
+        Vufs response = api.getDiffVUFS(userUuid, dateTime);
 
         // TODO: test validations
     }

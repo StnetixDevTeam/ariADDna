@@ -14,12 +14,16 @@
 package com.stnetix.ariaddna.client.api;
 
 import com.stnetix.ariaddna.client.ApiCallback;
-import com.stnetix.ariaddna.client.ApiClient;
 import com.stnetix.ariaddna.client.ApiException;
-import com.stnetix.ariaddna.client.ApiResponse;
 import com.stnetix.ariaddna.client.Configuration;
-import com.stnetix.ariaddna.client.Pair;
 import com.stnetix.ariaddna.client.ProgressRequestBody;
+import com.stnetix.ariaddna.client.model.CloudSetPages;
+import com.stnetix.ariaddna.client.model.InitialAllocationModel;
+import com.stnetix.ariaddna.client.model.StatisticSet;
+import com.stnetix.ariaddna.client.model.Vufs;
+import com.stnetix.ariaddna.client.ApiClient;
+import com.stnetix.ariaddna.client.ApiResponse;
+import com.stnetix.ariaddna.client.Pair;
 import com.stnetix.ariaddna.client.ProgressResponseBody;
 
 import com.google.gson.reflect.TypeToken;
@@ -28,14 +32,10 @@ import java.io.IOException;
 
 
 import com.stnetix.ariaddna.client.model.Cloud;
-import com.stnetix.ariaddna.client.model.CloudSetPages;
 import com.stnetix.ariaddna.client.model.Credential;
-import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
-import com.stnetix.ariaddna.client.model.InitialAllocationModel;
 import com.stnetix.ariaddna.client.model.Session;
-import com.stnetix.ariaddna.client.model.StatisticSet;
 import com.stnetix.ariaddna.client.model.User;
-import com.stnetix.ariaddna.client.model.Vufs;
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -1015,18 +1015,13 @@ public class DefaultApi {
         return call;
     }
     /* Build call for getDiffVUFS */
-    private com.squareup.okhttp.Call getDiffVUFSCall(String userUuid, Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getDiffVUFSCall(String userUuid, Long dateTime, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // create path and map variables
-        String localVarPath = "/vufs/snap/diff/{userUuid}/{year}/{month}/{day}/{hour}/{minute}/{second}/".replaceAll("\\{format\\}","json")
+        String localVarPath = "/vufs/snap/diff/{userUuid}/{dateTime}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()))
-        .replaceAll("\\{" + "year" + "\\}", apiClient.escapeString(year.toString()))
-        .replaceAll("\\{" + "month" + "\\}", apiClient.escapeString(month.toString()))
-        .replaceAll("\\{" + "day" + "\\}", apiClient.escapeString(day.toString()))
-        .replaceAll("\\{" + "hour" + "\\}", apiClient.escapeString(hour.toString()))
-        .replaceAll("\\{" + "minute" + "\\}", apiClient.escapeString(minute.toString()))
-        .replaceAll("\\{" + "second" + "\\}", apiClient.escapeString(second.toString()));
+        .replaceAll("\\{" + "dateTime" + "\\}", apiClient.escapeString(dateTime.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1063,45 +1058,20 @@ public class DefaultApi {
     }
     
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getDiffVUFSValidateBeforeCall(String userUuid, Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getDiffVUFSValidateBeforeCall(String userUuid, Long dateTime, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
             throw new ApiException("Missing the required parameter 'userUuid' when calling getDiffVUFS(Async)");
         }
         
-        // verify the required parameter 'year' is set
-        if (year == null) {
-            throw new ApiException("Missing the required parameter 'year' when calling getDiffVUFS(Async)");
-        }
-        
-        // verify the required parameter 'month' is set
-        if (month == null) {
-            throw new ApiException("Missing the required parameter 'month' when calling getDiffVUFS(Async)");
-        }
-        
-        // verify the required parameter 'day' is set
-        if (day == null) {
-            throw new ApiException("Missing the required parameter 'day' when calling getDiffVUFS(Async)");
-        }
-        
-        // verify the required parameter 'hour' is set
-        if (hour == null) {
-            throw new ApiException("Missing the required parameter 'hour' when calling getDiffVUFS(Async)");
-        }
-        
-        // verify the required parameter 'minute' is set
-        if (minute == null) {
-            throw new ApiException("Missing the required parameter 'minute' when calling getDiffVUFS(Async)");
-        }
-        
-        // verify the required parameter 'second' is set
-        if (second == null) {
-            throw new ApiException("Missing the required parameter 'second' when calling getDiffVUFS(Async)");
+        // verify the required parameter 'dateTime' is set
+        if (dateTime == null) {
+            throw new ApiException("Missing the required parameter 'dateTime' when calling getDiffVUFS(Async)");
         }
         
         
-        com.squareup.okhttp.Call call = getDiffVUFSCall(userUuid, year, month, day, hour, minute, second, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getDiffVUFSCall(userUuid, dateTime, progressListener, progressRequestListener);
         return call;
 
         
@@ -1114,18 +1084,12 @@ public class DefaultApi {
      * 
      * Allows to get difference of previous snapshot and actual.
      * @param userUuid Current user UUID. (required)
-     * @param year Year of fromDateTime of current VUFS snapshot (required)
-     * @param month Month of fromDateTime of current VUFS snapshot (required)
-     * @param day Day of fromDateTime of current VUFS snapshot (required)
-     * @param hour Hour of fromDateTime of current VUFS snapshot (required)
-     * @param minute Minute of fromDateTime of current VUFS snapshot (required)
-     * @param second Second of fromDateTime of current VUFS snapshot (required)
+     * @param dateTime FromDateTime of current VUFS snapshot (required)
      * @return Vufs
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Vufs getDiffVUFS(String userUuid, Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) throws ApiException {
-        ApiResponse<Vufs> resp = getDiffVUFSWithHttpInfo(userUuid, year, month, day, hour, minute, second);
-        LOGGER.info("Method {getDiffVUFS} was called, response code is {}", resp.getStatusCode());
+    public Vufs getDiffVUFS(String userUuid, Long dateTime) throws ApiException {
+        ApiResponse<Vufs> resp = getDiffVUFSWithHttpInfo(userUuid, dateTime);
         return resp.getData();
     }
 
@@ -1133,17 +1097,12 @@ public class DefaultApi {
      * 
      * Allows to get difference of previous snapshot and actual.
      * @param userUuid Current user UUID. (required)
-     * @param year Year of fromDateTime of current VUFS snapshot (required)
-     * @param month Month of fromDateTime of current VUFS snapshot (required)
-     * @param day Day of fromDateTime of current VUFS snapshot (required)
-     * @param hour Hour of fromDateTime of current VUFS snapshot (required)
-     * @param minute Minute of fromDateTime of current VUFS snapshot (required)
-     * @param second Second of fromDateTime of current VUFS snapshot (required)
+     * @param dateTime FromDateTime of current VUFS snapshot (required)
      * @return ApiResponse&lt;Vufs&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Vufs> getDiffVUFSWithHttpInfo(String userUuid, Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second) throws ApiException {
-        com.squareup.okhttp.Call call = getDiffVUFSValidateBeforeCall(userUuid, year, month, day, hour, minute, second, null, null);
+    public ApiResponse<Vufs> getDiffVUFSWithHttpInfo(String userUuid, Long dateTime) throws ApiException {
+        com.squareup.okhttp.Call call = getDiffVUFSValidateBeforeCall(userUuid, dateTime, null, null);
         Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -1152,17 +1111,12 @@ public class DefaultApi {
      *  (asynchronously)
      * Allows to get difference of previous snapshot and actual.
      * @param userUuid Current user UUID. (required)
-     * @param year Year of fromDateTime of current VUFS snapshot (required)
-     * @param month Month of fromDateTime of current VUFS snapshot (required)
-     * @param day Day of fromDateTime of current VUFS snapshot (required)
-     * @param hour Hour of fromDateTime of current VUFS snapshot (required)
-     * @param minute Minute of fromDateTime of current VUFS snapshot (required)
-     * @param second Second of fromDateTime of current VUFS snapshot (required)
+     * @param dateTime FromDateTime of current VUFS snapshot (required)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getDiffVUFSAsync(String userUuid, Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, final ApiCallback<Vufs> callback) throws ApiException {
+    public com.squareup.okhttp.Call getDiffVUFSAsync(String userUuid, Long dateTime, final ApiCallback<Vufs> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1183,7 +1137,7 @@ public class DefaultApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getDiffVUFSValidateBeforeCall(userUuid, year, month, day, hour, minute, second, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = getDiffVUFSValidateBeforeCall(userUuid, dateTime, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;

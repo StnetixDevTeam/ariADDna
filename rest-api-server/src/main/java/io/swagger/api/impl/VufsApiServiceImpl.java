@@ -17,10 +17,10 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-13T15:04:21.309Z")
 public class VufsApiServiceImpl extends VufsApiService {
     @Override
-    public Response getDiffVUFS(String userUuid, Integer year, Integer month, Integer day, Integer hour, Integer minute, Integer second, SecurityContext securityContext) throws NotFoundException {
+    public Response getDiffVUFS(String userUuid, Long dateTime, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }

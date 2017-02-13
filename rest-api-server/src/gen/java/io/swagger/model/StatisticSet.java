@@ -26,7 +26,7 @@ import java.util.List;
  * Contain set of statistic information about API object.
  */
 @ApiModel(description = "Contain set of statistic information about API object.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-13T15:04:21.309Z")
 public class StatisticSet   {
   @JsonProperty("statisticSet")
   private List<Statistic> statisticSet = new ArrayList<Statistic>();

@@ -28,12 +28,12 @@ import javax.ws.rs.*;
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 @io.swagger.annotations.Api(description = "the vufs API")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-08T08:47:23.330Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-13T15:04:21.309Z")
 public class VufsApi  {
    private final VufsApiService delegate = VufsApiServiceFactory.getVufsApi();
 
     @GET
-    @Path("/snap/diff/{userUuid}/{year}/{month}/{day}/{hour}/{minute}/{second}/")
+    @Path("/snap/diff/{userUuid}/{dateTime}")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "", notes = "Allows to get difference of previous snapshot and actual.", response = Vufs.class, tags={  })
@@ -44,15 +44,10 @@ public class VufsApi  {
         
         @io.swagger.annotations.ApiResponse(code = 200, message = "Unexpected error.", response = Vufs.class) })
     public Response getDiffVUFS(@ApiParam(value = "Current user UUID.",required=true) @PathParam("userUuid") String userUuid
-,@ApiParam(value = "Year of fromDateTime of current VUFS snapshot",required=true) @PathParam("year") Integer year
-,@ApiParam(value = "Month of fromDateTime of current VUFS snapshot",required=true) @PathParam("month") Integer month
-,@ApiParam(value = "Day of fromDateTime of current VUFS snapshot",required=true) @PathParam("day") Integer day
-,@ApiParam(value = "Hour of fromDateTime of current VUFS snapshot",required=true) @PathParam("hour") Integer hour
-,@ApiParam(value = "Minute of fromDateTime of current VUFS snapshot",required=true) @PathParam("minute") Integer minute
-,@ApiParam(value = "Second of fromDateTime of current VUFS snapshot",required=true) @PathParam("second") Integer second
+,@ApiParam(value = "FromDateTime of current VUFS snapshot",required=true) @PathParam("dateTime") Long dateTime
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.getDiffVUFS(userUuid,year,month,day,hour,minute,second,securityContext);
+        return delegate.getDiffVUFS(userUuid,dateTime,securityContext);
     }
     @GET
     @Path("/snap/{userUuid}")

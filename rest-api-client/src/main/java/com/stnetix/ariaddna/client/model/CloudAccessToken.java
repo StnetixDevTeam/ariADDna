@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiModel;
  * Stands for an external cloud access token. For more info see https://tools.ietf.org/html/draft-ietf-oauth-v2-31.
  */
 @ApiModel(description = "Stands for an external cloud access token. For more info see https://tools.ietf.org/html/draft-ietf-oauth-v2-31.")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-08T08:48:32.785Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-02-13T15:05:22.223Z")
 public class CloudAccessToken extends AriaddnaObj {
 
   @Override
