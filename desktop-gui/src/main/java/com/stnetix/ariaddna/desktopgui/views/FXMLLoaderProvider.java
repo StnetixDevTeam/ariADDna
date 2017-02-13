@@ -5,10 +5,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
 
+/**
+ * FXML loader provider
+ * create custom FXML loader from Spring context
+ *
+ * @author slonikmak
+ */
 @Component
 public class FXMLLoaderProvider {
     private AnnotationConfigApplicationContext ctx;
 
+    /**
+     * Inject Spring context
+     * @param ctx Spring context
+     */
     @Autowired
     public void setCtx(AnnotationConfigApplicationContext ctx) {
         this.ctx = ctx;

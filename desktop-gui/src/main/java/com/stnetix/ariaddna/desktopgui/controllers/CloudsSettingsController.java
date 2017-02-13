@@ -3,10 +3,10 @@ package com.stnetix.ariaddna.desktopgui.controllers;
 import org.springframework.stereotype.Component;
 
 /**
- * Controller for bottom pane(not used)
+ * Controller for common clouds settings
  *
  * @author slonikmak
  */
 @Component
-public class BottomPaneController implements IGuiController {
+public class CloudsSettingsController implements IGuiController {
 }
