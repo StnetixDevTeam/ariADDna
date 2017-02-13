@@ -16,7 +16,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2016-12-26T14:00:48.377Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-13T15:04:21.309Z")
 public abstract class CloudsApiService {
     public abstract Response addExternalCloudAccount(Cloud cloud,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteExternalCloudAccount(String cloudUuid,SecurityContext securityContext) throws NotFoundException;

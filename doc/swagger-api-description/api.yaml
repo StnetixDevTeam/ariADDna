@@ -270,7 +270,7 @@ paths:
           schema:
             $ref: '#/definitions/ErrorModel'
 
-  /vufs/snap/diff/{userUuid}/{lastCreationTime}:
+  /vufs/snap/diff/{userUuid}/{dateTime}:
     get:
       description: Allows to get difference of previous snapshot and actual.
       operationId: getDiffVUFS
@@ -282,11 +282,11 @@ paths:
           type: string
           format: uuid
         - in: path
-          name: lastCreationTime
-          description: Parametr fromDateTime of current VUFS snapshot
+          name: dateTime
+          description: FromDateTime of current VUFS snapshot
           required: true
-          type: string
-          format: date-time
+          type: integer
+          format: int64
       responses:
         '200':
           description: Difference VUFS snapshot of current user.
@@ -498,8 +498,8 @@ definitions:
         $ref: '#/definitions/User'
       loginTime:
         description: Time of creation of user's session.
-        type: string
-        format: date-time
+        type: integer
+        format: int64
     required:
       - user
       - loginTime
@@ -591,13 +591,13 @@ definitions:
       - $ref: '#/definitions/AriaddnaObj'
     properties:
       fromDateTime:
-        description: Created date of snapshot.
-        type: string
-        format: date-time
+        description: Created date of snapshot in milliseconds.
+        type: integer
+        format: int64
       toDateTime:
-        description: Deactivation date of snapshot.
-        type: string
-        format: date-time
+        description: Deactivation date of snapshot in milliseconds.
+        type: integer
+        format: int64
       owner:
         description: Owner of this snapshot.
         $ref: '#/definitions/User'
