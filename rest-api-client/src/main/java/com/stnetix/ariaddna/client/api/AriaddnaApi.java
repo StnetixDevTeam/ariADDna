@@ -43,16 +43,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultApi {
+public class AriaddnaApi {
     private ApiClient apiClient;
 
-    private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(DefaultApi.class);
+    private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(AriaddnaApi.class);
 
-    public DefaultApi() {
+    public AriaddnaApi() {
         this(Configuration.getDefaultApiClient());
     }
 
-    public DefaultApi(ApiClient apiClient) {
+    public AriaddnaApi(ApiClient apiClient) {
         this.apiClient = apiClient;
     }
 
