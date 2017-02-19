@@ -23,11 +23,15 @@ consumes:
   - application/json
 produces:
   - application/json
+tags:
+  - name: Ariaddna
 
 paths:
   /users:
   #Create a new user.
     post:
+      tags:
+        - Ariaddna
       description: Allows one to create a new user.
       operationId: addUser
       parameters:
@@ -54,6 +58,8 @@ paths:
   /users/{userUuid}:
   #Get user by UUID
     get:
+      tags:
+        - Ariaddna
       description: This operation allows one to get back information about certain user providing his UUID as a path parameter.
       operationId: findUserByUuid
       parameters:
@@ -79,6 +85,8 @@ paths:
 
   #Change user password.
     put:
+      tags:
+        - Ariaddna
       description: Changing user password.
       operationId: changeUserPassword
       parameters:
@@ -107,6 +115,8 @@ paths:
 
   #Delete user by UUID.
     delete:
+      tags:
+        - Ariaddna
       description: Deleting user.
       operationId: deleteUser
       parameters:
@@ -129,6 +139,8 @@ paths:
 
   /users/{userUuid}/clouds:
     get:
+      tags:
+        - Ariaddna
       description: Returns a list of clouds which a certain user has connected to his ariADDna account.
       operationId: getExternalCloudAccounts
       parameters:
@@ -155,6 +167,8 @@ paths:
   /auth:
   #Create new user session.
     post:
+      tags:
+        - Ariaddna
       description: Creating new user session.
       operationId: authUser
       parameters:
@@ -181,6 +195,8 @@ paths:
   /auth/{uuid}:
   #Logout user.
     put:
+      tags:
+        - Ariaddna
       description: Closing user session.
       operationId: logoutSession
       parameters:
@@ -203,6 +219,8 @@ paths:
 
   /clouds:
     post:
+      tags:
+        - Ariaddna
       description: Allows one to add an external cloud account to an existing ariADDna's user. The User MUST be already registered at the cloud service to be added.
       operationId: addExternalCloudAccount
       parameters:
@@ -227,6 +245,8 @@ paths:
 
   /clouds/{cloudUuid}:
     delete:
+      tags:
+        - Ariaddna
       description: Allows to delete user's external cloud account.
       operationId: deleteExternalCloudAccount
       parameters:
@@ -247,6 +267,8 @@ paths:
 
   /vufs/snap/{userUuid}:
     get:
+      tags:
+        - Ariaddna
       description: Allows to get snapshot vufs.
       operationId: getVUFS
       parameters:
@@ -272,6 +294,8 @@ paths:
 
   /vufs/snap/diff/{userUuid}/{dateTime}:
     get:
+      tags:
+        - Ariaddna
       description: Allows to get difference of previous snapshot and actual.
       operationId: getDiffVUFS
       parameters:
@@ -303,6 +327,8 @@ paths:
 
   /vufs/snap/diff/{userUuid}:
     post:
+      tags:
+        - Ariaddna
       description: Allows to send changes in local file storage to server with empty Allocation model and as response get Vufs object with Allocation model.
       operationId: sendChangesInLFS
       parameters:
@@ -334,6 +360,8 @@ paths:
 
   /vufs/allocation/{userUuid}:
     post:
+      tags:
+        - Ariaddna
       description: Allows to post file allocate strategy from client to server.
       operationId: postAllocateModel
       parameters:
@@ -361,6 +389,8 @@ paths:
 
   /stat/vufs/{userUuid}:
     post:
+      tags:
+        - Ariaddna
       description: Allows to post statistic from client to server about clouds.
       operationId: postCloudStatSet
       parameters:
@@ -385,6 +415,8 @@ paths:
             $ref: '#/definitions/ErrorModel'
 
     get:
+      tags:
+        - Ariaddna
       description: Allows to get statistic object about clouds.
       operationId: getCloudStatisticSet
       parameters:
@@ -410,6 +442,8 @@ paths:
 
   /stat/vufs/health/{userUuid}:
     get:
+      tags:
+        - Ariaddna
       description: Allows to get health-check statistic about users Clouds.
       operationId: getHealthCheckStat
       parameters:
