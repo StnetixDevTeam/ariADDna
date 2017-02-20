@@ -17,7 +17,6 @@ import com.stnetix.ariaddna.client.ApiException;
 import com.stnetix.ariaddna.client.model.Cloud;
 import com.stnetix.ariaddna.client.model.CloudSetPages;
 import com.stnetix.ariaddna.client.model.Credential;
-import org.joda.time.DateTime;
 import com.stnetix.ariaddna.client.model.InitialAllocationModel;
 import com.stnetix.ariaddna.client.model.Session;
 import com.stnetix.ariaddna.client.model.StatisticSet;
@@ -28,12 +27,12 @@ import org.junit.Test;
 import org.junit.Ignore;
 
 /**
- * API tests for DefaultApi
+ * API tests for AriaddnaApi
  */
 @Ignore
-public class DefaultApiTest {
+public class AriaddnaApiTest {
 
-    private final DefaultApi api = new DefaultApi();
+    private final AriaddnaApi api = new AriaddnaApi();
 
     
     /**

@@ -1,25 +1,25 @@
-# DefaultApi
+# AriaddnaApi
 
 All URIs are relative to *https://api.ariaddna.stnetix.com/v1*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addExternalCloudAccount**](DefaultApi.md#addExternalCloudAccount) | **POST** /clouds | 
-[**addUser**](DefaultApi.md#addUser) | **POST** /users | 
-[**authUser**](DefaultApi.md#authUser) | **POST** /auth | 
-[**changeUserPassword**](DefaultApi.md#changeUserPassword) | **PUT** /users/{userUuid} | 
-[**deleteExternalCloudAccount**](DefaultApi.md#deleteExternalCloudAccount) | **DELETE** /clouds/{cloudUuid} | 
-[**deleteUser**](DefaultApi.md#deleteUser) | **DELETE** /users/{userUuid} | 
-[**findUserByUuid**](DefaultApi.md#findUserByUuid) | **GET** /users/{userUuid} | 
-[**getCloudStatisticSet**](DefaultApi.md#getCloudStatisticSet) | **GET** /stat/vufs/{userUuid} | 
-[**getDiffVUFS**](DefaultApi.md#getDiffVUFS) | **GET** /vufs/snap/diff/{userUuid}/{dateTime} | 
-[**getExternalCloudAccounts**](DefaultApi.md#getExternalCloudAccounts) | **GET** /users/{userUuid}/clouds | 
-[**getHealthCheckStat**](DefaultApi.md#getHealthCheckStat) | **GET** /stat/vufs/health/{userUuid} | 
-[**getVUFS**](DefaultApi.md#getVUFS) | **GET** /vufs/snap/{userUuid} | 
-[**logoutSession**](DefaultApi.md#logoutSession) | **PUT** /auth/{uuid} | 
-[**postAllocateModel**](DefaultApi.md#postAllocateModel) | **POST** /vufs/allocation/{userUuid} | 
-[**postCloudStatSet**](DefaultApi.md#postCloudStatSet) | **POST** /stat/vufs/{userUuid} | 
-[**sendChangesInLFS**](DefaultApi.md#sendChangesInLFS) | **POST** /vufs/snap/diff/{userUuid} | 
+[**addExternalCloudAccount**](AriaddnaApi.md#addExternalCloudAccount) | **POST** /clouds | 
+[**addUser**](AriaddnaApi.md#addUser) | **POST** /users | 
+[**authUser**](AriaddnaApi.md#authUser) | **POST** /auth | 
+[**changeUserPassword**](AriaddnaApi.md#changeUserPassword) | **PUT** /users/{userUuid} | 
+[**deleteExternalCloudAccount**](AriaddnaApi.md#deleteExternalCloudAccount) | **DELETE** /clouds/{cloudUuid} | 
+[**deleteUser**](AriaddnaApi.md#deleteUser) | **DELETE** /users/{userUuid} | 
+[**findUserByUuid**](AriaddnaApi.md#findUserByUuid) | **GET** /users/{userUuid} | 
+[**getCloudStatisticSet**](AriaddnaApi.md#getCloudStatisticSet) | **GET** /stat/vufs/{userUuid} | 
+[**getDiffVUFS**](AriaddnaApi.md#getDiffVUFS) | **GET** /vufs/snap/diff/{userUuid}/{dateTime} | 
+[**getExternalCloudAccounts**](AriaddnaApi.md#getExternalCloudAccounts) | **GET** /users/{userUuid}/clouds | 
+[**getHealthCheckStat**](AriaddnaApi.md#getHealthCheckStat) | **GET** /stat/vufs/health/{userUuid} | 
+[**getVUFS**](AriaddnaApi.md#getVUFS) | **GET** /vufs/snap/{userUuid} | 
+[**logoutSession**](AriaddnaApi.md#logoutSession) | **PUT** /auth/{uuid} | 
+[**postAllocateModel**](AriaddnaApi.md#postAllocateModel) | **POST** /vufs/allocation/{userUuid} | 
+[**postCloudStatSet**](AriaddnaApi.md#postCloudStatSet) | **POST** /stat/vufs/{userUuid} | 
+[**sendChangesInLFS**](AriaddnaApi.md#sendChangesInLFS) | **POST** /vufs/snap/diff/{userUuid} | 
 
 
 <a name="addExternalCloudAccount"></a>
@@ -34,16 +34,16 @@ Allows one to add an external cloud account to an existing ariADDna&#39;s user. 
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 Cloud cloud = new Cloud(); // Cloud | A required information about an external cloud service that a user wants to include to his ariADDna.
 try {
     Cloud result = apiInstance.addExternalCloudAccount(cloud);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#addExternalCloudAccount");
+    System.err.println("Exception when calling AriaddnaApi#addExternalCloudAccount");
     e.printStackTrace();
 }
 ```
@@ -79,16 +79,16 @@ Allows one to create a new user.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 User user = new User(); // User | A new User-object containing all specific information that makes user profile unique.
 try {
     User result = apiInstance.addUser(user);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#addUser");
+    System.err.println("Exception when calling AriaddnaApi#addUser");
     e.printStackTrace();
 }
 ```
@@ -124,16 +124,16 @@ Creating new user session.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 Credential user = new Credential(); // Credential | Authorization user credential.
 try {
     Session result = apiInstance.authUser(user);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#authUser");
+    System.err.println("Exception when calling AriaddnaApi#authUser");
     e.printStackTrace();
 }
 ```
@@ -169,16 +169,16 @@ Changing user password.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | UUID of user to fetch.
 User user = new User(); // User | Changed user.
 try {
     apiInstance.changeUserPassword(userUuid, user);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#changeUserPassword");
+    System.err.println("Exception when calling AriaddnaApi#changeUserPassword");
     e.printStackTrace();
 }
 ```
@@ -215,16 +215,16 @@ Allows to delete user&#39;s external cloud account.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String cloudUuid = "cloudUuid_example"; // String | An external cloud identifier which user has inside his profile. Allows to delete external cloud profile.
 try {
     String result = apiInstance.deleteExternalCloudAccount(cloudUuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#deleteExternalCloudAccount");
+    System.err.println("Exception when calling AriaddnaApi#deleteExternalCloudAccount");
     e.printStackTrace();
 }
 ```
@@ -260,15 +260,15 @@ Deleting user.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | UUID of user to delete.
 try {
     apiInstance.deleteUser(userUuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#deleteUser");
+    System.err.println("Exception when calling AriaddnaApi#deleteUser");
     e.printStackTrace();
 }
 ```
@@ -304,16 +304,16 @@ This operation allows one to get back information about certain user providing h
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | The UUID of a user to fetch.
 try {
     User result = apiInstance.findUserByUuid(userUuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#findUserByUuid");
+    System.err.println("Exception when calling AriaddnaApi#findUserByUuid");
     e.printStackTrace();
 }
 ```
@@ -349,16 +349,16 @@ Allows to get statistic object about clouds.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | User UUID.
 try {
     StatisticSet result = apiInstance.getCloudStatisticSet(userUuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#getCloudStatisticSet");
+    System.err.println("Exception when calling AriaddnaApi#getCloudStatisticSet");
     e.printStackTrace();
 }
 ```
@@ -394,17 +394,17 @@ Allows to get difference of previous snapshot and actual.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | Current user UUID.
 Long dateTime = 789L; // Long | FromDateTime of current VUFS snapshot
 try {
     Vufs result = apiInstance.getDiffVUFS(userUuid, dateTime);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#getDiffVUFS");
+    System.err.println("Exception when calling AriaddnaApi#getDiffVUFS");
     e.printStackTrace();
 }
 ```
@@ -441,16 +441,16 @@ Returns a list of clouds which a certain user has connected to his ariADDna acco
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | Providing user's UUID one can access his CloudSet and add retrieve the list of available external cloud accounts.
 try {
     CloudSetPages result = apiInstance.getExternalCloudAccounts(userUuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#getExternalCloudAccounts");
+    System.err.println("Exception when calling AriaddnaApi#getExternalCloudAccounts");
     e.printStackTrace();
 }
 ```
@@ -486,16 +486,16 @@ Allows to get health-check statistic about users Clouds.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | User UUID.
 try {
     StatisticSet result = apiInstance.getHealthCheckStat(userUuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#getHealthCheckStat");
+    System.err.println("Exception when calling AriaddnaApi#getHealthCheckStat");
     e.printStackTrace();
 }
 ```
@@ -531,16 +531,16 @@ Allows to get snapshot vufs.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | Current user UUID.
 try {
     Vufs result = apiInstance.getVUFS(userUuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#getVUFS");
+    System.err.println("Exception when calling AriaddnaApi#getVUFS");
     e.printStackTrace();
 }
 ```
@@ -576,15 +576,15 @@ Closing user session.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String uuid = "uuid_example"; // String | UUID of user session.
 try {
     apiInstance.logoutSession(uuid);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#logoutSession");
+    System.err.println("Exception when calling AriaddnaApi#logoutSession");
     e.printStackTrace();
 }
 ```
@@ -620,17 +620,17 @@ Allows to post file allocate strategy from client to server.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | User UUID.
 InitialAllocationModel initialAllocationModel = new InitialAllocationModel(); // InitialAllocationModel | File allocation strategy.
 try {
     Vufs result = apiInstance.postAllocateModel(userUuid, initialAllocationModel);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#postAllocateModel");
+    System.err.println("Exception when calling AriaddnaApi#postAllocateModel");
     e.printStackTrace();
 }
 ```
@@ -667,16 +667,16 @@ Allows to post statistic from client to server about clouds.
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 String userUuid = "userUuid_example"; // String | User UUID.
 StatisticSet cloudStatisticSet = new StatisticSet(); // StatisticSet | Cloud statistic set typed object.
 try {
     apiInstance.postCloudStatSet(userUuid, cloudStatisticSet);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#postCloudStatSet");
+    System.err.println("Exception when calling AriaddnaApi#postCloudStatSet");
     e.printStackTrace();
 }
 ```
@@ -713,17 +713,17 @@ Allows to send changes in local file storage to server with empty Allocation mod
 ```java
 // Import classes:
 //import io.swagger.client.ApiException;
-//import io.swagger.client.api.DefaultApi;
+//import io.swagger.client.api.AriaddnaApi;
 
 
-DefaultApi apiInstance = new DefaultApi();
+AriaddnaApi apiInstance = new AriaddnaApi();
 Vufs localChanges = new Vufs(); // Vufs | VUFS snapshot typed object with changed in local file storage with empty Allocation model.
 String userUuid = "userUuid_example"; // String | Current user UUID.
 try {
     Vufs result = apiInstance.sendChangesInLFS(localChanges, userUuid);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling DefaultApi#sendChangesInLFS");
+    System.err.println("Exception when calling AriaddnaApi#sendChangesInLFS");
     e.printStackTrace();
 }
 ```
