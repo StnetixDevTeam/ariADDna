@@ -74,7 +74,7 @@ public class FileSystemWatchingService {
      * Process all native events for keys queued to the watcher
      */
     void processEvents() {
-        for (; ; ) {
+        while (!isStoped) {
             // wait for key to be signalled
             WatchKey key;
             try {
