@@ -10,7 +10,7 @@ public class FileSystemWatchEvent {
      * Event types
      */
     public enum Type {
-        CREATE, DELETE, MOVE, RENAME, UPDATE
+        CREATE, DELETE, MOVE, RENAME, MODIFY
     }
 
     private Type type;

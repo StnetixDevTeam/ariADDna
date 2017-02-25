@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
-import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.*;
 
 /**
  * Class for transform native event to FileSystemWatchEvent
@@ -51,6 +50,12 @@ public class Consumer implements Runnable {
             @SuppressWarnings("unchecked")
             Path name = event.context();
             Path child = dir.resolve(name);
+
+            //Check for MODIFY events
+            if (kind.equals(ENTRY_MODIFY)) {
+                service.runEventListeners(new FileSystemWatchEvent(FileSystemWatchEvent.Type.MODIFY, child));
+                continue;
+            }
 
             //determination RENAME events
             if (events.size() > 1) {
