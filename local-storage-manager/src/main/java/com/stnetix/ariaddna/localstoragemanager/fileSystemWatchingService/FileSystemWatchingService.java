@@ -25,6 +25,8 @@ import static java.nio.file.StandardWatchEventKinds.*;
  * In this service native events added in queue and {@link Consumer} processing their
  * Consumer thread watch the queue and find matches and generate new events,
  * then runs {@link FileSystemEventListener}
+ *
+ * FIXME: Tested on Windows NTFS and Linux Ext4 file systems
  */
 public class FileSystemWatchingService {
     private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(FileSystemWatchingService.class);
