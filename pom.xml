@@ -26,6 +26,7 @@
         <module>desktop-core</module>
         <module>common-utils</module>
         <module>rest-api-client</module>
+        <module>local-storage-manager</module>
     </modules>
     <properties>
         <spring.version>4.3.6.RELEASE</spring.version>
