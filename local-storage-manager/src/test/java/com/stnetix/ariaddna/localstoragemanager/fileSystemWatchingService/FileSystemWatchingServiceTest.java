@@ -18,6 +18,12 @@ class FileSystemWatchingServiceTest {
     @BeforeAll
     static void setUp() throws IOException {
         //Change to yours test folder
+
+
+    }
+
+    @BeforeEach
+    void beforeEach() throws IOException {
         root = Files.createTempDirectory("ariaddnaTemp");
         service = new FileSystemWatchingService(root);
 
@@ -32,11 +38,6 @@ class FileSystemWatchingServiceTest {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-    }
-
-    @BeforeEach
-    void beforeEach() {
         count = 0;
         service.removeEventListners();
     }
@@ -120,12 +121,17 @@ class FileSystemWatchingServiceTest {
         });
     }
 
-    @AfterAll
-    static void tearDown() throws IOException {
-
+    @AfterEach
+    void tearDown() throws IOException {
         deleteFiles(root);
 
         Files.delete(root);
+    }
+
+    @AfterAll
+    static void tearDownAll() throws IOException {
+
+
     }
 
 
