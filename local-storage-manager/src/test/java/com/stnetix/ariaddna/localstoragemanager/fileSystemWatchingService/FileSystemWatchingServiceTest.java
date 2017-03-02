@@ -61,6 +61,8 @@ class FileSystemWatchingServiceTest {
 
     @Test
     void deleteFilesTest() throws IOException, InterruptedException {
+        count = 0;
+
         service.addEventListener(e -> {
             if (e.getType().equals(FileSystemWatchEvent.Type.DELETE)) {
                 count++;
