@@ -24,7 +24,7 @@ import static java.nio.file.StandardWatchEventKinds.*;
  */
 public class Consumer implements Runnable {
 
-    private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(FileSystemWatchingService.class);
+    private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(Consumer.class);
 
     //collection for snapshot events
     private CopyOnWriteArrayList<Pair<Path, List<WatchEvent<?>>>> newQueue = new CopyOnWriteArrayList<>();

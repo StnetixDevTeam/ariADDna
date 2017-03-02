@@ -106,7 +106,7 @@ public class FileSystemWatchingService {
             WatchKey key;
             try {
                 key = watcher.take();
-                LOGGER.debug("Take the WatchKey {}", key);
+                LOGGER.debug("Take the WatchKey");
             } catch (InterruptedException x) {
                 LOGGER.trace("processEvent was interrupted and service stopped with message: {}", x.getMessage());
                 return;
@@ -179,8 +179,16 @@ public class FileSystemWatchingService {
      *
      * @param listener event listener
      */
-    public void addEventListeners(FileSystemEventListener listener) {
+    public void addEventListener(FileSystemEventListener listener) {
         listeners.add(listener);
+    }
+
+    public void removeEventListners() {
+        listeners.clear();
+    }
+
+    public void removeEventListner(FileSystemEventListener listener) {
+        listeners.remove(listener);
     }
 
     /**
