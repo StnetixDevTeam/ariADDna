@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.TimeUnit;
 
 import static java.nio.file.StandardWatchEventKinds.*;
 
@@ -30,6 +31,8 @@ import static java.nio.file.StandardWatchEventKinds.*;
  */
 public class FileSystemWatchingService {
     private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(FileSystemWatchingService.class);
+
+    private Consumer consumer;
 
     //List of Event Listeners
     private List<FileSystemEventListener> listeners = new ArrayList<>();
@@ -59,10 +62,22 @@ public class FileSystemWatchingService {
         this.keys = new HashMap<>();
 
         //start Consumer
-        new Thread(new Consumer(queue, this)).start();
+
+        new Thread(consumer = new Consumer(queue, this)).start();
 
         //register directories
-        walkAndRegisterDirectories(dir);
+        registerDirectories(dir);
+    }
+
+    public FileSystemWatchingService() throws IOException {
+        LOGGER.debug("start service");
+
+        this.watcher = FileSystems.getDefault().newWatchService();
+        this.keys = new HashMap<>();
+
+        //start Consumer
+        new Thread(new Consumer(queue, this)).start();
+
     }
 
     /**
@@ -71,7 +86,7 @@ public class FileSystemWatchingService {
      * @param dir dir for watch
      * @throws IOException
      */
-    private void registerDirectory(Path dir) throws IOException {
+    void registerDirectory(Path dir) throws IOException {
         LOGGER.debug("Register directory with path {}", dir);
 
         WatchKey key = dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
@@ -84,7 +99,7 @@ public class FileSystemWatchingService {
      * @param start dir with sub-directories
      * @throws IOException
      */
-    void walkAndRegisterDirectories(final Path start) throws IOException {
+    void registerDirectories(final Path start) throws IOException {
         // register directory and sub-directories
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
             @Override
@@ -105,8 +120,7 @@ public class FileSystemWatchingService {
             //multiple events packed into key
             WatchKey key;
             try {
-                key = watcher.take();
-                LOGGER.debug("Take the WatchKey");
+                key = watcher.poll(50, TimeUnit.MILLISECONDS);
             } catch (InterruptedException x) {
                 LOGGER.trace("processEvent was interrupted and service stopped with message: {}", x.getMessage());
                 return;
@@ -115,7 +129,6 @@ public class FileSystemWatchingService {
             //Get the path associated with the key
             Path dir = keys.get(key);
             if (dir == null) {
-                LOGGER.debug("WatchKey not recognized!!");
                 continue;
             }
 
@@ -206,6 +219,8 @@ public class FileSystemWatchingService {
     public void stop() {
         LOGGER.debug("Service stopped");
         isAlive = false;
+        consumer.stop();
+
     }
 
 }

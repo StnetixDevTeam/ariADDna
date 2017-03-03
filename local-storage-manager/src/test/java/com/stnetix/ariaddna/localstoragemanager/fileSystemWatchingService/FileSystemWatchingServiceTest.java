@@ -3,10 +3,7 @@ package com.stnetix.ariaddna.localstoragemanager.fileSystemWatchingService;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
-import java.nio.file.FileVisitResult;
-import java.nio.file.FileVisitor;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
 
@@ -34,7 +31,7 @@ class FileSystemWatchingServiceTest {
         thread.start();
 
         try {
-            thread.join(5000);
+            thread.join(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -85,6 +82,37 @@ class FileSystemWatchingServiceTest {
 
     }
 
+    @Test
+    void renameFileTest() throws InterruptedException, IOException {
+        //count = 0;
+
+        Path path = Paths.get("C:/temp/tmp");
+
+        service.registerDirectory(path);
+
+        service.addEventListener(event -> {
+            if (event.getType().equals(FileSystemWatchEvent.Type.RENAME)) {
+                count++;
+            }
+        });
+
+        int fileCount = 1;
+
+        //createTempFiles(fileCount, root);
+
+        //Thread.sleep(500);
+
+        renameFiles(path);
+
+        Thread.sleep(10000);
+
+        Assertions.assertEquals(fileCount, count);
+
+
+    }
+
+
+
     static void createTempFiles(int filesCount, Path rootDir) {
         for (int i = 0; i < filesCount; i++) {
             try {
@@ -106,6 +134,40 @@ class FileSystemWatchingServiceTest {
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 Files.delete(file);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+        });
+    }
+
+    static void renameFiles(Path dir) throws IOException {
+        final int[] i = {0};
+
+        Files.walkFileTree(dir, new FileVisitor<Path>() {
+
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                Path parent = file.getParent();
+                Files.move(file, Paths.get(parent.toString(), "newFile" + i[0] + ".tmp"));
+                System.out.println("rename ");
+                file.toFile().renameTo((parent.resolve("newFile" + i[0] + ".tmp")).toFile());
+
+                i[0]++;
+
                 return FileVisitResult.CONTINUE;
             }
 

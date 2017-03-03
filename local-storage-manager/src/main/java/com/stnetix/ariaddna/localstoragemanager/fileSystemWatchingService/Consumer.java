@@ -117,10 +117,11 @@ public class Consumer implements Runnable {
                                         if (kind.name().equals("ENTRY_DELETE") && nextKind.name().equals("ENTRY_CREATE") &&
                                                 child.getParent().equals(nextChild.getParent())) {
 
+                                            LOGGER.debug("Native event {}, from {}", nextKind, nextChild);
                                             LOGGER.debug("defined RENAME event from {} to {}", child, nextChild);
 
                                             service.runEvents(new FileSystemWatchEvent(FileSystemWatchEvent.Type.RENAME, child, nextChild));
-                                            service.replaceKey(child, nextChild);
+                                            if (Files.isDirectory(nextChild)) service.replaceKey(child, nextChild);
                                             j++;
 
 
@@ -140,7 +141,7 @@ public class Consumer implements Runnable {
                             if (kind == ENTRY_CREATE) {
                                 try {
                                     if (Files.isDirectory(child)) {
-                                        service.walkAndRegisterDirectories(child);
+                                        service.registerDirectories(child);
                                     }
                                 } catch (IOException x) {
                                     LOGGER.trace("Cant register folder {}", x.getMessage());
@@ -211,7 +212,7 @@ public class Consumer implements Runnable {
 
                         try {
                             if (Files.isDirectory(p.getKey().resolve(name))) {
-                                service.walkAndRegisterDirectories(p.getKey().resolve(name));
+                                service.registerDirectories(p.getKey().resolve(name));
                             }
                         } catch (IOException x) {
                             LOGGER.trace("Cant register folder {}", x.getMessage());
@@ -237,6 +238,7 @@ public class Consumer implements Runnable {
      * stop consumer
      */
     public void stop() {
+        LOGGER.debug("Consumer stopped");
         isAlive = false;
     }
 }
