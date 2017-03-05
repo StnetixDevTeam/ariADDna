@@ -66,4 +66,10 @@ public class SimpleTest {
 
         service.processEvents();
     }
+
+    @Test
+    void startService() throws IOException {
+        FileSystemWatchingService service = new FileSystemWatchingService(Paths.get("c:/temp"));
+        service.processEvents();
+    }
 }
