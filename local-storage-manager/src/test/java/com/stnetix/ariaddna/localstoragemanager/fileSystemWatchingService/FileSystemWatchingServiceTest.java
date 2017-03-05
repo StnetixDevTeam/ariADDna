@@ -38,21 +38,19 @@ class FileSystemWatchingServiceTest {
 
         int filesCount = 10;
 
-        new Thread(() -> {
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-            createTempFiles(filesCount, root);
+        createTempFiles(filesCount, root);
 
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Thread.sleep(1500);
         Assertions.assertEquals(filesCount, count);
@@ -63,39 +61,37 @@ class FileSystemWatchingServiceTest {
 
         int filesCount = 10;
 
-        new Thread(() -> {
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        service.addEventListener(e -> {
+            if (e.getType().equals(FileSystemWatchEvent.Type.DELETE)) {
+                count++;
             }
+        });
 
-            service.addEventListener(e -> {
-                if (e.getType().equals(FileSystemWatchEvent.Type.DELETE)) {
-                    count++;
-                }
-            });
+        createTempFiles(filesCount, root);
 
-            createTempFiles(filesCount, root);
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            deleteFiles(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            try {
-                deleteFiles(root);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Thread.sleep(2500);
 
@@ -113,30 +109,57 @@ class FileSystemWatchingServiceTest {
 
         int fileCount = 10;
 
-        new Thread(() -> {
-            try {
-                Thread.sleep(700);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            createTempFiles(fileCount, root);
+        try {
+            Thread.sleep(700);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        createTempFiles(fileCount, root);
 
-            try {
-                renameFiles(root);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            renameFiles(root);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-            try {
-                Thread.sleep(800);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }).start();
+        try {
+            Thread.sleep(800);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         Thread.sleep(2000);
 
         Assertions.assertEquals(fileCount, count);
+    }
+
+    @Test
+    void moveFileTest() throws IOException, InterruptedException {
+        service.addEventListener(event -> {
+            if (event.getType().equals(FileSystemWatchEvent.Type.MOVE)) {
+                count++;
+            }
+        });
+
+        int fileCount = 10;
+
+        Path newFolder = Files.createTempDirectory(root, "new");
+
+        createTempFiles(fileCount, root);
+
+        Thread.sleep(500);
+
+        moveFiles(root, newFolder);
+
+        Thread.sleep(500);
+
+        Assertions.assertEquals(fileCount, count);
+
+        deleteFiles(newFolder);
+
+        Files.delete(newFolder);
+
+
     }
 
     private static void createTempFiles(int filesCount, Path rootDir) {
@@ -183,21 +206,48 @@ class FileSystemWatchingServiceTest {
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
                 return FileVisitResult.CONTINUE;
             }
+
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                if (Files.isDirectory(file)) return FileVisitResult.CONTINUE;
                 Path parent = file.getParent();
                 Files.move(file, Paths.get(parent.toString(), "newFile" + i[0] + ".tmp"));
-                System.out.println("rename ");
-                file.toFile().renameTo((parent.resolve("newFile" + i[0] + ".tmp")).toFile());
 
                 i[0]++;
 
                 return FileVisitResult.CONTINUE;
             }
+
             @Override
             public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
                 return FileVisitResult.CONTINUE;
             }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+        });
+    }
+
+    private static void moveFiles(Path from, Path to) throws IOException {
+        Files.walkFileTree(from, new FileVisitor<Path>() {
+            @Override
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                Files.move(file, to.resolve(file.getFileName()));
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                return FileVisitResult.CONTINUE;
+            }
+
             @Override
             public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
                 return FileVisitResult.CONTINUE;
