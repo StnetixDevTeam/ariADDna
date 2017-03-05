@@ -8,33 +8,21 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 
 class FileSystemWatchingServiceTest {
-    static FileSystemWatchingService service;
-    static Path root;
-    static int count;
+    private static FileSystemWatchingService service;
+    private static Path root;
+    private static int count;
 
     @BeforeAll
     static void setUp() throws IOException {
-        //Change to yours test folder
+        root = Files.createTempDirectory("ariaddnaTemp");
+        service = new FileSystemWatchingService(root);
 
-
+        new Thread(() -> service.processEvents()).start();
     }
 
     @BeforeEach
     void beforeEach() throws IOException {
-        root = Files.createTempDirectory("ariaddnaTemp");
-        service = new FileSystemWatchingService(root);
 
-
-        Thread thread = new Thread(() -> {
-            service.processEvents();
-        });
-        thread.start();
-
-        try {
-            thread.join(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         count = 0;
         service.removeEventListners();
     }
@@ -50,45 +38,72 @@ class FileSystemWatchingServiceTest {
 
         int filesCount = 10;
 
-        createTempFiles(filesCount, root);
+        new Thread(() -> {
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        Thread.sleep(1000);
+            createTempFiles(filesCount, root);
 
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        Thread.sleep(1500);
         Assertions.assertEquals(filesCount, count);
     }
 
     @Test
     void deleteFilesTest() throws IOException, InterruptedException {
-        count = 0;
-
-        service.addEventListener(e -> {
-            if (e.getType().equals(FileSystemWatchEvent.Type.DELETE)) {
-                count++;
-            }
-        });
 
         int filesCount = 10;
 
-        createTempFiles(filesCount, root);
+        new Thread(() -> {
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        Thread.sleep(1000);
+            service.addEventListener(e -> {
+                if (e.getType().equals(FileSystemWatchEvent.Type.DELETE)) {
+                    count++;
+                }
+            });
 
-        deleteFiles(root);
+            createTempFiles(filesCount, root);
 
-        Thread.sleep(1000);
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                deleteFiles(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
+
+        Thread.sleep(2500);
 
         Assertions.assertEquals(filesCount, count);
-
-
     }
 
     @Test
     void renameFileTest() throws InterruptedException, IOException {
-        //count = 0;
-
-        Path path = Paths.get("C:/temp/tmp");
-
-        service.registerDirectory(path);
 
         service.addEventListener(event -> {
             if (event.getType().equals(FileSystemWatchEvent.Type.RENAME)) {
@@ -96,24 +111,35 @@ class FileSystemWatchingServiceTest {
             }
         });
 
-        int fileCount = 1;
+        int fileCount = 10;
 
-        //createTempFiles(fileCount, root);
+        new Thread(() -> {
+            try {
+                Thread.sleep(700);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            createTempFiles(fileCount, root);
 
-        //Thread.sleep(500);
+            try {
+                renameFiles(root);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        renameFiles(path);
+            try {
+                Thread.sleep(800);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }).start();
 
-        Thread.sleep(10000);
+        Thread.sleep(2000);
 
         Assertions.assertEquals(fileCount, count);
-
-
     }
 
-
-
-    static void createTempFiles(int filesCount, Path rootDir) {
+    private static void createTempFiles(int filesCount, Path rootDir) {
         for (int i = 0; i < filesCount; i++) {
             try {
                 Files.createTempFile(rootDir, "ariaddnaFile" + i, ".tmp");
@@ -123,7 +149,7 @@ class FileSystemWatchingServiceTest {
         }
     }
 
-    static void deleteFiles(Path dir) throws IOException {
+    private static void deleteFiles(Path dir) throws IOException {
 
         Files.walkFileTree(dir, new FileVisitor<Path>() {
             @Override
@@ -149,16 +175,14 @@ class FileSystemWatchingServiceTest {
         });
     }
 
-    static void renameFiles(Path dir) throws IOException {
+    private static void renameFiles(Path dir) throws IOException {
         final int[] i = {0};
 
         Files.walkFileTree(dir, new FileVisitor<Path>() {
-
             @Override
             public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
                 return FileVisitResult.CONTINUE;
             }
-
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 Path parent = file.getParent();
@@ -170,12 +194,10 @@ class FileSystemWatchingServiceTest {
 
                 return FileVisitResult.CONTINUE;
             }
-
             @Override
             public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
                 return FileVisitResult.CONTINUE;
             }
-
             @Override
             public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
                 return FileVisitResult.CONTINUE;
@@ -186,17 +208,11 @@ class FileSystemWatchingServiceTest {
     @AfterEach
     void tearDown() throws IOException {
         deleteFiles(root);
-
-        Files.delete(root);
     }
 
     @AfterAll
     static void tearDownAll() throws IOException {
-
-
+        service.stop();
+        Files.delete(root);
     }
-
-
-
-
 }
