@@ -79,5 +79,15 @@ public class LocalStoreIndexingService {
         }
     }
 
+    /**
+     * get common file attributes
+     *
+     * @param file file to get attributes
+     * @return {@link FileAttributes} file attributes
+     * @throws IOException
+     */
+    public FileAttributes getFileAttributes(Path file) throws IOException {
+        return new FileAttributes(file);
+    }
 
 }

@@ -82,6 +82,30 @@ class LocalStoreIndexingServiceTest {
         Assertions.assertEquals(fileName, service.findFileByName(root, fileName).get().getFileName().toString());
     }
 
+    @Test
+    void getFileAttribute() throws IOException {
+        createTempFiles(1, root);
+        Path file = root.resolve("tempFile0.tmp");
+        FileAttributes attr = service.getFileAttributes(file);
+        Assertions.assertTrue(attr.getCreationTime().getTime() > 0);
+        Assertions.assertTrue(attr.getLastAccessTime().getTime() > 0);
+        Assertions.assertTrue(attr.getModifyTime().getTime() > 0);
+        Assertions.assertFalse(attr.isDirectory());
+        Assertions.assertTrue(attr.isRegularFile());
+        Assertions.assertFalse(attr.isSymbolicLinc());
+    }
+
+    @Test
+    void getLastModifyTime() throws IOException {
+        createTempFiles(1, root);
+        Path file = root.resolve("tempFile0.tmp");
+        Date date = new Date();
+        Files.write(file, "qwerty".getBytes());
+        FileAttributes attr = service.getFileAttributes(file);
+        Assertions.assertTrue(attr.getCreationTime().getTime() < attr.getModifyTime().getTime());
+        Assertions.assertTrue(attr.getModifyTime().getTime() > date.getTime());
+    }
+
     private static void createTempFiles(int filesCount, Path rootDir) {
         createTempFiles(filesCount, rootDir, 0);
     }
@@ -97,7 +121,6 @@ class LocalStoreIndexingServiceTest {
     }
 
     private static void deleteFiles(Path dir) throws IOException {
-
         Files.walk(dir, FileVisitOption.FOLLOW_LINKS)
                 .sorted(Comparator.reverseOrder())
                 .map(Path::toFile)
