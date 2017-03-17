@@ -19,9 +19,12 @@ public class TestService implements IService{
     }
 
     @Override
-    public void run() {
-        while (!isStopped){
+    public boolean isRun() {
+        return !isStopped;
+    }
 
-        }
+    @Override
+    public void run() {
+        while (!isStopped);
     }
 }

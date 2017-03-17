@@ -8,4 +8,5 @@ import com.stnetix.ariaddna.commonutils.exception.AriaddnaException;
 public interface IService extends Runnable {
     void start() throws AriaddnaException;
     void stop() throws AriaddnaException;
+    boolean isRun();
 }

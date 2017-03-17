@@ -1,6 +1,8 @@
 package com.stnetix.ariaddna.servercore.tools;
 
 
+import com.stnetix.ariaddna.commonutils.exception.AriaddnaException;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  */
 public class ServiceTree {
     private HashSet<ServiceNode> nodes;
+    private ArrayList<ServiceNode> startQueue;
 
     public ServiceTree() {
         nodes = new HashSet<>();
@@ -24,20 +27,32 @@ public class ServiceTree {
         }
     }
 
-    public void startServer() {
-        List<ServiceNode> startQueue = createStartQueue();
+    public void startServer() throws AriaddnaException {
+        startQueue = createStartQueue();
+        for (ServiceNode node: startQueue) {
+            if(!node.getService().isRun()) {
+                Thread thread = new Thread(node.getService());
+                thread.start();
+            }
+        }
+    }
+
+    public void monitoring() {
+        for (ServiceNode node: startQueue) {
+            //TODO: write monitoring service
+        }
     }
 
     private ArrayList<ServiceNode> createStartQueue() {
-        ArrayList<ServiceNode> startQueue = new ArrayList<>();
-        
+        startQueue = new ArrayList<>();
+        //TODO: write start queue
         return startQueue;
     }
 
     private class ServiceNode {
         private IService service;
         private HashSet<ServiceNode> childes;
-        private boolean isRun;
+
 
         ServiceNode(IService service, IService parent) throws ServiceNotFoundException {
             if (service == null) throw new ServiceNotFoundException("Service must be not null");
