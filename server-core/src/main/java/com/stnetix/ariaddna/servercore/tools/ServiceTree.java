@@ -2,12 +2,10 @@ package com.stnetix.ariaddna.servercore.tools;
 
 
 import com.stnetix.ariaddna.commonutils.exception.AriaddnaException;
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * Created by alexkotov on 27.02.17.
@@ -15,6 +13,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class ServiceTree {
     private HashSet<ServiceNode> nodes;
     private ArrayList<ServiceNode> startQueue;
+
+    private static AriaddnaLogger logger = AriaddnaLogger.getLogger(ServiceTree.class);
 
     public ServiceTree() {
         nodes = new HashSet<>();
@@ -29,23 +29,67 @@ public class ServiceTree {
 
     public void startServer() throws AriaddnaException {
         startQueue = createStartQueue();
-        for (ServiceNode node: startQueue) {
-            if(!node.getService().isRun()) {
+        for (ServiceNode node : startQueue) {
+            if (!node.getService().isRun()) {
                 Thread thread = new Thread(node.getService());
                 thread.start();
+                logger.info("Service "+node.getService().getClass().getTypeName() + " started by server-core service.");
             }
         }
     }
 
-    public void monitoring() {
-        for (ServiceNode node: startQueue) {
-            //TODO: write monitoring service
+    public void monitoring() throws AriaddnaException {
+        boolean isStoped = false;
+        while (!isStoped) {
+            for (ServiceNode node : startQueue) {
+                if (!node.getService().isRun()) {
+                    logger.info("Service "+node.getService().getClass().getTypeName() + " stopped by itself.");
+                    stopServer();
+                    isStoped=true;
+                    break;
+                }
+            }
+        }
+    }
+
+    private void stopServer() throws AriaddnaException {
+        for (int i = startQueue.size()-1; i>=0; i--) {
+            IService service = startQueue.get(i).getService();
+            if(service.isRun()) {
+                logger.info("Service "+service.getClass().getTypeName() + " stopped by monitoring service.");
+                startQueue.get(i).getService().stop();
+            }
         }
     }
 
     private ArrayList<ServiceNode> createStartQueue() {
         startQueue = new ArrayList<>();
-        //TODO: write start queue
+        ArrayList<ServiceNode> tmpList = new ArrayList<>(nodes);
+        while (tmpList.size() > 0) {
+            for (ServiceNode node : tmpList) {
+                if (node.hasChilds()) {
+                    for (ServiceNode childNode : node.getChildes()) {
+                        if (childNode.hasChilds()) {
+                            continue;
+                        } else {
+                            if (!startQueue.contains(childNode)) {
+                                startQueue.add(childNode);
+                                node.getChildes().remove(childNode);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                } else {
+                    if (!startQueue.contains(node)) {
+                        startQueue.add(node);
+                        tmpList.remove(node);
+                        break;
+                    }
+                }
+            }
+        }
+
         return startQueue;
     }
 
@@ -76,7 +120,7 @@ public class ServiceTree {
         }
 
         public boolean hasChilds() {
-            return childes.size() > 0;
+            return childes==null;
         }
     }
 }
