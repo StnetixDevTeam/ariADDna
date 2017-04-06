@@ -6,6 +6,8 @@ import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by alexkotov on 27.02.17.
@@ -13,6 +15,7 @@ import java.util.HashSet;
 public class ServiceTree {
     private HashSet<ServiceNode> nodes;
     private ArrayList<ServiceNode> startQueue;
+    private ExecutorService executorService = Executors.newCachedThreadPool();
 
     private static AriaddnaLogger logger = AriaddnaLogger.getLogger(ServiceTree.class);
 
@@ -31,8 +34,7 @@ public class ServiceTree {
         startQueue = createStartQueue();
         for (ServiceNode node : startQueue) {
             if (!node.getService().isRun()) {
-                Thread thread = new Thread(node.getService());
-                thread.start();
+                executorService.execute(node.getService());
                 logger.info("Service "+node.getService().getClass().getTypeName() + " started by server-core service.");
             }
         }
@@ -47,7 +49,14 @@ public class ServiceTree {
                     stopServer();
                     isStoped=true;
                     break;
+                } else {
+                    logger.info("Service "+node.getService().getClass().getTypeName() + " is running normally.");
                 }
+            }
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                throw new AriaddnaException("Throws on monitoring service, caused by: ", e);
             }
         }
     }
@@ -122,5 +131,10 @@ public class ServiceTree {
         public boolean hasChilds() {
             return childes==null;
         }
+
+    }
+
+    public ExecutorService getExecutorService() {
+        return executorService;
     }
 }
