@@ -1,0 +1,11 @@
+<web-app>
+    <display-name>WebSocketApp</display-name>
+    <servlet>
+        <servlet-name>wsservlet</servlet-name>
+        <servlet-class>ToUpperWebSocketServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>wsservlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+</web-app>

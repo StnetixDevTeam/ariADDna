@@ -27,6 +27,8 @@
         <module>common-utils</module>
         <module>rest-api-client</module>
         <module>local-storage-manager</module>
+        <module>notify-client</module>
+        <module>notify-server</module>
     </modules>
     <properties>
         <spring.version>4.3.6.RELEASE</spring.version>

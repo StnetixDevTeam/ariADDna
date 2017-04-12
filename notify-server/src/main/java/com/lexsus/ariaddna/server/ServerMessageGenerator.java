@@ -1,0 +1,17 @@
+package com.lexsus.ariaddna.server;
+
+import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
+
+/**
+ * Created by LugovoyAV on 31.03.2017.
+ */
+public class ServerMessageGenerator implements MessageGenerator<String>{
+    @Override
+    public String generate() {
+        return "Test message";
+    }
+}
