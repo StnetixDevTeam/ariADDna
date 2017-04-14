@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -35,9 +36,30 @@ public class UserServiceImpl implements UserService{
     @Override
     public void sendMessageAll(String text) throws IOException {
         Set<Map.Entry<ClientInfo,BlockingQueue<String>>> set = clientMap.entrySet();
-        for (Map.Entry<ClientInfo,BlockingQueue<String>> entry:set){
-            try {
-                entry.getValue().put(text);
+        System.out.println("sendMessageAll text ="+ text);
+        if (set==null)
+        {
+            System.out.println("set == null ");
+        }
+
+
+        //Iterator<Map.Entry<ClientInfo,BlockingQueue<String>>> iter = set.iterator();
+        for (Map.Entry<ClientInfo,BlockingQueue<String>> entry:set) {
+           try {
+                BlockingQueue<String> q = entry.getValue();
+                if (q==null) {
+
+                    System.out.println("queue==null");
+                }
+                else
+                {
+                    if (text==null)
+                    {
+                        System.out.println("text==null");
+                    }
+                    System.out.println("service message put = "+text);
+                    q.put(text);
+                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -52,6 +74,7 @@ public class UserServiceImpl implements UserService{
             if (worker != null)
                 worker.setStopped(true);
         }
+        System.out.println("remove Client");
         clientMap.remove(client);
         queueUsers.remove(session);
     }
@@ -65,7 +88,6 @@ public class UserServiceImpl implements UserService{
 
     public void addClient(Session session)
     {
-
         ClientInfo clientInfo = GetClientInfoBySession(session);
         queueUsers.put(session, clientInfo);
         ExecutorService executorService = Executors.newCachedThreadPool();

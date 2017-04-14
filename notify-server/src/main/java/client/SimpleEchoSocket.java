@@ -5,6 +5,7 @@ package client;
  */
 import java.util.concurrent.*;
 
+import com.lexsus.ariaddna.server.SharedQueue;
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.StatusCode;
 import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
@@ -20,8 +21,6 @@ public class SimpleEchoSocket
 {
     private final CountDownLatch closeLatch;
     private ClientSocketListener listener;
-    private final BlockingQueue<String> queue;
-    @SuppressWarnings("unused")
     private Session session;
 
 //    public SimpleEchoSocket()
@@ -29,12 +28,11 @@ public class SimpleEchoSocket
 //        this.closeLatch = new CountDownLatch(1);
 //    }
 
-    public SimpleEchoSocket(ClientSocketListener listener,BlockingQueue<String> queue)
+    public SimpleEchoSocket(ClientSocketListener listener)
     {
         //this();
         this.closeLatch = new CountDownLatch(1);
         this.listener = listener;
-        this.queue = queue;
     }
 
 
@@ -85,6 +83,6 @@ public class SimpleEchoSocket
     @OnWebSocketMessage
     public void onMessage(String msg) throws InterruptedException {
         //System.out.printf("Got msg: %s%n",msg);
-        queue.put(msg);
+        //queue.put(msg);
     }
 }

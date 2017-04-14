@@ -19,9 +19,6 @@ import org.springframework.context.annotation.ComponentScan;
 @WebSocket
 public class ToUpperWebSocket{
 
-    @Autowired
-    @Qualifier("main")
-    private ITestAuto testAuto;
     private UserService service;
     private SharedQueue<Session> queue;
     public ToUpperWebSocket(UserService service) {

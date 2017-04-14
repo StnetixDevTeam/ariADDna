@@ -3,12 +3,9 @@ package client;
 /**
  * Created by Vladislav Gasanov on 28.03.2017.
  */
-import java.net.URI;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
 
-import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
-import org.eclipse.jetty.websocket.client.WebSocketClient;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * Example of a simple Echo Client.
@@ -22,14 +19,17 @@ public class Client{
         {
             destUri = args[0];
         }
-        ClientPushNotification client = new ClientPushNotification(destUri);
-        try {
-            client.start();
-            new ClientMessageSystem().runMessagesSystem(client.getQueue());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        ClientSocketService client = new ClientSocketService(destUri);
+//        try {
+//            client.start();
+//            new ClientMessageSystem().runMessagesSystem();
+        ApplicationContext applicationContext =
+                new AnnotationConfigApplicationContext(ConfigClient.class);
+        ClientMessageSystem client = applicationContext.getBean(ClientMessageSystem.class);
+        client.runMessagesSystem();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 //        WebSocketClient client = new WebSocketClient();
 //        SimpleEchoSocket socket = new SimpleEchoSocket(destUri);

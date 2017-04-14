@@ -1,11 +1,9 @@
 package com.lexsus.ariaddna.server;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 /**
  * Created by Lexsus on 01.04.2017.
  */
-public class PushProduceServerImpl<E> implements IPushProduceServer<E> {
+public class PushProduceServerImpl<E> implements IPushProduce<E> {
   //  @Autowired
     private SharedQueue<E> sharedQueue;
 
@@ -23,10 +21,14 @@ public class PushProduceServerImpl<E> implements IPushProduceServer<E> {
     public void produce() {
         E mes = generator.generate();
         if (mes!=null)
+        {
             try {
                 sharedQueue.put(mes);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+        else
+            System.out.println("generator element==null");
     }
 }

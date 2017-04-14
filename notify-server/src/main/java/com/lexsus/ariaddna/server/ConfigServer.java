@@ -1,7 +1,5 @@
 package com.lexsus.ariaddna.server;
 
-import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,10 +11,6 @@ import org.springframework.context.annotation.Scope;
 @Configuration
 @ComponentScan("com.lexsus.ariaddna")
 public class ConfigServer {
-
-    @Autowired
-    ITestAuto testAuto;
-
 
     @Bean()
     public UserService userServiceImpl(){return new UserServiceImpl();}
@@ -36,7 +30,7 @@ public class ConfigServer {
     }
 
     @Bean
-    public IPushConsumeServer<String> consumer() {
+    public IPushConsume<String> consumer() {
         return new PushConsumeServerImpl(queue(),  processor());
     }
 
@@ -47,7 +41,7 @@ public class ConfigServer {
     }
 
     @Bean
-    public IPushProduceServer<String> producer() {
+    public IPushProduce<String> producer() {
         return new PushProduceServerImpl(queue(), generator());
     }
 

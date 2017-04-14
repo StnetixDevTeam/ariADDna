@@ -1,22 +1,35 @@
 package client;
 
+import com.lexsus.ariaddna.server.IPushConsume;
+import com.lexsus.ariaddna.server.MessageProcessor;
+import com.lexsus.ariaddna.server.SharedQueue;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by LugovoyAV on 31.03.2017.
  */
 public class ClientMessageSystem {
+    IPushConsume<String> consumer;
+    @Autowired
+    ClientSocketService clientService;
+
+    public ClientMessageSystem(IPushConsume<String> consumer) {
+        this.consumer = consumer;
+    }
+
     private boolean   isStopped;
-    public void runMessagesSystem(BlockingQueue<String> queue) {
+    public void runMessagesSystem() {
         isStopped = false;
+        try {
+            clientService.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         new Thread(() -> {
             while (!isStopped) {
-                try {
-                    String str = queue.take();
-                    System.out.printf("[ClientMessageSystem]Got msg: %s%n",str);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                consumer.consume();
 
             }
         }).start();

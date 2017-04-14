@@ -1,13 +1,9 @@
 package com.lexsus.ariaddna.server;
 
-import org.eclipse.jetty.server.session.JDBCSessionManager;
-import org.eclipse.jetty.websocket.api.Session;
-import org.springframework.beans.factory.annotation.Autowired;
-
 /**
  * Created by LugovoyAV on 03.04.2017.
  */
-public class PushConsumeServerImpl<E> implements IPushConsumeServer<E> {
+public class PushConsumeServerImpl<E> implements IPushConsume<E> {
 
     private SharedQueue<E> sharedQueue;
     //@Autowired
@@ -26,6 +22,12 @@ public class PushConsumeServerImpl<E> implements IPushConsumeServer<E> {
         E element = null;
         try {
             element = sharedQueue.take();
+            if (element==null)
+            {
+                System.out.println("null message");
+                return;//TODO // FIXME: 13.04.2017 first element == null
+            }
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

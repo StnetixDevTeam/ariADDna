@@ -4,10 +4,10 @@ package com.lexsus.ariaddna.server;
  * Created by LugovoyAV on 31.03.2017.
  */
 public class ServerMessageSystem {
-    IPushConsumeServer<String> consumer;
-    IPushProduceServer<String> producer;
+    IPushConsume<String> consumer;
+    IPushProduce<String> producer;
     boolean isStopped = false;
-    public ServerMessageSystem(IPushProduceServer<String> producer,IPushConsumeServer<String> consumer) {
+    public ServerMessageSystem(IPushProduce<String> producer, IPushConsume<String> consumer) {
         this.producer = producer;
         this.consumer = consumer;
     }
