@@ -50,9 +50,7 @@ public class SimpleEchoSocket
     @OnWebSocketClose
     public void onClose(int statusCode, String reason)
     {
-
         System.out.printf("Connection closed: %d - %s%n",statusCode,reason);
-        //this.session.getPolicy().get
         this.session = null;
         this.closeLatch.countDown(); // trigger latch
         listener.onClose(statusCode,reason);
@@ -82,7 +80,7 @@ public class SimpleEchoSocket
 
     @OnWebSocketMessage
     public void onMessage(String msg) throws InterruptedException {
-        //System.out.printf("Got msg: %s%n",msg);
-        //queue.put(msg);
+        listener.onMessage(msg);
+
     }
 }
