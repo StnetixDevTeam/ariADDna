@@ -6,9 +6,8 @@ package com.lexsus.ariaddna.server;
 public class PushConsumeServerImpl<E> implements IPushConsume<E> {
 
     private SharedQueue<E> sharedQueue;
-    //@Autowired
     //TODO If you need send individual messages to client.
-    private SharedQueue<ClientInfo> sharedClients;
+
 
     protected MessageProcessor messageProcessor;
 

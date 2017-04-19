@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Scope;
 public class ConfigServer {
 
     @Bean()
-    public UserService userServiceImpl(){return new UserServiceImpl();}
+    public UserService userServiceImpl(){return new UserServiceImpl<String>();}
 
     @Bean
     public MyAdvancedEchoCreator webSocketCreator(){return new MyAdvancedEchoCreator(userServiceImpl());}

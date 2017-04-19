@@ -8,17 +8,17 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Created by LugovoyAV on 06.04.2017.
  */
-public class WorkerThread implements Runnable{
+public class WorkerThread<E> implements Runnable{
     public void setStopped(boolean stopped) {
         isStopped = stopped;
     }
 
     private boolean isStopped = false;
 
-    private BlockingQueue<String> queue;
+    private BlockingQueue<E> queue;
     private Session session;
 
-    public WorkerThread(BlockingQueue<String> queue, Session session) {
+    public WorkerThread(BlockingQueue<E> queue, Session session) {
         this.queue = queue;
         this.session = session;
     }
@@ -32,10 +32,11 @@ public class WorkerThread implements Runnable{
     private void processCommand() {
         while (!isStopped) {
             try {
-                String message = queue.take();
+                E message = queue.take();
                 try {
                     //TODO Future<Void>
-                    session.getRemote().sendString(message);
+                    //TODO check String.valueOf(message)
+                    session.getRemote().sendString(String.valueOf(message));
                     System.out.println("send message:"+message);
                 } catch (IOException e) {
                     e.printStackTrace();

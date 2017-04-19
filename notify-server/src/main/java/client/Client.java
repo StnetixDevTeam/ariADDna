@@ -32,7 +32,7 @@ public class Client{
 //        }
 
 //        WebSocketClient client = new WebSocketClient();
-//        SimpleEchoSocket socket = new SimpleEchoSocket(destUri);
+//        AutoConnectSocket socket = new AutoConnectSocket(destUri);
 //        try
 //        {
 //            client.start();

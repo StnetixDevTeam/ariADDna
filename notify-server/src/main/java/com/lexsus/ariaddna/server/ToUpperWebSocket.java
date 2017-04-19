@@ -1,6 +1,8 @@
 package com.lexsus.ariaddna.server;
 
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+
 import java.io.IOException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -17,23 +19,23 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 
 @WebSocket
-public class ToUpperWebSocket{
+public class ToUpperWebSocket {
 
     private UserService service;
     private SharedQueue<Session> queue;
+    private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(ToUpperWebSocket.class);
     public ToUpperWebSocket(UserService service) {
         this.service = service;
     }
+
     @OnWebSocketMessage
     public void onText(Session session, String message) throws IOException {
 
-        System.out.println("Message received:" + message);
-
         if (session.isOpen()) {
 
-        String response = message.toUpperCase();
+            String response = message.toUpperCase();
 
-        session.getRemote().sendString(response);
+            session.getRemote().sendString(response);
 
         }
 
@@ -41,7 +43,8 @@ public class ToUpperWebSocket{
 
     @OnWebSocketConnect
     public void onConnect(Session session) throws IOException {
-        System.out.println(session.getRemoteAddress().getHostString() + " connected!");
+        LOGGER.debug(session.getRemoteAddress().getHostString() + " connected!");
+
         service.addClient(session);
 
     }
@@ -49,7 +52,7 @@ public class ToUpperWebSocket{
 
     @OnWebSocketClose
     public void onClose(Session session, int status, String reason) {
-        System.out.println(session.getRemoteAddress().getHostString() + " closed!");
+        LOGGER.debug(session.getRemoteAddress().getHostString() + " closed!");
         service.removeClient(session);
     }
 

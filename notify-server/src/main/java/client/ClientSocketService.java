@@ -1,15 +1,12 @@
 package client;
 
 import com.lexsus.ariaddna.server.SharedQueue;
-import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,6 +14,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class ClientSocketService implements ClientSocketListener<String>{
 
+    public static final int DURATION = 5;
     private String dest;
     WebSocketClient client = new WebSocketClient();
     private SharedQueue<String> queue;
@@ -40,7 +38,7 @@ public class ClientSocketService implements ClientSocketListener<String>{
 
     public void start() throws Exception {
 
-        SimpleEchoSocket socket = new SimpleEchoSocket(this);
+        AutoConnectSocket socket = new AutoConnectSocket(this);
         try
         {
             client.start();
@@ -57,7 +55,7 @@ public class ClientSocketService implements ClientSocketListener<String>{
         }
     }
 
-    private void connect(SimpleEchoSocket socket){
+    private void connect(AutoConnectSocket socket){
         URI echoUri = null;
         try {
             echoUri = new URI(dest);
@@ -74,7 +72,7 @@ public class ClientSocketService implements ClientSocketListener<String>{
 
         // wait for closed socket connection.
         try {
-            socket.awaitClose(5, TimeUnit.SECONDS);
+            socket.awaitClose(DURATION, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -86,6 +84,6 @@ public class ClientSocketService implements ClientSocketListener<String>{
     @Override
     public void onClose(int statusCode, String reason) {
         if (client.isRunning())
-            connect(new SimpleEchoSocket(this));
+            connect(new AutoConnectSocket(this));
     }
 }

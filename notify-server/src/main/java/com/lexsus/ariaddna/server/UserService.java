@@ -7,9 +7,9 @@ import java.io.IOException;
 /**
  * Created by LugovoyAV on 04.04.2017.
  */
-public interface UserService {
-    void sendMessage(ClientInfo clientInfo, String text) throws IOException;
-    void sendMessageAll(String text) throws IOException;
+public interface UserService<E> {
+    void sendMessage(ClientInfo clientInfo, E message) throws IOException;
+    void sendMessageAll(E message) throws IOException;
     void addClient(Session session);
     void removeClient(Session session);
 }

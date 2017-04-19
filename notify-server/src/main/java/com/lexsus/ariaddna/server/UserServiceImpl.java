@@ -1,6 +1,7 @@
 package com.lexsus.ariaddna.server;
 
 import client.Client;
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import org.eclipse.jetty.websocket.api.Session;
 import org.springframework.stereotype.Service;
 
@@ -15,17 +16,17 @@ import java.util.concurrent.*;
  * Created by LugovoyAV on 04.04.2017.
  */
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl<E> implements UserService<E>{
     
     private ConcurrentHashMap<Session,ClientInfo> queueUsers = new ConcurrentHashMap<>();
 
-    private ConcurrentHashMap<ClientInfo,BlockingQueue<String>> clientMap = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<ClientInfo,BlockingQueue<E>> clientMap = new ConcurrentHashMap<>();
     private HashMap<ClientInfo,WorkerThread> workerHashMap = new HashMap<>();
-
+    private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(UserServiceImpl.class);
 
     @Override
     //TODO individual message
-    public void sendMessage(ClientInfo clientInfo, String text) throws IOException {
+    public void sendMessage(ClientInfo clientInfo, E message) throws IOException {
 //        for (Session session :
 //                queueUsers) {
 
@@ -34,32 +35,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void sendMessageAll(String text) throws IOException {
-        Set<Map.Entry<ClientInfo,BlockingQueue<String>>> set = clientMap.entrySet();
-        System.out.println("sendMessageAll text ="+ text);
-        if (set==null)
-        {
-            System.out.println("set == null ");
-        }
-
-
-        //Iterator<Map.Entry<ClientInfo,BlockingQueue<String>>> iter = set.iterator();
-        for (Map.Entry<ClientInfo,BlockingQueue<String>> entry:set) {
+    public void sendMessageAll(E message) throws IOException {
+        Set<Map.Entry<ClientInfo,BlockingQueue<E>>> set = clientMap.entrySet();
+        for (Map.Entry<ClientInfo,BlockingQueue<E>> entry:set) {
            try {
-                BlockingQueue<String> q = entry.getValue();
-                if (q==null) {
+                BlockingQueue<E> q = entry.getValue();
+                q.put(message);
 
-                    System.out.println("queue==null");
-                }
-                else
-                {
-                    if (text==null)
-                    {
-                        System.out.println("text==null");
-                    }
-                    System.out.println("service message put = "+text);
-                    q.put(text);
-                }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -74,7 +56,7 @@ public class UserServiceImpl implements UserService{
             if (worker != null)
                 worker.setStopped(true);
         }
-        System.out.println("remove Client");
+        LOGGER.debug("remove Client");
         clientMap.remove(client);
         queueUsers.remove(session);
     }
