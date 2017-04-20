@@ -9,7 +9,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>extarnal-cloud-api</artifactId>
+    <artifactId>rest-api-cloud-client</artifactId>
 
     <dependencies>
         <dependency>
