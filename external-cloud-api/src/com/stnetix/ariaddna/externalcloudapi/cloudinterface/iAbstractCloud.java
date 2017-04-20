@@ -16,8 +16,6 @@ public interface iAbstractCloud {
      * information which may be converted into JSON Object.
      */
 
-    //TODO look for possibility of a cloud provider to return successfully sent byte amount.
-    //TODO Function should take as a parameter a ref to a file chunk: Type?
     String uploadResource(String path);
 
     /**
