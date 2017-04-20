@@ -1,88 +1,90 @@
 package com.stnetix.ariaddna.externalcloudapi.cloudinterface;
 
 /**
- * This is an abstract interface containing general methods for manipulation with any external cloud storage.
+ * This is an abstract interface containing general methods for
+ * manipulation with resources at any external cloud storage.
  * Every certain cloud storage realization must implement this interface.
  */
 public interface iAbstractCloud {
     /**
-     * An uploadBinFile method implementation takes as a parameter a reference to a file-chunk.
-     * After that it should initiate a transferring procedure to an external cloud storage.
-     * @return The method implementation should return the amount of successfully sent bytes orex
-     * zero if the transfer fails.
+     * An uploadResource method implementation takes as a parameter a path to a resource
+     * which is stored at user's local HDD/SSD and sends it to an external cloud storage.
+     * Notice, that resource may be a file or directory with files.
+     *
+     * @param path A path to a resource at user's local storage.
+     * @return String representation of response with usefull
+     * information which may be converted into JSON Object.
      */
 
     //TODO look for possibility of a cloud provider to return successfully sent byte amount.
     //TODO Function should take as a parameter a ref to a file chunk: Type?
-    int uploadFile();
+    String uploadResource(String path);
 
     /**
-     * Provides the ability to upload a file from one cloud disk storage to another.
-     * @param path A path where the uploaded file should be stored.
-     * @param url A URL of an external file which may be provided by another cloud.
-     *            Also may be any link to any file in the Internet.
+     * Provides the ability to upload a resource from one cloud disk storage to another.
+     * A method should somehow request a URL for downloading and pass it as parameter.
+     * Also a URL may point to any file that is available at the Internet.
+     * @param path A path where the uploaded resource should be stored.
+     * @param url A URL to an external resource.
+     * @return String representation of response with usefull
+     * information which may be converted into JSON Object.
      */
-    void uploadFileExternally(String path, String url);
+    String uploadExternalResource(String path, String url);
 
     /**
      * A downloadBinFile method implementation is responsible for downloading a file-chunk from
      * a cloud storage to user's local storage.
+     * @param path
+     * @return String representation of response with usefull
+     * information which may be converted into JSON Object.
      */
-    //TODO what should be a parameter and a return value?
-    void downloadFile();
+    String downloadResource(String path);
 
     /**
      * Provides a copying procedure. Thus as a result one should have to similar files.
      * @param from Stands for the path to a file that would be copied.
-     * @param path This is a new path for the copied file.
+     * @param to This is a new path for the copied file.
+     * @return String representation of response with usefull
+     * information which may be converted into JSON Object.
      */
-    void copyFile(String from, String path);
+    String copyFile(String from, String to);
 
     /**
      * This method implementation moves the file from one path to another.
      * @param from Stands for the path to a file that would be copied.
-     * @param path This is a new path where the file will be moved.
+     * @param to This is a new path where the file will be moved.
+     * @return String representation of response with usefull
+     * information which may be converted into JSON Object.
      */
-    void moveFile(String from, String path);
+    String moveFile(String from, String to);
 
     /**
      * A createDirectory implementation method allows one to create a new folder or directory
      * at a cloud storage.
      * @param path A path where a new directory will be created relatively a root of a cloud storage.
-     * @return Gives back a URL to a created folder.
+     * @return String representation of response with usefull
+     * information which may be converted into JSON Object.
      */
     String createDirectory(String path);
 
     /**
-     * This method implementation should remove a directory or a file.
+     * This method implementation should delete a directory or a file.
      * @param path A path to a file which would be removed.
-     * @return A method implementation should return true if a directory was remove and false otherwise.
+     * @return String representation of response with usefull
+     * information which may be converted into JSON Object.
      */
-    //FIXME should it be a response body?
-    boolean removeFile(String path);
+    String deleteResource(String path);
 
     /**
      * A method implementation should provide the possibility to receive
-     * different information about a file.
+     * different information about a resource.
      * E.g. creation time, file type, size and so on.
-     * Notice, that "file" both means a usual file and a directory.
-     * @return JSON object with meta data.
+     * Notice, that "resource" both means a usual file and a directory.
+     * @return String representation of response with usefull
+     * information which may be converted into JSON Object.
      */
-    //FIXME return and param values
-    String getFileMetaData();
+    String getResourceMetadata(String path);
 
-    /**
-     * This method implementation should work similar with getFileMetaData but retrieving information about directory.
-     */
-    //FIXME return and param values
-    void getDirectoryMetaData();
-
-    /**
-     * This method implementation should provide the ability to figure out how much available space for a user
-     * is at a cloud storage.
-     * @return Free space in bytes.
-     */
-    int getAvailableSpace();
 
     /**
      * An implementation should allow one to get as much informaation
@@ -93,7 +95,8 @@ public interface iAbstractCloud {
      * - used space
      * = free space
      *
-     * @return JSON object with a data.
+     * @return String representation of response with usefull
+     * information which may be converted into JSON Object.
      */
-    int getCloudDiskMetadata();
+    String getCloudDiskMetadata();
 }
