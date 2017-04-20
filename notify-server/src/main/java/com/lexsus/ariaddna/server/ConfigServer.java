@@ -5,6 +5,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import javax.json.JsonObject;
+
 /**
  * Created by Lexsus on 01.04.2017.
  */
@@ -13,35 +15,35 @@ import org.springframework.context.annotation.Scope;
 public class ConfigServer {
 
     @Bean()
-    public UserService userServiceImpl(){return new UserServiceImpl<String>();}
+    public UserService userServiceImpl(){return new UserServiceImpl<JsonObject>();}
 
     @Bean
     public MyAdvancedEchoCreator webSocketCreator(){return new MyAdvancedEchoCreator(userServiceImpl());}
 
     @Bean
     @Scope("singleton")
-    public SharedQueue<String> queue(){
+    public SharedQueue<JsonObject> queue(){
         return new SharedQueue<>();
     }
 
     @Bean
-    public MessageProcessor<String> processor() {
+    public MessageProcessor<JsonObject> processor() {
         return new ServerMessageProcessor();
     }
 
     @Bean
-    public IPushConsume<String> consumer() {
+    public IPushConsume<JsonObject> consumer() {
         return new PushConsumeServerImpl(queue(),  processor());
     }
 
     @Bean
-    public MessageGenerator<String> generator() {
+    public MessageGenerator<JsonObject> generator() {
         //NOTE: spring will scan dependencies because of ComponentScan and inject them
-        return new ServerMessageGenerator();
+        return new JSONServerMessageGenerator();
     }
 
     @Bean
-    public IPushProduce<String> producer() {
+    public IPushProduce<JsonObject> producer() {
         return new PushProduceServerImpl(queue(), generator());
     }
 

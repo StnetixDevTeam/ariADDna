@@ -3,11 +3,11 @@ package com.lexsus.ariaddna.server;
 /**
  * Created by LugovoyAV on 31.03.2017.
  */
-public class ServerMessageSystem {
-    IPushConsume<String> consumer;
-    IPushProduce<String> producer;
+public class ServerMessageSystem <E>{
+    IPushConsume<E> consumer;
+    IPushProduce<E> producer;
     boolean isStopped = false;
-    public ServerMessageSystem(IPushProduce<String> producer, IPushConsume<String> consumer) {
+    public ServerMessageSystem(IPushProduce<E> producer, IPushConsume<E> consumer) {
         this.producer = producer;
         this.consumer = consumer;
     }

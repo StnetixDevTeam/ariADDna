@@ -1,5 +1,6 @@
 package com.lexsus.ariaddna.server;
 
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import org.eclipse.jetty.websocket.api.Session;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.concurrent.BlockingQueue;
  * Created by LugovoyAV on 06.04.2017.
  */
 public class WorkerThread<E> implements Runnable{
+    private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(PushProduceServerImpl.class);
     public void setStopped(boolean stopped) {
         isStopped = stopped;
     }
@@ -36,8 +38,11 @@ public class WorkerThread<E> implements Runnable{
                 try {
                     //TODO Future<Void>
                     //TODO check String.valueOf(message)
-                    session.getRemote().sendString(String.valueOf(message));
-                    System.out.println("send message:"+message);
+                    if (session.isOpen()) {
+                        session.getRemote().sendString(String.valueOf(message));
+                        LOGGER.debug("send message:" + message);
+                    } else
+                        LOGGER.debug("Can't send message session is closed" );
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
