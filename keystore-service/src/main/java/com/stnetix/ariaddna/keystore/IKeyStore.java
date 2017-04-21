@@ -1,8 +1,10 @@
 package com.stnetix.ariaddna.keystore;
 
 import com.stnetix.ariaddna.keystore.exceptions.KeyStoreException;
-import com.stnetix.ariaddna.keystore.impl.KeyStore;
 
+
+import java.io.File;
+import java.security.KeyStore;
 import java.security.cert.Certificate;
 import java.util.UUID;
 
@@ -12,48 +14,65 @@ import java.util.UUID;
 public interface IKeyStore {
 
     /**
-     * This method generate KeyStore file on called side.
-     * @return KeyStore object.
+     * This method generate file with keystore.
+     * @return File of keystore.
      * */
-    KeyStore generateKeyStore() throws KeyStoreException;
+    File generateKeyStore() throws KeyStoreException;
 
     /**
-     * This method generate {@link Certificate} by users UUID.
-     * @return  generated Certificate.
+     * This method generate file with keystore of disable certificates.
+     * @return File of disable certificates.
      * */
-    Certificate generateCert(UUID uuid) throws KeyStoreException;
+    File generateDisableKeyStore() throws KeyStoreException;
 
     /**
-     * This method store {@link Certificate} into local keystore file.
-     * @param cert is Certificate to store.
+     * This method generate certificate {@link File} by users UUID.
+     * @return  generated certificate file.
      * */
-    void storeCert(Certificate cert) throws KeyStoreException;
+    File generateCert(UUID uuid) throws KeyStoreException;
+
+    /**
+     * This method store certificate {@link File} into keystore file.
+     * @param certFile is certificate file to store.
+     * @param keyStore is keystore file where certificate was stored.
+     * */
+    void storeCert(File certFile, File keyStore) throws KeyStoreException;
 
     /**
      * This method check is Certificate valid.
+     * @param certFile is certificate file.
      * @return true if Certificate is valid.
      * */
-    boolean isValidCert(Certificate cert) throws KeyStoreException;
+    boolean isValidCert(File certFile) throws KeyStoreException;
 
     /**
-     * This method check local KeyStore file contain the Certificate.
-     * @return true if local KeyStore contain the Certificate.
+     * This method check KeyStore file contain the Certificate file.
+     * @param certFile is certificate file.
+     * @param keyStore is keystore file where certificate was stored.
+     * @return true if KeyStore contain the certificate.
      * */
-    boolean isKeyStoreContainCert(Certificate cert) throws KeyStoreException;
+    boolean isKeyStoreContainCert(File certFile, File keyStore) throws KeyStoreException;
 
     /**
      * This method find in local KeyStore Certificate where alias id UUID.
-     * @return Certificate.
+     * @param uuid
+     * @param keyStore is keystore file.
+     * @return certificate file.
      * */
-    Certificate getCertByUUID(UUID uuid) throws KeyStoreException;
+    File getCertByUUID(UUID uuid, File keyStore) throws KeyStoreException;
 
     /**
-     * This method remove Certificate from local KeyStore
+     * This method remove Certificate from KeyStore
+     * @param certFile is certificate file.
+     * @param keyStoreFrom is keystore file where certificate was deleted.
      * */
-    void removeCert(Certificate cert) throws KeyStoreException;
+    void removeCert(File certFile, File keyStoreFrom) throws KeyStoreException;
 
     /**
      * This method mark Certificate as disabled.
+     * @param certFile is certificate file.
+     * @param keyStoreFrom is keystore file with active certificates.
+     * @param keyStoreTo is keystore file with disable certificates.
      * */
-    void disableCert(Certificate cert) throws KeyStoreException;
+    void disableCert(File certFile, File keyStoreFrom, File keyStoreTo) throws KeyStoreException;
 }
