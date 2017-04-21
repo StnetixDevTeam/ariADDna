@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import javax.json.JsonObject;
+
 /**
  * Created by LugovoyAV on 14.04.2017.
  */
@@ -12,17 +14,17 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan("com.lexsus.ariaddna")
 public class ConfigClient {
     @Bean
-    public SharedQueue<String> queue(){
+    public SharedQueue<JsonObject> queue(){
         return new SharedQueue<>();
     }
 
     @Bean
-    public MessageProcessor<String> processor() {
+    public MessageProcessor<JsonObject> processor() {
         return new ClientMessageProcessor();
     }
 
     @Bean
-    public IPushConsume<String> consumer() {
+    public IPushConsume<JsonObject> consumer() {
         return new PushClientConsumeImpl<>(queue(),  processor());
     }
 

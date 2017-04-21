@@ -10,12 +10,12 @@ import java.util.concurrent.BlockingQueue;
 /**
  * Created by LugovoyAV on 31.03.2017.
  */
-public class ClientMessageSystem {
-    IPushConsume<String> consumer;
+public class ClientMessageSystem<E> {
+    IPushConsume<E> consumer;
     @Autowired
     ClientSocketService clientService;
 
-    public ClientMessageSystem(IPushConsume<String> consumer) {
+    public ClientMessageSystem(IPushConsume<E> consumer) {
         this.consumer = consumer;
     }
 

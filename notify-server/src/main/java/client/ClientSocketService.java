@@ -12,22 +12,22 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by Lexsus on 30.03.2017.
  */
-public class ClientSocketService implements ClientSocketListener<String>{
+public class ClientSocketService<E> implements ClientSocketListener<E>{
 
     public static final int DURATION = 5;
     private String dest;
     WebSocketClient client = new WebSocketClient();
-    private SharedQueue<String> queue;
+    private SharedQueue<E> queue;
 
 
-    public ClientSocketService(String dest, SharedQueue<String> queue) {
+    public ClientSocketService(String dest, SharedQueue<E> queue) {
         this.dest = dest;
         this.queue = queue;
     }
 
 
     @Override
-    public void onMessage(String message) {
+    public void onMessage(E message) {
         try {
             queue.put(message);
 
@@ -81,8 +81,10 @@ public class ClientSocketService implements ClientSocketListener<String>{
     public void stop(){
 
     }
+
+
     @Override
-    public void onClose(int statusCode, String reason) {
+    public void onClose(int statusCode, E reason) {
         if (client.isRunning())
             connect(new AutoConnectSocket(this));
     }
