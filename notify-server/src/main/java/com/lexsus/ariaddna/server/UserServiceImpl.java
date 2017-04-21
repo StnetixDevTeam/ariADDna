@@ -1,13 +1,11 @@
 package com.lexsus.ariaddna.server;
 
-import client.Client;
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import org.eclipse.jetty.websocket.api.Session;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -55,10 +53,12 @@ public class UserServiceImpl<E> implements UserService<E>{
             WorkerThread worker = workerHashMap.get(session);
             if (worker != null)
                 worker.setStopped(true);
+
+            clientMap.remove(client);
+            queueUsers.remove(session);
+            LOGGER.debug("remove Client");
         }
-        LOGGER.debug("remove Client");
-        clientMap.remove(client);
-        queueUsers.remove(session);
+
     }
 
     private ClientInfo GetClientInfoBySession(Session session) {
