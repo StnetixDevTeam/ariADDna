@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.security.KeyStore;
+import java.util.UUID;
 
 /**
  * Created by alexkotov on 20.04.17.
@@ -23,14 +24,16 @@ public class KeyFactory {
 
     private static final String KEYSTORE_PATH;
     private static final String DISABLED_KEYSTORE_PATH;
-    static final char[] PASS;
+    private static final char[] PASS;
     private static final AriaddnaLogger LOGGER;
+    private static final String KEYSTORE_FORMAT;
 
     static {
-        PASS = "password1".toCharArray();
+        PASS = UUID.randomUUID().toString().toCharArray();
         KEYSTORE_PATH = "ariaddna.keystore";
         DISABLED_KEYSTORE_PATH = "disabled_ariaddna.keystore";
         LOGGER = AriaddnaLogger.getLogger(KeyFactory.class);
+        KEYSTORE_FORMAT = "JKS";
     }
 
     public File getNewKeyStore() throws KeyStoreException {
@@ -57,7 +60,7 @@ public class KeyFactory {
             String alias = CertFactory.getCertFactory().getCertSubjectName(cert);
             LOGGER.info("Certificate with filename {} has Subject name {}", certFile.getAbsolutePath(), alias);
             FileInputStream fis = new FileInputStream(keyStoreFile);
-            KeyStore keyStore = KeyStore.getInstance("JKS");
+            KeyStore keyStore = KeyStore.getInstance(KEYSTORE_FORMAT);
             keyStore.load(fis,PASS);
             LOGGER.info("KeyStore load successful");
             fis.close();
@@ -78,7 +81,7 @@ public class KeyFactory {
         try (FileInputStream fis = new FileInputStream(keyStoreFile)) {
             X509CertImpl cert = (X509CertImpl) CertFactory.getCertFactory().getCertByFile(certFile);
             String alias = CertFactory.getCertFactory().getCertSubjectName(cert);
-            KeyStore keyStore = KeyStore.getInstance("JKS");
+            KeyStore keyStore = KeyStore.getInstance(KEYSTORE_FORMAT);
             keyStore.load(fis,PASS);
             LOGGER.info("Certificate with filename {} "+(keyStore.containsAlias(alias)?"contain":"not contain")+" in keystore with filename {}", certFile.getAbsolutePath(), keyStoreFile.getAbsolutePath());
             return keyStore.containsAlias(alias);
@@ -92,7 +95,7 @@ public class KeyFactory {
     public File getCertByAlias(String alias, File keyStoreFile) throws KeyStoreException {
         try {
             FileInputStream fis = new FileInputStream(keyStoreFile);
-            KeyStore keyStore = KeyStore.getInstance("JKS");
+            KeyStore keyStore = KeyStore.getInstance(KEYSTORE_FORMAT);
             keyStore.load(fis,PASS);
             LOGGER.info("KeyStore {} loaded successful.", keyStoreFile.getAbsolutePath());
             fis.close();
@@ -116,7 +119,7 @@ public class KeyFactory {
             String alias = CertFactory.getCertFactory().getCertSubjectName(cert);
 
             FileInputStream fis = new FileInputStream(keyStoreFile);
-            KeyStore keyStore = KeyStore.getInstance("JKS");
+            KeyStore keyStore = KeyStore.getInstance(KEYSTORE_FORMAT);
             keyStore.load(fis,PASS);
             fis.close();
 
@@ -136,7 +139,7 @@ public class KeyFactory {
     private File generateKeyStoreByName(String name) throws KeyStoreException {
         KeyStore keyStore = null;
         try (FileOutputStream fos = new FileOutputStream(name)) {
-            keyStore = KeyStore.getInstance("JKS");
+            keyStore = KeyStore.getInstance(KEYSTORE_FORMAT);
             keyStore.load(null, PASS);
             keyStore.store(fos,PASS);
             File keyStoreFile = new File(name);

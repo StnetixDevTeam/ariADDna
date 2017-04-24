@@ -20,35 +20,49 @@ import java.util.Date;
  */
 public class CertFactory {
     private static final CertFactory CERT_FACTORY = new CertFactory();
-    private CertFactory(){}
+
+    private CertFactory() {
+    }
 
     public static CertFactory getCertFactory() {
         return CERT_FACTORY;
     }
+
     private static final AriaddnaLogger LOGGER;
     private static final Date FROM;
     private static final Date TO;
     private static final int DAYS;
+    private static final String CRYPTO_ALGORITHM_RSA;
+    private static final String CRYPTO_ALGORITHM_SHA1RSA;
+    private static final int CERTIFICATE_SIZE;
+    private static final String SUBJECT_CN;
+    private static final String SUBJECT_L_C;
 
     static {
         LOGGER = AriaddnaLogger.getLogger(CertFactory.class);
         FROM = new Date(System.currentTimeMillis());
         DAYS = 365 * 10;
-        TO = new Date(System.currentTimeMillis() + 86400000L * DAYS );
+        TO = new Date(System.currentTimeMillis() + 86400000L * DAYS);
+        CRYPTO_ALGORITHM_RSA = "RSA";
+        CRYPTO_ALGORITHM_SHA1RSA = "SHA1withRSA";
+        CERTIFICATE_SIZE = 1024;
+        SUBJECT_CN = "CN=";
+        SUBJECT_L_C = "L=Russia, C=RU";
+
     }
 
-    public File getNewCertificate(String alias) throws KeyStoreException{
+    public File getNewCertificate(String alias) throws KeyStoreException {
         KeyPairGenerator keyPairGenerator = null;
         try {
-            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(1024);
+            keyPairGenerator = KeyPairGenerator.getInstance(CRYPTO_ALGORITHM_RSA);
+            keyPairGenerator.initialize(CERTIFICATE_SIZE);
             KeyPair keyPair = keyPairGenerator.generateKeyPair();
 
             PrivateKey privateKey = keyPair.getPrivate();
             X509CertInfo certInfo = new X509CertInfo();
-            CertificateValidity interval = new CertificateValidity(FROM,TO);
+            CertificateValidity interval = new CertificateValidity(FROM, TO);
             BigInteger sn = new BigInteger(64, new SecureRandom());
-            X500Name owner = new X500Name("CN="+alias+", L=Russia, C=RU");
+            X500Name owner = new X500Name(SUBJECT_CN + alias + ", "+SUBJECT_L_C);
 
             certInfo.set(X509CertInfo.VALIDITY, interval);
             certInfo.set(X509CertInfo.SERIAL_NUMBER, new CertificateSerialNumber(sn));
@@ -60,15 +74,15 @@ public class CertFactory {
             certInfo.set(X509CertInfo.ALGORITHM_ID, new CertificateAlgorithmId(algorithm));
 
             X509CertImpl cert = new X509CertImpl(certInfo);
-            cert.sign(privateKey,"SHA1withRSA");
+            cert.sign(privateKey, CRYPTO_ALGORITHM_SHA1RSA);
 
-            algorithm = (AlgorithmId)cert.get(X509CertImpl.SIG_ALG);
+            algorithm = (AlgorithmId) cert.get(X509CertImpl.SIG_ALG);
             certInfo.set(CertificateAlgorithmId.NAME + "." + CertificateAlgorithmId.ALGORITHM, algorithm);
             cert = new X509CertImpl(certInfo);
-            cert.sign(privateKey, "SHA1withRSA");
+            cert.sign(privateKey, CRYPTO_ALGORITHM_SHA1RSA);
 
-            File certFile = new File(alias+".cer");
-            if(certFile.createNewFile()){
+            File certFile = new File(alias + ".cer");
+            if (certFile.createNewFile()) {
                 FileOutputStream fos = new FileOutputStream(certFile);
                 fos.write(cert.getEncoded());
                 fos.close();
@@ -88,7 +102,7 @@ public class CertFactory {
             long notBefore = cert.getNotBefore().getTime();
             long notAfter = cert.getNotAfter().getTime();
             long now = System.currentTimeMillis();
-            LOGGER.info("Certificate {} is " + (now >= notBefore && now <= notAfter ? "valid": "not valid"), certFile.getAbsolutePath());
+            LOGGER.info("Certificate {} is " + (now >= notBefore && now <= notAfter ? "valid" : "not valid"), certFile.getAbsolutePath());
             return now >= notBefore && now <= notAfter;
         } catch (Exception e) {
             LOGGER.error("Exception: ", e);
