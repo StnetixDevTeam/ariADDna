@@ -1,4 +1,4 @@
-package com.lexsus.ariaddna.server;
+package com.stnetix.ariaddna.pushnotification.server;
 
 /**
  * Created by Lexsus on 01.04.2017.

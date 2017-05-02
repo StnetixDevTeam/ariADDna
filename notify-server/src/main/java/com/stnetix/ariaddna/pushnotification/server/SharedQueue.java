@@ -1,4 +1,4 @@
-package com.lexsus.ariaddna.server;
+package com.stnetix.ariaddna.pushnotification.server;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentLinkedQueue;

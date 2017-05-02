@@ -1,4 +1,4 @@
-package com.lexsus.ariaddna.server;
+package com.stnetix.ariaddna.pushnotification.server;
 
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeRequest;
 import org.eclipse.jetty.websocket.servlet.ServletUpgradeResponse;
@@ -7,12 +7,12 @@ import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
 /**
  * Created by Lexsus on 01.04.2017.
  */
-public class MyAdvancedEchoCreator implements WebSocketCreator
+public class AriaddnaWebSocketCreator implements WebSocketCreator
 {
-    private ToUpperWebSocket textEcho;
-    public MyAdvancedEchoCreator(UserService service)
+    private AriaddnaWebSocket textEcho;
+    public AriaddnaWebSocketCreator(UserService service)
     {
-        this.textEcho = new ToUpperWebSocket(service);
+        this.textEcho = new AriaddnaWebSocket(service);
     }
 
     @Override

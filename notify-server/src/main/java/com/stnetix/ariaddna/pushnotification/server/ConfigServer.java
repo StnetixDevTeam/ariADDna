@@ -1,24 +1,25 @@
-package com.lexsus.ariaddna.server;
+package com.stnetix.ariaddna.pushnotification.server;
 
+import com.google.gson.JsonObject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
-import javax.json.JsonObject;
+
 
 /**
  * Created by Lexsus on 01.04.2017.
  */
 @Configuration
-@ComponentScan("com.lexsus.ariaddna")
+@ComponentScan("com.stnetix.ariaddna.pushnotification")
 public class ConfigServer {
 
     @Bean()
     public UserService userServiceImpl(){return new UserServiceImpl<JsonObject>();}
 
     @Bean
-    public MyAdvancedEchoCreator webSocketCreator(){return new MyAdvancedEchoCreator(userServiceImpl());}
+    public AriaddnaWebSocketCreator webSocketCreator(){return new AriaddnaWebSocketCreator(userServiceImpl());}
 
     @Bean
     @Scope("singleton")

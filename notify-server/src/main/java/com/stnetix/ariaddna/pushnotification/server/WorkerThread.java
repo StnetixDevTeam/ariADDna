@@ -1,4 +1,4 @@
-package com.lexsus.ariaddna.server;
+package com.stnetix.ariaddna.pushnotification.server;
 
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import org.eclipse.jetty.websocket.api.Session;

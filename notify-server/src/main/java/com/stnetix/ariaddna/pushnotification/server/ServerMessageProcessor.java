@@ -1,6 +1,5 @@
-package com.lexsus.ariaddna.server;
+package com.stnetix.ariaddna.pushnotification.server;
 
-import org.eclipse.jetty.websocket.api.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;

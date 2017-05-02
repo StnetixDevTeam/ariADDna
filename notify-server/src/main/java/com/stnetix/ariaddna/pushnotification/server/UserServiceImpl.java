@@ -1,13 +1,11 @@
-package com.lexsus.ariaddna.server;
+package com.stnetix.ariaddna.pushnotification.server;
 
-import client.Client;
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import org.eclipse.jetty.websocket.api.Session;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -27,11 +25,6 @@ public class UserServiceImpl<E> implements UserService<E>{
     @Override
     //TODO individual message
     public void sendMessage(ClientInfo clientInfo, E message) throws IOException {
-//        for (Session session :
-//                queueUsers) {
-
-//            session.getRemote().sendString("TextMessage");
-//        }
     }
 
     @Override
