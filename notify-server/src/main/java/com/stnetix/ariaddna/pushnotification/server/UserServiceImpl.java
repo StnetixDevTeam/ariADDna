@@ -48,10 +48,12 @@ public class UserServiceImpl<E> implements UserService<E>{
             WorkerThread worker = workerHashMap.get(session);
             if (worker != null)
                 worker.setStopped(true);
+
+            clientMap.remove(client);
+            queueUsers.remove(session);
+            LOGGER.debug("remove Client");
         }
-        LOGGER.debug("remove Client");
-        clientMap.remove(client);
-        queueUsers.remove(session);
+
     }
 
     private ClientInfo GetClientInfoBySession(Session session) {
