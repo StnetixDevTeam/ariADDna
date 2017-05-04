@@ -36,7 +36,10 @@ public class ConfigClient {
     }
 
     @Bean
-    public ClientSocketService clientPushNotification() {return new ClientSocketService("ws://127.0.0.1:8080/pushnotification",queue());}
+    public ConfigurationService configurationSrevice(){return new ConfigurationService();}
+
+    @Bean
+    public ClientSocketService clientPushNotification() {return new ClientSocketService(configurationSrevice().getPushNotificationServerURL(),queue());}
 
 
 }
