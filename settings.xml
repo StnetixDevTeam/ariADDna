@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Settings>
+	<PushNotificationServer URL="ws://127.0.0.1:8080/pushnotification" name="Ariaddna WS"/>
+</Settings>
