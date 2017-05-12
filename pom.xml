@@ -32,6 +32,8 @@
         <module>storage-service</module>
         <!--<module>notify-client</module>-->
         <module>notify-server</module>
+        <module>rest-api-cloud-client</module>
+
     </modules>
     <properties>
         <spring.version>4.3.6.RELEASE</spring.version>
