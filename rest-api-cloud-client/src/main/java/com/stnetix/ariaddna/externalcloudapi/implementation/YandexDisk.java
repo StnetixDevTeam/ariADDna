@@ -1,19 +1,20 @@
 package com.stnetix.ariaddna.externalcloudapi.implementation;
 
 import com.google.gson.JsonObject;
+import com.stnetix.ariaddna.externalcloudapi.AccessToken;
 import com.stnetix.ariaddna.externalcloudapi.cloudinterface.iAbstractCloud;
-import okhttp3.HttpUrl;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Base64;
 
 
 public class YandexDisk implements iAbstractCloud {
+
+    private static AccessToken accessToken;
 
     private static final String HOST_URL = "https://cloud-api.yandex.net";
 
@@ -21,7 +22,12 @@ public class YandexDisk implements iAbstractCloud {
 
     private static final String CLIENT_ID = "e8c6429fe5a3432cb13db5c000200b54";
 
-    private String verificationCode;
+    private static final String CLIENT_SECRET = "214fdb6c6cb04e91be34ff8ce939d102";
+
+    private String verificationCode = "3045024";
+
+    public static final MediaType JSON
+            = MediaType.parse("application/json; charset=utf-8");
 
     private OkHttpClient client;
 
@@ -106,8 +112,16 @@ public class YandexDisk implements iAbstractCloud {
         }
 
 
+
+
+        String json = madeJson();
+
+        String cred = Credentials.basic(CLIENT_ID, CLIENT_SECRET);
+
         Request request = new Request.Builder()
-                .url(authUrl)
+                .url("https://" + OAUTH_HOST + "/token")
+                .post(RequestBody.create(JSON, json ))
+                .header("Authorization", cred)
                 .build();
 
         try {
@@ -117,6 +131,11 @@ public class YandexDisk implements iAbstractCloud {
             e.printStackTrace();
         }
         return null;
+    }
+
+    String madeJson() {
+        return "grant_type=authorization_code"
+                + "&code=" + verificationCode;
     }
 
     @Override
