@@ -1,6 +1,7 @@
 package com.stnetix.ariaddna.externalcloudapi.implementation;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.stnetix.ariaddna.externalcloudapi.AccessToken;
 import com.stnetix.ariaddna.externalcloudapi.cloudinterface.iAbstractCloud;
 import okhttp3.*;
@@ -14,9 +15,9 @@ import java.util.Base64;
 
 public class YandexDisk implements iAbstractCloud {
 
-    private static AccessToken accessToken;
+    private AccessToken accessToken;
 
-    private static final String HOST_URL = "https://cloud-api.yandex.net";
+    private static final String HOST_URL = "cloud-api.yandex.net";
 
     private static final String OAUTH_HOST = "oauth.yandex.ru";
 
@@ -24,7 +25,9 @@ public class YandexDisk implements iAbstractCloud {
 
     private static final String CLIENT_SECRET = "214fdb6c6cb04e91be34ff8ce939d102";
 
-    private String verificationCode = "3045024";
+    private String verificationCode = "8036817";
+
+    private String tempAccessToken = "AQAAAAAIFbt3AAMrdZAyyabtukr0k-pKAH9gcgY";
 
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
@@ -33,6 +36,33 @@ public class YandexDisk implements iAbstractCloud {
 
     public YandexDisk() {
         client = new OkHttpClient();
+    }
+
+    private HttpUrl constructOAuthUrl(){
+        return new HttpUrl.Builder()
+                .scheme("https")
+                .host(OAUTH_HOST)
+                .addPathSegment("authorize")
+                .addQueryParameter("response_type", "code")
+                .addQueryParameter("client_id", CLIENT_ID)
+                .build();
+    }
+
+    private void openOAuthPage(){
+        try {
+            Desktop desktop = java.awt.Desktop.getDesktop();
+            desktop.browse(constructOAuthUrl().uri());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setVerificationCode(String value){
+        this.verificationCode = value;
+    }
+
+    public String getVerificationCode(){
+        return this.verificationCode;
     }
 
     @Override
@@ -77,59 +107,56 @@ public class YandexDisk implements iAbstractCloud {
 
     @Override
     public JsonObject getCloudStorageMetadata() {
-        return null;
+        JsonParser parser = new JsonParser();
+        JsonObject result = new JsonObject();
+        Request request = new Request.Builder()
+                .url("https://" + HOST_URL + "/v1/disk")
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "OAuth " + tempAccessToken)
+                .get()
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() == 200) {
+
+                result = parser.parse(response.body().string()).getAsJsonObject();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
     public JsonObject getCloudStorageAuthToken() {
-/*        Request request = new Request.Builder()
-                .url(HOST_URL)
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .build();
-        try {
-            Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+        if(verificationCode == null) {
+            //FIXME Somehow we need to set the verification code value that a user will see at a page
+            //How to call setVerificationCode(..) _conveniently_? Maybe popup-window?
+            openOAuthPage();
+        } else {
+            String authCred = Credentials.basic(CLIENT_ID, CLIENT_SECRET);
+            String bodyParam = "grant_type=authorization_code&code=" + verificationCode;
 
-
-        HttpUrl authUrl = new HttpUrl.Builder()
-                .scheme("https")
-                .host(OAUTH_HOST)
-                .addPathSegment("authorize")
-                .addQueryParameter("response_type", "code")
-                .addQueryParameter("client_id", CLIENT_ID)
-                .build();
-
-
-        try {
-            Desktop desktop = java.awt.Desktop.getDesktop();
-            desktop.browse(authUrl.uri());
-        } catch (Exception e) {
-            e.printStackTrace();
+            Request request = new Request.Builder()
+                    .url("https://" + OAUTH_HOST + "/token")
+                    .header("Authorization", authCred)
+                    .post(RequestBody.create(JSON, bodyParam ))
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                if(response.code() == 200) {
+                    JsonParser parser = new JsonParser();
+                    JsonObject o = parser.parse(response.body().string()).getAsJsonObject();
+                    accessToken = AccessToken.buildAccessToken(o);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
-
-
-
-        String json = madeJson();
-
-        String cred = Credentials.basic(CLIENT_ID, CLIENT_SECRET);
-
-        Request request = new Request.Builder()
-                .url("https://" + OAUTH_HOST + "/token")
-                .post(RequestBody.create(JSON, json ))
-                .header("Authorization", cred)
-                .build();
-
-        try {
-            Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 
@@ -145,6 +172,7 @@ public class YandexDisk implements iAbstractCloud {
 
     public static void main(String[] args) {
         YandexDisk yandexDisk = new YandexDisk();
-        yandexDisk.getCloudStorageAuthToken();
+       // yandexDisk.getCloudStorageAuthToken();
+        yandexDisk.getCloudStorageMetadata();
     }
 }
