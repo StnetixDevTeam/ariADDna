@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Base64;
 
+//TODO Выделить в отдельный модуль все хосты и огрызки URL'ов
+//TODO Отправлять в БД настройки облака
+//TODO Продумать способ хранения множества аккаунтов
 
 public class YandexDisk implements iAbstractCloud {
 

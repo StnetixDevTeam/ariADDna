@@ -19,6 +19,7 @@ public class AccessToken {
     }
 
     public static AccessToken buildAccessToken(JsonObject authResponse){
+
         return new AccessToken(
                         authResponse.get("token_type").toString(),
                         authResponse.get("access_token").toString(),
