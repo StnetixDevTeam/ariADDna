@@ -52,6 +52,5 @@ public class ArriaddnaWebSocketServlet extends WebSocketServlet{
         serverMessageSystem.runMessagesSystem();
         AriaddnaWebSocketCreator socket = applicationContext.getBean(AriaddnaWebSocketCreator.class);
         factory.setCreator(socket);
-
     }
 }

@@ -9,15 +9,16 @@ import org.eclipse.jetty.websocket.servlet.WebSocketCreator;
  */
 public class AriaddnaWebSocketCreator implements WebSocketCreator
 {
-    private AriaddnaWebSocket textEcho;
+    private AriaddnaWebSocket ariaddnaWebSocket;
     public AriaddnaWebSocketCreator(UserService service)
     {
-        this.textEcho = new AriaddnaWebSocket(service);
+        this.ariaddnaWebSocket = new AriaddnaWebSocket(service);
     }
 
     @Override
     public Object createWebSocket(ServletUpgradeRequest req, ServletUpgradeResponse resp)
     {
-        return textEcho;
+        return ariaddnaWebSocket;
     }
+
 }
