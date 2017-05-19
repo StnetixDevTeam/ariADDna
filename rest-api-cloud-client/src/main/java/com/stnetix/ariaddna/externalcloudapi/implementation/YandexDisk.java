@@ -24,13 +24,14 @@ public class YandexDisk implements iAbstractCloud {
 
     private static final String OAUTH_HOST = "oauth.yandex.ru";
 
-    private static final String CLIENT_ID = "e8c6429fe5a3432cb13db5c000200b54";
+    private static final String CLIENT_ID = "141588389ce24e4e80e6ccd5db81c7a6";
 
-    private static final String CLIENT_SECRET = "214fdb6c6cb04e91be34ff8ce939d102";
+    private static final String CLIENT_SECRET = "7fbc2f7214b64d53809249b5534291d2";
 
-    private String verificationCode = "8036817";
+    private String verificationCode = "4306705";
 
-    private String tempAccessToken = "AQAAAAAIFbt3AAMrdZAyyabtukr0k-pKAH9gcgY";
+    private String tempAccessToken = "AQAAAAAeFNwNAARF-Tixdh81n007h52kXupp1qg";
+
 
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
@@ -95,7 +96,28 @@ public class YandexDisk implements iAbstractCloud {
 
     @Override
     public JsonObject createDirectory(File path) {
-        return null;
+        JsonParser parser = new JsonParser();
+        JsonObject result = new JsonObject();
+
+        String folderName = "path: TEST";
+        Request request = new Request.Builder()
+                .url("https://" + HOST_URL + "/v1/disk/resources?path=TEST")
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "OAuth " + tempAccessToken)
+                .build();
+
+        try {
+            Response response = client.newCall(request).execute();
+            if(response.code() == 200) {
+
+                result = parser.parse(response.body().string()).getAsJsonObject();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
 
     @Override
@@ -175,7 +197,8 @@ public class YandexDisk implements iAbstractCloud {
 
     public static void main(String[] args) {
         YandexDisk yandexDisk = new YandexDisk();
-       // yandexDisk.getCloudStorageAuthToken();
-        yandexDisk.getCloudStorageMetadata();
+    //    yandexDisk.getCloudStorageAuthToken();
+     //yandexDisk.getCloudStorageAuthToken();
+       yandexDisk.createDirectory(null);
     }
 }

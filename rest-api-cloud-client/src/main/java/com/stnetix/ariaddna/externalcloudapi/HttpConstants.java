@@ -14,6 +14,8 @@ public final class HttpConstants {
     public static final String YANDEX_DISK_OAUTH_HOST = "oauth.yandex.ru";
     public static final String YANDEX_DISK_API_VER = "v1";
     public static final String YANDEX_DISK_ROOT = "disk";
+    public static final String YANDEX_DISK_RESOURSES = "resources";
+
 
     private HttpConstants(){
 
