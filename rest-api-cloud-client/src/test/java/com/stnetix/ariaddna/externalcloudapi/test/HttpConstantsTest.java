@@ -8,13 +8,16 @@ import org.junit.Test;
 public class HttpConstantsTest {
     @Test
     public void testConstructUrl(){
-            HttpUrl url = new HttpUrl.Builder()
+        HttpUrl url = new HttpUrl.Builder()
                     .scheme(HTTPS_SCHEME)
-                    .host(YANDEX_DISK_HOST)
-                    .addPathSegment(YANDEX_DISK_API_VER)
-                    .addPathSegment(YANDEX_DISK_ROOT)
+                    .host(YD_HOST)
+                    .addPathSegment(YD_API_VER)
+                    .addPathSegment(YD_ROOT)
                     .build();
 
+        System.out.println(url.toString());
+
         Assert.assertEquals("https://cloud-api.yandex.net/v1/disk", url.toString());
+
     }
 }

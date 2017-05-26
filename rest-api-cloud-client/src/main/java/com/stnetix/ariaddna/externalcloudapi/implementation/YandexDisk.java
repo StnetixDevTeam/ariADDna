@@ -1,22 +1,26 @@
 package com.stnetix.ariaddna.externalcloudapi.implementation;
 
+import static com.stnetix.ariaddna.externalcloudapi.HttpConstants.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.stnetix.ariaddna.externalcloudapi.AccessToken;
 import com.stnetix.ariaddna.externalcloudapi.cloudinterface.iAbstractCloud;
 import okhttp3.*;
+import okhttp3.internal.Util;
+import okio.ByteString;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Base64;
 
 //TODO Выделить в отдельный модуль все хосты и огрызки URL'ов
 //TODO Отправлять в БД настройки облака
 //TODO Продумать способ хранения множества аккаунтов
 
 public class YandexDisk implements iAbstractCloud {
+
+    private JsonParser parser;
 
     private AccessToken accessToken;
 
@@ -28,9 +32,13 @@ public class YandexDisk implements iAbstractCloud {
 
     private static final String CLIENT_SECRET = "7fbc2f7214b64d53809249b5534291d2";
 
-    private String verificationCode = "4306705";
+    private String verificationCode = "4393020";
 
     private String tempAccessToken = "AQAAAAAeFNwNAARF-Tixdh81n007h52kXupp1qg";
+
+    private static String DISK_ROOT = "disk:/";
+
+    private static String APP_ROOT = "app:/";
 
 
     public static final MediaType JSON
@@ -40,6 +48,7 @@ public class YandexDisk implements iAbstractCloud {
 
     public YandexDisk() {
         client = new OkHttpClient();
+        parser = new JsonParser();
     }
 
     private HttpUrl constructOAuthUrl(){
@@ -96,19 +105,23 @@ public class YandexDisk implements iAbstractCloud {
 
     @Override
     public JsonObject createDirectory(File path) {
-        JsonParser parser = new JsonParser();
+
         JsonObject result = new JsonObject();
 
-        String folderName = "path: TEST";
+        String folderName = "path=disk:/T2EST";
+        //TODO создание папки должно быть рекурсивным
         Request request = new Request.Builder()
-                .url("https://" + HOST_URL + "/v1/disk/resources?path=TEST")
+                .url("https://" + HOST_URL + "/v1/disk/resources?path=" +
+                        APP_ROOT + path.getParent() + path.getName())
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "OAuth " + tempAccessToken)
+                .put(Util.EMPTY_REQUEST)
                 .build();
 
         try {
             Response response = client.newCall(request).execute();
+            System.out.println(response.body().string());
             if(response.code() == 200) {
 
                 result = parser.parse(response.body().string()).getAsJsonObject();
@@ -132,7 +145,6 @@ public class YandexDisk implements iAbstractCloud {
 
     @Override
     public JsonObject getCloudStorageMetadata() {
-        JsonParser parser = new JsonParser();
         JsonObject result = new JsonObject();
         Request request = new Request.Builder()
                 .url("https://" + HOST_URL + "/v1/disk")
@@ -185,11 +197,6 @@ public class YandexDisk implements iAbstractCloud {
         return null;
     }
 
-    String madeJson() {
-        return "grant_type=authorization_code"
-                + "&code=" + verificationCode;
-    }
-
     @Override
     public JsonObject revokeCloudStorageAuthToken() {
         return null;
@@ -197,8 +204,8 @@ public class YandexDisk implements iAbstractCloud {
 
     public static void main(String[] args) {
         YandexDisk yandexDisk = new YandexDisk();
-    //    yandexDisk.getCloudStorageAuthToken();
-     //yandexDisk.getCloudStorageAuthToken();
-       yandexDisk.createDirectory(null);
+      //  yandexDisk.getCloudStorageAuthToken();
+        yandexDisk.getCloudStorageMetadata();
+        yandexDisk.createDirectory(null);
     }
 }
