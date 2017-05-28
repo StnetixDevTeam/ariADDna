@@ -33,7 +33,6 @@
         <module>storage-service</module>
         <!--<module>notify-client</module>-->
         <module>notify-server</module>
-        <module>rest-api-cloud-client</module>
 
     </modules>
     <properties>

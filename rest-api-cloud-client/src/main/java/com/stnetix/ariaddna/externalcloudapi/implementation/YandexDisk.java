@@ -32,9 +32,11 @@ public class YandexDisk implements iAbstractCloud {
 
     private static final String CLIENT_SECRET = "7fbc2f7214b64d53809249b5534291d2";
 
-    private String verificationCode = "4393020";
+    private String verificationCode = "3650961";
 
-    private String tempAccessToken = "AQAAAAAeFNwNAARF-Tixdh81n007h52kXupp1qg";
+    private String tempAccessToken = "AQAAAAAeFNwNAARF-Q0jtdjwhUH6mR6qL3eeGhg";
+
+    private String tempAccessToken2 = "AQAAAAAeFNwNAARF-Tixdh81n007h52kXupp1qg";
 
     private static String DISK_ROOT = "disk:/";
 
@@ -78,6 +80,22 @@ public class YandexDisk implements iAbstractCloud {
         return this.verificationCode;
     }
 
+    private JsonObject sendRequest(Request request){
+        JsonObject result = new JsonObject();
+
+        try {
+            Response response = client.newCall(request).execute();
+            System.out.println(response.body().string());
+            if(response.code() == 200) {
+                result = parser.parse(response.body().string()).getAsJsonObject();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
     @Override
     public JsonObject uploadFile(File path) {
         return null;
@@ -105,32 +123,32 @@ public class YandexDisk implements iAbstractCloud {
 
     @Override
     public JsonObject createDirectory(File path) {
+        JsonObject result;
 
-        JsonObject result = new JsonObject();
-
-        String folderName = "path=disk:/T2EST";
-        //TODO создание папки должно быть рекурсивным
-        Request request = new Request.Builder()
-                .url("https://" + HOST_URL + "/v1/disk/resources?path=" +
-                        APP_ROOT + path.getParent() + path.getName())
-                .header("Accept", "application/json")
-                .header("Content-Type", "application/json")
-                .header("Authorization", "OAuth " + tempAccessToken)
-                .put(Util.EMPTY_REQUEST)
-                .build();
-
-        try {
-            Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
-            if(response.code() == 200) {
-
-                result = parser.parse(response.body().string()).getAsJsonObject();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(path.getParent() == null){
+            Request request = new Request.Builder()
+                    .url("https://" + HOST_URL + "/v1/disk/resources?path=" +
+                            APP_ROOT + path.getName())
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", "OAuth " + tempAccessToken)
+                    .put(Util.EMPTY_REQUEST)
+                    .build();
+            result = sendRequest(request);
+            return result;
+        } else {
+            createDirectory(path.getParentFile());
+            Request request = new Request.Builder()
+                    .url("https://" + HOST_URL + "/v1/disk/resources?path=" +
+                            APP_ROOT + slashSwap(path.getParent() + '/' + path.getName()))
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", "OAuth " + tempAccessToken)
+                    .put(Util.EMPTY_REQUEST)
+                    .build();
+            result = sendRequest(request);
+            return result;
         }
-
-        return result;
     }
 
     @Override
@@ -145,7 +163,7 @@ public class YandexDisk implements iAbstractCloud {
 
     @Override
     public JsonObject getCloudStorageMetadata() {
-        JsonObject result = new JsonObject();
+        JsonObject result;
         Request request = new Request.Builder()
                 .url("https://" + HOST_URL + "/v1/disk")
                 .header("Accept", "application/json")
@@ -154,16 +172,7 @@ public class YandexDisk implements iAbstractCloud {
                 .get()
                 .build();
 
-        try {
-            Response response = client.newCall(request).execute();
-            if(response.code() == 200) {
-
-                result = parser.parse(response.body().string()).getAsJsonObject();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        result = sendRequest(request);
         return result;
     }
 
@@ -193,7 +202,6 @@ public class YandexDisk implements iAbstractCloud {
                 e.printStackTrace();
             }
         }
-
         return null;
     }
 
@@ -202,10 +210,15 @@ public class YandexDisk implements iAbstractCloud {
         return null;
     }
 
-    public static void main(String[] args) {
-        YandexDisk yandexDisk = new YandexDisk();
-      //  yandexDisk.getCloudStorageAuthToken();
-        yandexDisk.getCloudStorageMetadata();
-        yandexDisk.createDirectory(null);
+    private String slashSwap(String s) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '\\') {
+                sb.append('/');
+            } else {
+                sb.append(s.charAt(i));
+            }
+        }
+        return sb.toString();
     }
 }

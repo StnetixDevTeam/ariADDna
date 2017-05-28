@@ -1,6 +1,5 @@
 package com.stnetix.ariaddna.externalcloudapi.test;
 
-import com.google.gson.JsonObject;
 import com.stnetix.ariaddna.externalcloudapi.cloudinterface.iAbstractCloud;
 import com.stnetix.ariaddna.externalcloudapi.implementation.YandexDisk;
 import org.junit.*;
@@ -10,43 +9,57 @@ import java.io.File;
 public class IAbstractCloudTest {
     private static iAbstractCloud cloud;
 
-    private static File dir;
-    private static File subDir;
+    private static File level_1;
+    private static File level_2;
+    private static File level_3;
+    private static File level_4;
 
     @BeforeClass
     public static void setUp(){
         cloud = new YandexDisk();
-        dir = new File("This_is_a_test_folder");
-        subDir = new File(dir, "sub directory");
+        level_1 = new File("Level 1");
+        level_2 = new File(level_1, "Level_2");
+        level_3 = new File(level_2, "Level-3");
+        level_4 = new File(level_3, "Level 4");
 
-        if(!dir.exists() & !subDir.exists()){
-            dir.mkdir();
-            subDir.mkdir();
-            System.out.println("Directories " + dir.getName() + " "
-                    + dir.getName() + "/" + subDir.getName() + " created");
+        if(!level_1.exists() & !level_2.exists()){
+            level_1.mkdir();
+            level_2.mkdir();
+            level_3.mkdir();
+            level_4.mkdir();
+            System.out.println("Directories " + level_1.getName() + " "
+                    + level_1.getName() + "/" + level_2.getName() + " created");
         }
     }
 
     @AfterClass
     public static void clean(){
-        if(dir.exists() & subDir.exists()){
-            subDir.delete();
-            dir.delete();
+        if(level_1.exists() & level_2.exists()){
+            level_4.delete();
+            level_3.delete();
+            level_2.delete();
+            level_1.delete();
             System.out.println("Directories were deleted");
         }
     }
 
-
+    @Ignore
+    @Test
+    public void testGetCloudStorageAuthToken() throws Exception {
+        cloud.getCloudStorageAuthToken();
+    }
     @Test
     public void testCreateDirectory() throws Exception {
-        cloud.createDirectory(dir);
-        cloud.createDirectory(subDir);
+//        cloud.createDirectory(level_1);
+//        cloud.createDirectory(level_2);
+        cloud.createDirectory(level_4);
     }
 
     @Test
     public void testDeleteDirectory() throws Exception {
-        cloud.deleteResource(dir);
-        cloud.deleteResource(subDir);
+        cloud.deleteResource(level_1);
     }
+
+
 
 }
