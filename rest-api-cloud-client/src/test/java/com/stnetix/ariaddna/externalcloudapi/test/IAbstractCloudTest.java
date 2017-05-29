@@ -48,6 +48,7 @@ public class IAbstractCloudTest {
     public void testGetCloudStorageAuthToken() throws Exception {
         cloud.getCloudStorageAuthToken();
     }
+
     @Test
     public void testCreateDirectory() throws Exception {
 //        cloud.createDirectory(level_1);
@@ -60,6 +61,10 @@ public class IAbstractCloudTest {
         cloud.deleteResource(level_1);
     }
 
-
+    @Test
+    public void testDownloadFile() throws Exception {
+        File path = new File("Мишки.jpg");
+        cloud.downloadFile(path);
+}
 
 }

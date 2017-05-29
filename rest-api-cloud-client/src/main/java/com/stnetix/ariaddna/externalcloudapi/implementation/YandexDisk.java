@@ -5,13 +5,14 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.stnetix.ariaddna.externalcloudapi.AccessToken;
 import com.stnetix.ariaddna.externalcloudapi.cloudinterface.iAbstractCloud;
+import com.sun.xml.internal.ws.encoding.MtomCodec;
+import com.sun.xml.internal.ws.util.ByteArrayBuffer;
 import okhttp3.*;
 import okhttp3.internal.Util;
 import okio.ByteString;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 
 //TODO Выделить в отдельный модуль все хосты и огрызки URL'ов
@@ -54,13 +55,14 @@ public class YandexDisk implements iAbstractCloud {
     }
 
     private HttpUrl constructOAuthUrl(){
-        return new HttpUrl.Builder()
+        return getOAuthUrl(Clouds.DropBox);
+       /* return new HttpUrl.Builder()
                 .scheme("https")
                 .host(OAUTH_HOST)
                 .addPathSegment("authorize")
                 .addQueryParameter("response_type", "code")
                 .addQueryParameter("client_id", CLIENT_ID)
-                .build();
+                .build();*/
     }
 
     private void openOAuthPage(){
@@ -85,7 +87,7 @@ public class YandexDisk implements iAbstractCloud {
 
         try {
             Response response = client.newCall(request).execute();
-            System.out.println(response.body().string());
+          //  System.out.println(response.body().string());
             if(response.code() == 200) {
                 result = parser.parse(response.body().string()).getAsJsonObject();
             }
@@ -96,6 +98,39 @@ public class YandexDisk implements iAbstractCloud {
         return result;
     }
 
+    private void saveFileOnDiks(String href, File path){
+        Request request = new Request.Builder()
+                .url(href)
+                .get()
+                .build();
+
+        Response response;
+
+
+        try {
+            response = client.newCall(request).execute();
+            if(response.code() == 200) {
+                if (path.exists()) {
+                    path.delete();
+                }
+
+                path.createNewFile();
+
+                InputStream is = response.body().byteStream();
+                BufferedInputStream bis = new BufferedInputStream(is);
+                FileOutputStream fos = new FileOutputStream(path);
+                BufferedOutputStream bos = new BufferedOutputStream(fos);
+                int cur = 0;
+                while ((cur = bis.read()) != -1) {
+                    bos.write(cur);
+                }
+                bos.close();
+                fos.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public JsonObject uploadFile(File path) {
         return null;
@@ -108,7 +143,22 @@ public class YandexDisk implements iAbstractCloud {
 
     @Override
     public JsonObject downloadFile(File path) {
-        return null;
+        Request request;
+        JsonObject result;
+            request = new Request.Builder()
+                    .url("https://" + HOST_URL + "/v1/disk/resources/download?path=" +
+                            APP_ROOT + path.getName())
+                    .header("Accept", "application/json")
+                    .header("Content-Type", "application/json")
+                    .header("Authorization", "OAuth " + tempAccessToken)
+                    .get()
+                    .build();
+        result = sendRequest(request);
+        String href = result.get("href").toString();
+        href = href.substring(1, href.length() -1 );
+        saveFileOnDiks(href, path);
+
+        return result;
     }
 
     @Override
