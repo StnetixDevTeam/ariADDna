@@ -65,6 +65,11 @@ public class IAbstractCloudTest {
     public void testDownloadFile() throws Exception {
         File path = new File("Мишки.jpg");
         cloud.downloadFile(path);
-}
+    }
 
+    @Test
+    public void testUploadFile() throws Exception {
+        File path = new File("Медвежата.jpg");
+        cloud.uploadFile(path);
+    }
 }

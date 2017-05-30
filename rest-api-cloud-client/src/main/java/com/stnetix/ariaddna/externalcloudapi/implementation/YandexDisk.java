@@ -5,11 +5,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.stnetix.ariaddna.externalcloudapi.AccessToken;
 import com.stnetix.ariaddna.externalcloudapi.cloudinterface.iAbstractCloud;
-import com.sun.xml.internal.ws.encoding.MtomCodec;
-import com.sun.xml.internal.ws.util.ByteArrayBuffer;
 import okhttp3.*;
 import okhttp3.internal.Util;
-import okio.ByteString;
 
 import java.awt.*;
 import java.io.*;
@@ -46,6 +43,9 @@ public class YandexDisk implements iAbstractCloud {
 
     public static final MediaType JSON
             = MediaType.parse("application/json; charset=utf-8");
+
+    public static final MediaType JPG
+            = MediaType.parse("image/jpeg");
 
     private OkHttpClient client;
 
@@ -98,7 +98,7 @@ public class YandexDisk implements iAbstractCloud {
         return result;
     }
 
-    private void saveFileOnDiks(String href, File path){
+    private void getFileFromCloud(String href, File path){
         Request request = new Request.Builder()
                 .url(href)
                 .get()
@@ -131,9 +131,43 @@ public class YandexDisk implements iAbstractCloud {
             e.printStackTrace();
         }
     }
+
+    private void sendFileToCloud(String href, File path){
+        Response response;
+
+        //Use path instead
+        File file = new File("Мишки.jpg");
+
+        try {
+            Request request = new Request.Builder()
+                    .url(href)
+                    .put(RequestBody.create(JPG, file))
+                    .build();
+            response = client.newCall(request).execute();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public JsonObject uploadFile(File path) {
-        return null;
+        Request request;
+        JsonObject result;
+        request = new Request.Builder()
+                .url("https://" + HOST_URL + "/v1/disk/resources/upload?path=" +
+                        APP_ROOT + path.getName())
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "OAuth " + tempAccessToken)
+                .get()
+                .build();
+        result = sendRequest(request);
+        String href = result.get("href").toString();
+        href = href.substring(1, href.length() -1 );
+        sendFileToCloud(href, path);
+
+        return result;
     }
 
     @Override
@@ -156,7 +190,7 @@ public class YandexDisk implements iAbstractCloud {
         result = sendRequest(request);
         String href = result.get("href").toString();
         href = href.substring(1, href.length() -1 );
-        saveFileOnDiks(href, path);
+        getFileFromCloud(href, path);
 
         return result;
     }
