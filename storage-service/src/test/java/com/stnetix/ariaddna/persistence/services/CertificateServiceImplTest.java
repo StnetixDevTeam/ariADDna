@@ -2,12 +2,20 @@ package com.stnetix.ariaddna.persistence.services;
 
 import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
 import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 
+import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,16 +25,25 @@ import static org.junit.Assert.*;
 /**
  * Created by alexkotov on 03.05.17.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = AppConfiguration.class)
+@SpringBootTest
 public class CertificateServiceImplTest {
 
-    private ConfigurableApplicationContext context;
-    private CertificateServiceImpl certificateService;
+    @Autowired
+    private ICertificateService certificateService;
 
-    @Before
-    public void before() {
-        context = SpringApplication.run(AppConfiguration.class);
-        certificateService = context.getBean(CertificateServiceImpl.class);
-    }
+//    @Before
+//    public void before(){
+//        List<CertificateDTO> certificateDTOList = certificateService.getAllCertificates();
+//        certificateDTOList.forEach(certificateDTO -> certificateService.remove(certificateDTO));
+//    }
+//
+//    @After
+//    public void after(){
+//        List<CertificateDTO> certificateDTOList = certificateService.getAllCertificates();
+//        certificateDTOList.forEach(certificateDTO -> certificateService.remove(certificateDTO));
+//    }
 
     @Test
     public void saveTest() throws Exception {
@@ -39,7 +56,8 @@ public class CertificateServiceImplTest {
 
         CertificateDTO savedCertDTO = certificateService.save(certificateDTO);
         assertNotNull(savedCertDTO);
-        assertEquals(certificateDTO.getUuid(),savedCertDTO.getUuid());
+        assertNotNull(savedCertDTO.getId());
+
 
 
     }

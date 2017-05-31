@@ -1,9 +1,11 @@
 package com.stnetix.ariaddna.commonutils.DTO;
 
+import java.io.Serializable;
+
 /**
  * Created by alexkotov on 01.05.17.
  */
-public class CertificateDTO {
+public class CertificateDTO implements Serializable {
     private Long id;
 
     private String uuid;
