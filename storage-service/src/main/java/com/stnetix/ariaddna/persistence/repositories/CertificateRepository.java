@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by alexkotov on 26.04.17.
  */
-@Transactional(readOnly = true)
+@Transactional
 public interface CertificateRepository extends CrudRepository<Certificate, Long> {
 
     @Query(value = "select c from Certificate c where c.isActive = true")
