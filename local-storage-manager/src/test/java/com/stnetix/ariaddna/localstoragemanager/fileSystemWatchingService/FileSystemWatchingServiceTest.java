@@ -1,27 +1,27 @@
 package com.stnetix.ariaddna.localstoragemanager.fileSystemWatchingService;
 
-import org.junit.jupiter.api.*;
+import org.junit.*;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 
 
-class FileSystemWatchingServiceTest {
+public class FileSystemWatchingServiceTest {
     private static FileSystemWatchingService service;
     private static Path root;
     private static int count;
 
-    @BeforeAll
-    static void setUp() throws IOException {
+    @BeforeClass
+    public static void setUp() throws IOException {
         root = Files.createTempDirectory("ariaddnaTemp");
         service = new FileSystemWatchingService(root);
 
         new Thread(() -> service.processEvents()).start();
     }
 
-    @BeforeEach
-    void beforeEach() throws IOException {
+    @Before
+    public void beforeEach() throws IOException {
 
         count = 0;
         service.removeEventListners();
@@ -53,11 +53,11 @@ class FileSystemWatchingServiceTest {
         }
 
         Thread.sleep(1500);
-        Assertions.assertEquals(filesCount, count);
+        Assert.assertEquals(filesCount, count);
     }
 
     @Test
-    void deleteFilesTest() throws IOException, InterruptedException {
+    public void deleteFilesTest() throws IOException, InterruptedException {
 
         int filesCount = 10;
 
@@ -95,11 +95,11 @@ class FileSystemWatchingServiceTest {
 
         Thread.sleep(2500);
 
-        Assertions.assertEquals(filesCount, count);
+        Assert.assertEquals(filesCount, count);
     }
 
     @Test
-    void renameFileTest() throws InterruptedException, IOException {
+    public void renameFileTest() throws InterruptedException, IOException {
 
         service.addEventListener(event -> {
             if (event.getType().equals(FileSystemWatchEvent.Type.RENAME)) {
@@ -130,11 +130,11 @@ class FileSystemWatchingServiceTest {
 
         Thread.sleep(2000);
 
-        Assertions.assertEquals(fileCount, count);
+        Assert.assertEquals(fileCount, count);
     }
 
     @Test
-    void moveFileTest() throws IOException, InterruptedException {
+    public void moveFileTest() throws IOException, InterruptedException {
         service.addEventListener(event -> {
             if (event.getType().equals(FileSystemWatchEvent.Type.MOVE)) {
                 count++;
@@ -153,7 +153,7 @@ class FileSystemWatchingServiceTest {
 
         Thread.sleep(500);
 
-        Assertions.assertEquals(fileCount, count);
+        Assert.assertEquals(fileCount, count);
 
         deleteFiles(newFolder);
 
@@ -255,13 +255,13 @@ class FileSystemWatchingServiceTest {
         });
     }
 
-    @AfterEach
-    void tearDown() throws IOException {
+    @After
+    public void tearDown() throws IOException {
         deleteFiles(root);
     }
 
-    @AfterAll
-    static void tearDownAll() throws IOException {
+    @AfterClass
+    public static void tearDownAll() throws IOException {
         service.stop();
         Files.delete(root);
     }
