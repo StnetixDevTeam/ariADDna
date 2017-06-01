@@ -28,9 +28,10 @@
         <module>rest-api-client</module>
         <module>server-core</module>
         <module>local-storage-manager</module>
+        
         <module>keystore-service</module>
         <module>storage-service</module>
-        <!--<module>notify-client</module>-->
+        
         <module>notify-server</module>
         <module>rest-api-cloud-client</module>
 
