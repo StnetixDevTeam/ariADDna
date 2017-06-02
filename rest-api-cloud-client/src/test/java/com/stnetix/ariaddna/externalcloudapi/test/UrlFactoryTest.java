@@ -1,11 +1,12 @@
 package com.stnetix.ariaddna.externalcloudapi.test;
 
-import static com.stnetix.ariaddna.externalcloudapi.HttpConstants.*;
+import static com.stnetix.ariaddna.externalcloudapi.UrlFactory.*;
 import okhttp3.HttpUrl;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class HttpConstantsTest {
+public class UrlFactoryTest {
+
     @Test
     public void testConstructUrl(){
         HttpUrl url = new HttpUrl.Builder()
@@ -18,6 +19,13 @@ public class HttpConstantsTest {
         System.out.println(url.toString());
 
         Assert.assertEquals("https://cloud-api.yandex.net/v1/disk", url.toString());
+
+        url = url.newBuilder()
+                .addPathSegment("resources")
+                .addQueryParameter("path", "app:/" + "image.jpg")
+                .build();
+
+        System.out.println(url.toString());
 
     }
 }

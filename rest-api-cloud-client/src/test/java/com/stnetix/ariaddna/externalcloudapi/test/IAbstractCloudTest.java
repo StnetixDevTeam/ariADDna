@@ -1,13 +1,19 @@
 package com.stnetix.ariaddna.externalcloudapi.test;
 
-import com.stnetix.ariaddna.externalcloudapi.cloudinterface.iAbstractCloud;
+import com.google.gson.JsonObject;
+import com.stnetix.ariaddna.externalcloudapi.Clouds;
+import com.stnetix.ariaddna.externalcloudapi.cloudinterface.IAbstractCloud;
 import com.stnetix.ariaddna.externalcloudapi.implementation.YandexDisk;
+import okhttp3.Request;
+import okhttp3.internal.Util;
 import org.junit.*;
 
 import java.io.File;
+import java.net.URL;
 
 public class IAbstractCloudTest {
-    private static iAbstractCloud cloud;
+    private static IAbstractCloud cloud;
+    private static JsonObject result;
 
     private static File level_1;
     private static File level_2;
@@ -16,6 +22,7 @@ public class IAbstractCloudTest {
 
     @BeforeClass
     public static void setUp(){
+        result = new JsonObject();
         cloud = new YandexDisk();
         level_1 = new File("Level 1");
         level_2 = new File(level_1, "Level_2");
@@ -53,23 +60,48 @@ public class IAbstractCloudTest {
     public void testCreateDirectory() throws Exception {
 //        cloud.createDirectory(level_1);
 //        cloud.createDirectory(level_2);
-        cloud.createDirectory(level_4);
+        result = cloud.createDirectory(level_4);
+        System.out.println(result.toString());
     }
 
     @Test
     public void testDeleteDirectory() throws Exception {
-        cloud.deleteResource(level_1);
+        result = cloud.deleteResource(level_1);
+        System.out.println(result.toString());
     }
 
     @Test
     public void testDownloadFile() throws Exception {
         File path = new File("Мишки.jpg");
-        cloud.downloadFile(path);
+        result = cloud.downloadFile(path);
     }
 
     @Test
     public void testUploadFile() throws Exception {
         File path = new File("Медвежата.jpg");
-        cloud.uploadFile(path);
+        result = cloud.uploadFile(path);
     }
+
+    @Test
+    public void testUploadExtFile() throws Exception{
+        URL url = new URL("https://yadi.sk/i/-WxwJWyN3Jm2Hq");
+        File path = new File("Питер.jpg");
+        result = cloud.uploadExternalFile(path, url);
+    }
+
+    @Test
+    public void testGetResourceMetadata() throws Exception {
+        File path = new File("Мишки.jpg");
+        result = cloud.getResourceMetadata(path);
+        System.out.println(result.toString());
+    }
+
+    @Test
+    public void testCopyResource() throws Exception {
+        File from = new File("Мишки.jpg");
+        File to = new File("Лесные жители.jpg");
+        result = cloud.copyFile(from, to);
+        System.out.println(result.toString());
+    }
+
 }

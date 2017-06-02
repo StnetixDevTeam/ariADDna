@@ -7,7 +7,7 @@ import java.net.URL;
 import okhttp3.HttpUrl;
 
 /**
- * HttpConstants class contains different text fragments which are to help a programmer
+ * UrlFactory class contains different text fragments which are to help a programmer
  * construct any desired URL for request to an external cloud.
  *
  * The class is final to prevent it's inheritance.
@@ -15,12 +15,7 @@ import okhttp3.HttpUrl;
  */
 
 //TODO Переделать в UrlFactory
-public final class HttpConstants {
-    public enum Clouds{
-        YandexDisk,
-        DropBox
-    }
-
+public final class UrlFactory {
     public static final String HTTPS_SCHEME  = "https";
 
     public static final String YD_HOST = "cloud-api.yandex.net";
@@ -55,6 +50,7 @@ public final class HttpConstants {
 
     public static void main(String[] args) {
         System.out.println(getOAuthUrl(Clouds.DropBox));
+        System.out.println(get());
     }
     public static HttpUrl get() {
         HttpUrl httpUrl = new HttpUrl.Builder()
@@ -71,7 +67,7 @@ public final class HttpConstants {
         return null;
     }
 
-    private HttpConstants(){
+    private UrlFactory(){
 
     }
 }

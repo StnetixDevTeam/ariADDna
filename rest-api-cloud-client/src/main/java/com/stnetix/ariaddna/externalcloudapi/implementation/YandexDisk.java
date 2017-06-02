@@ -1,10 +1,12 @@
 package com.stnetix.ariaddna.externalcloudapi.implementation;
 
-import static com.stnetix.ariaddna.externalcloudapi.HttpConstants.*;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.stnetix.ariaddna.externalcloudapi.AccessToken;
-import com.stnetix.ariaddna.externalcloudapi.cloudinterface.iAbstractCloud;
+import com.stnetix.ariaddna.externalcloudapi.Clouds;
+import com.stnetix.ariaddna.externalcloudapi.MediaTypes;
+import com.stnetix.ariaddna.externalcloudapi.UrlFactory;
+import com.stnetix.ariaddna.externalcloudapi.cloudinterface.IAbstractCloud;
 import okhttp3.*;
 import okhttp3.internal.Util;
 
@@ -12,19 +14,35 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 
+import static com.stnetix.ariaddna.externalcloudapi.UrlFactory.getOAuthUrl;
+
 //TODO Выделить в отдельный модуль все хосты и огрызки URL'ов
 //TODO Отправлять в БД настройки облака
 //TODO Продумать способ хранения множества аккаунтов
 
-public class YandexDisk implements iAbstractCloud {
+public class YandexDisk implements IAbstractCloud {
 
     private JsonParser parser;
 
     private AccessToken accessToken;
 
-    private static final String HOST_URL = "cloud-api.yandex.net";
+    private static final HttpUrl DISK_PATH;
 
-    private static final String OAUTH_HOST = "oauth.yandex.ru";
+    private static final HttpUrl RESOURCES_PATH;
+
+    private static final HttpUrl COPY_PATH;
+
+    private static final HttpUrl MOVE_PATH;
+
+    private static final HttpUrl DLOAD_PATH;
+
+    private static final HttpUrl ULOAD_PATH;
+
+    private static final HttpUrl FILES_PATH;
+
+    private static final HttpUrl VCODE_REQ_PATH;
+
+    private static final HttpUrl TOKEN_REQ_PATH;
 
     private static final String CLIENT_ID = "141588389ce24e4e80e6ccd5db81c7a6";
 
@@ -34,41 +52,66 @@ public class YandexDisk implements iAbstractCloud {
 
     private String tempAccessToken = "AQAAAAAeFNwNAARF-Q0jtdjwhUH6mR6qL3eeGhg";
 
-    private String tempAccessToken2 = "AQAAAAAeFNwNAARF-Tixdh81n007h52kXupp1qg";
-
-    private static String DISK_ROOT = "disk:/";
-
     private static String APP_ROOT = "app:/";
 
-
-    public static final MediaType JSON
-            = MediaType.parse("application/json; charset=utf-8");
-
-    public static final MediaType JPG
-            = MediaType.parse("image/jpeg");
-
     private OkHttpClient client;
+
+    static {
+        DISK_PATH = new HttpUrl.Builder()
+                .scheme("https")
+                .host("cloud-api.yandex.net")
+                .addPathSegment("v1")
+                .addPathSegment("disk")
+                .build();
+
+        VCODE_REQ_PATH = new HttpUrl.Builder()
+                .scheme("https")
+                .host("oauth.yandex.ru")
+                .addPathSegment("authorize")
+                .addQueryParameter("response_type", "code")
+                .addQueryParameter("client_id", CLIENT_ID)
+                .build();
+
+        TOKEN_REQ_PATH = new HttpUrl.Builder()
+                .scheme("https")
+                .host("oauth.yandex.ru")
+                .addPathSegment("token")
+                .build();
+
+        RESOURCES_PATH = DISK_PATH.newBuilder()
+                .addPathSegment("resources")
+                .build();
+
+        COPY_PATH = RESOURCES_PATH.newBuilder()
+                .addPathSegment("copy")
+                .build();
+
+        MOVE_PATH = RESOURCES_PATH.newBuilder()
+                .addPathSegment("move")
+                .build();
+
+        ULOAD_PATH = RESOURCES_PATH.newBuilder()
+                .addPathSegment("upload")
+                .build();
+
+        DLOAD_PATH = RESOURCES_PATH.newBuilder()
+                .addPathSegment("download")
+                .build();
+
+        FILES_PATH = RESOURCES_PATH.newBuilder()
+                .addPathSegment("files")
+                .build();
+    }
 
     public YandexDisk() {
         client = new OkHttpClient();
         parser = new JsonParser();
     }
 
-    private HttpUrl constructOAuthUrl(){
-        return getOAuthUrl(Clouds.DropBox);
-       /* return new HttpUrl.Builder()
-                .scheme("https")
-                .host(OAUTH_HOST)
-                .addPathSegment("authorize")
-                .addQueryParameter("response_type", "code")
-                .addQueryParameter("client_id", CLIENT_ID)
-                .build();*/
-    }
-
     private void openOAuthPage(){
         try {
             Desktop desktop = java.awt.Desktop.getDesktop();
-            desktop.browse(constructOAuthUrl().uri());
+            desktop.browse(VCODE_REQ_PATH.uri());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,10 +130,7 @@ public class YandexDisk implements iAbstractCloud {
 
         try {
             Response response = client.newCall(request).execute();
-          //  System.out.println(response.body().string());
-            if(response.code() == 200) {
-                result = parser.parse(response.body().string()).getAsJsonObject();
-            }
+            result = parser.parse(response.body().string()).getAsJsonObject();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -120,7 +160,7 @@ public class YandexDisk implements iAbstractCloud {
                 BufferedInputStream bis = new BufferedInputStream(is);
                 FileOutputStream fos = new FileOutputStream(path);
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
-                int cur = 0;
+                int cur;
                 while ((cur = bis.read()) != -1) {
                     bos.write(cur);
                 }
@@ -141,7 +181,7 @@ public class YandexDisk implements iAbstractCloud {
         try {
             Request request = new Request.Builder()
                     .url(href)
-                    .put(RequestBody.create(JPG, file))
+                    .put(RequestBody.create(MediaTypes.JPG.getType(), file))
                     .build();
             response = client.newCall(request).execute();
 
@@ -154,14 +194,18 @@ public class YandexDisk implements iAbstractCloud {
     public JsonObject uploadFile(File path) {
         Request request;
         JsonObject result;
+
+        HttpUrl uploadPath = ULOAD_PATH.newBuilder()
+                .addQueryParameter("path", APP_ROOT + path.getName()).build();
+
         request = new Request.Builder()
-                .url("https://" + HOST_URL + "/v1/disk/resources/upload?path=" +
-                        APP_ROOT + path.getName())
+                .url(uploadPath)
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "OAuth " + tempAccessToken)
                 .get()
                 .build();
+
         result = sendRequest(request);
         String href = result.get("href").toString();
         href = href.substring(1, href.length() -1 );
@@ -172,16 +216,37 @@ public class YandexDisk implements iAbstractCloud {
 
     @Override
     public JsonObject uploadExternalFile(File path, URL url) {
-        return null;
+        JsonObject result;
+
+        HttpUrl uploadPath = ULOAD_PATH.newBuilder()
+                .addQueryParameter("path", APP_ROOT + path.getName())
+                .addQueryParameter("url", url.toString())
+                .build();
+
+        Request request = new Request.Builder()
+                .url(uploadPath)
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "OAuth " + tempAccessToken)
+                .post(Util.EMPTY_REQUEST)
+                .build();
+
+        result = sendRequest(request);
+
+        return result;
     }
 
     @Override
     public JsonObject downloadFile(File path) {
         Request request;
         JsonObject result;
+
+        HttpUrl downloadPath = DLOAD_PATH.newBuilder()
+                .addQueryParameter("path", APP_ROOT + path.getName())
+                .build();
+
             request = new Request.Builder()
-                    .url("https://" + HOST_URL + "/v1/disk/resources/download?path=" +
-                            APP_ROOT + path.getName())
+                    .url(downloadPath)
                     .header("Accept", "application/json")
                     .header("Content-Type", "application/json")
                     .header("Authorization", "OAuth " + tempAccessToken)
@@ -197,59 +262,121 @@ public class YandexDisk implements iAbstractCloud {
 
     @Override
     public JsonObject copyFile(File from, File to) {
-        return null;
+        JsonObject result;
+
+        HttpUrl copyPath = COPY_PATH.newBuilder()
+                .addQueryParameter("from", APP_ROOT + from.getName())
+                .addQueryParameter("path", APP_ROOT + to.getPath())
+                .build();
+
+        Request request = new Request.Builder()
+                .url(copyPath)
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "OAuth " + tempAccessToken)
+                .post(Util.EMPTY_REQUEST)
+                .build();
+
+        result = sendRequest(request);
+
+        return result;
     }
 
     @Override
     public JsonObject moveFile(File from, File to) {
-        return null;
+        JsonObject result;
+
+        HttpUrl movePath = MOVE_PATH.newBuilder()
+                .addQueryParameter("from", APP_ROOT + from.getName())
+                .addQueryParameter("path", APP_ROOT + to.getPath())
+                .build();
+
+        Request request = new Request.Builder()
+                .url(movePath)
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "OAuth " + tempAccessToken)
+                .post(Util.EMPTY_REQUEST)
+                .build();
+
+        result = sendRequest(request);
+
+        return result;
     }
 
     @Override
     public JsonObject createDirectory(File path) {
         JsonObject result;
+        HttpUrl dirPath;
 
         if(path.getParent() == null){
-            Request request = new Request.Builder()
-                    .url("https://" + HOST_URL + "/v1/disk/resources?path=" +
-                            APP_ROOT + path.getName())
-                    .header("Accept", "application/json")
-                    .header("Content-Type", "application/json")
-                    .header("Authorization", "OAuth " + tempAccessToken)
-                    .put(Util.EMPTY_REQUEST)
+            dirPath = RESOURCES_PATH.newBuilder()
+                    .addQueryParameter("path", APP_ROOT + path.getName())
                     .build();
-            result = sendRequest(request);
-            return result;
         } else {
             createDirectory(path.getParentFile());
-            Request request = new Request.Builder()
-                    .url("https://" + HOST_URL + "/v1/disk/resources?path=" +
-                            APP_ROOT + slashSwap(path.getParent() + '/' + path.getName()))
-                    .header("Accept", "application/json")
-                    .header("Content-Type", "application/json")
-                    .header("Authorization", "OAuth " + tempAccessToken)
-                    .put(Util.EMPTY_REQUEST)
+            dirPath = RESOURCES_PATH.newBuilder()
+                    .addQueryParameter("path", APP_ROOT + slashSwap(path.getParent() + '/' + path.getName()))
                     .build();
-            result = sendRequest(request);
-            return result;
         }
+
+        Request request = new Request.Builder()
+                .url(dirPath)
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "OAuth " + tempAccessToken)
+                .put(Util.EMPTY_REQUEST)
+                .build();
+        result = sendRequest(request);
+        return result;
     }
 
     @Override
     public JsonObject deleteResource(File path) {
-        return null;
+        JsonObject result;
+
+        HttpUrl deletePath = RESOURCES_PATH.newBuilder()
+                .addQueryParameter("path", APP_ROOT + path.getName())
+                .build();
+
+        Request request = new Request.Builder()
+                .url(deletePath)
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "OAuth " + tempAccessToken)
+                .delete()
+                .build();
+        result = sendRequest(request);
+
+        return result;
     }
 
     @Override
     public JsonObject getResourceMetadata(File path) {
-        return null;
+        JsonObject result;
+
+        HttpUrl resourcePath = RESOURCES_PATH.newBuilder()
+                .addQueryParameter("path", APP_ROOT + path.getName())
+                .build();
+
+        Request request = new Request.Builder()
+                .url(resourcePath)
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .header("Authorization", "OAuth " + tempAccessToken)
+                .get()
+                .build();
+
+        result = sendRequest(request);
+
+        return  result;
     }
 
     @Override
     public JsonObject getCloudStorageMetadata() {
         JsonObject result;
         Request request = new Request.Builder()
-                .url("https://" + HOST_URL + "/v1/disk")
+                .url(DISK_PATH)
                 .header("Accept", "application/json")
                 .header("Content-Type", "application/json")
                 .header("Authorization", "OAuth " + tempAccessToken)
@@ -271,9 +398,9 @@ public class YandexDisk implements iAbstractCloud {
             String bodyParam = "grant_type=authorization_code&code=" + verificationCode;
 
             Request request = new Request.Builder()
-                    .url("https://" + OAUTH_HOST + "/token")
+                    .url(TOKEN_REQ_PATH)
                     .header("Authorization", authCred)
-                    .post(RequestBody.create(JSON, bodyParam ))
+                    .post(RequestBody.create(MediaTypes.JSON.getType(), bodyParam ))
                     .build();
             try {
                 Response response = client.newCall(request).execute();

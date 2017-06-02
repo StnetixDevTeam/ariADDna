@@ -1,9 +1,12 @@
 package com.stnetix.ariaddna.externalcloudapi.cloudinterface;
 
 import com.google.gson.JsonObject;
+import com.stnetix.ariaddna.externalcloudapi.Clouds;
+import com.stnetix.ariaddna.externalcloudapi.implementation.YandexDisk;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Optional;
 
 /**
  * This is an abstract interface containing general methods for
@@ -12,7 +15,7 @@ import java.net.URL;
  * Also here are methods for general operations with a cloud.
  * Every certain cloud storage realization must implement this interface.
  */
-public interface iAbstractCloud {
+public interface IAbstractCloud {
     /**
      * An uploadFile method implementation takes as a parameter a path to a file
      * which is stored at user's local HDD/SSD and sends it to an external cloud storage.
