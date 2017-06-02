@@ -16,6 +16,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,22 +29,12 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfiguration.class)
 @SpringBootTest
+//Transactional mark this test to rollback all changes after test
+@Transactional
 public class CertificateServiceImplTest {
 
     @Autowired
     private ICertificateService certificateService;
-
-//    @Before
-//    public void before(){
-//        List<CertificateDTO> certificateDTOList = certificateService.getAllCertificates();
-//        certificateDTOList.forEach(certificateDTO -> certificateService.remove(certificateDTO));
-//    }
-//
-//    @After
-//    public void after(){
-//        List<CertificateDTO> certificateDTOList = certificateService.getAllCertificates();
-//        certificateDTOList.forEach(certificateDTO -> certificateService.remove(certificateDTO));
-//    }
 
     @Test
     public void saveTest() throws Exception {
@@ -57,8 +48,6 @@ public class CertificateServiceImplTest {
         CertificateDTO savedCertDTO = certificateService.save(certificateDTO);
         assertNotNull(savedCertDTO);
         assertNotNull(savedCertDTO.getId());
-
-
 
     }
 

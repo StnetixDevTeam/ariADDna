@@ -1,8 +1,5 @@
 package com.stnetix.ariaddna.persistence.utils;
 
-import com.stnetix.ariaddna.commonutils.xmlparser.XmlParser;
-import com.stnetix.ariaddna.commonutils.xmlparser.exception.XmlParserException;
-import com.stnetix.ariaddna.commonutils.xmlparser.handlers.StorageDBHandler;
 import com.stnetix.ariaddna.persistence.repositories.CertificateRepository;
 import com.stnetix.ariaddna.persistence.repositories.KeyStorePasswordRepository;
 import com.stnetix.ariaddna.persistence.services.CertificateServiceImpl;
@@ -13,17 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.sql.DataSource;
 
 /**
  * Created by alexkotov on 10.05.17.

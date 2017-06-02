@@ -6,15 +6,11 @@ import com.stnetix.ariaddna.commonutils.xmlparser.handlers.StorageDBHandler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.hibernate3.HibernateExceptionTranslator;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -45,13 +41,6 @@ public class JPAConfiguration {
         config.setMaximumPoolSize(5);
 
         return new HikariDataSource(config);
-//        return DataSourceBuilder
-//                .create()
-//                .driverClassName(handler.getDriverClass())
-//                .url(handler.getUrl())
-//                .username(handler.getLogin())
-//                .password(handler.getPass())
-//                .build();
     }
 
     @Bean
@@ -84,17 +73,5 @@ public class JPAConfiguration {
     public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
         return entityManagerFactory.createEntityManager();
     }
-
-//    @Bean
-//    public PlatformTransactionManager transactionManager() throws SQLException {
-//        JpaTransactionManager txManager = new JpaTransactionManager();
-//        txManager.setEntityManagerFactory(entityManagerFactory());
-//        return txManager;
-//    }
-
-//    @Bean
-//    public HibernateExceptionTranslator hibernateExceptionTranslator() {
-//        return new HibernateExceptionTranslator();
-//    }
 
 }
