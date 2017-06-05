@@ -2,7 +2,7 @@ package com.stnetix.ariaddna.persistence.utils;
 
 import com.stnetix.ariaddna.commonutils.xmlparser.XmlParser;
 import com.stnetix.ariaddna.commonutils.xmlparser.exception.XmlParserException;
-import com.stnetix.ariaddna.commonutils.xmlparser.handlers.StorageDBHandler;
+import com.stnetix.ariaddna.commonutils.xmlparser.handlers.XmlDbSettingHandler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,9 +27,9 @@ public class JPAConfiguration {
 
     @Bean(destroyMethod = "shutdown")
     public DataSource dataSource(){
-        StorageDBHandler handler = null;
+        XmlDbSettingHandler handler = null;
         try {
-            handler = (StorageDBHandler) new XmlParser("settings.xml", new StorageDBHandler()).getHandler();
+            handler = (XmlDbSettingHandler) new XmlParser("settings.xml", new XmlDbSettingHandler()).getHandler();
         } catch (XmlParserException e) {
             e.printStackTrace();
         }

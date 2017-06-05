@@ -7,7 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * Created by alexkotov on 30.05.17.
  */
-public class StorageDBHandler extends DefaultHandler {
+public class XmlDbSettingHandler extends DefaultHandler {
 
     private String url;
     private String login;
