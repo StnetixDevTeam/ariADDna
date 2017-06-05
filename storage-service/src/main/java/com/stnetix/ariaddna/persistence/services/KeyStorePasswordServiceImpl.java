@@ -17,7 +17,7 @@ import java.util.UUID;
  * Created by alexkotov on 01.05.17.
  */
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 public class KeyStorePasswordServiceImpl implements IKeyStorePasswordService {
 
     private KeyStorePasswordTransformer transformer;

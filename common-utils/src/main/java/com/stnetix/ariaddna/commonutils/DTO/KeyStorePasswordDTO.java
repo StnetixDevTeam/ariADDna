@@ -1,10 +1,12 @@
 package com.stnetix.ariaddna.commonutils.DTO;
 
 
+import java.io.Serializable;
+
 /**
  * Created by alexkotov on 01.05.17.
  */
-public class KeyStorePasswordDTO {
+public class KeyStorePasswordDTO implements Serializable {
     private Long id;
 
     private String pass;
