@@ -1,7 +1,10 @@
 package com.stnetix.ariaddna.keystore.utils;
 
+import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import com.stnetix.ariaddna.keystore.exceptions.KeyStoreException;
+import com.stnetix.ariaddna.persistence.services.ICertificateService;
+import org.springframework.beans.factory.annotation.Autowired;
 import sun.security.x509.*;
 
 import java.io.File;
@@ -88,6 +91,8 @@ public class CertFactory {
                 fos.close();
             }
             LOGGER.info("Certificate generated with filename {}", certFile.getAbsolutePath());
+            CertificateDTO storedCert = PersistHelper.getInstance().storeCertificete(new CertificateDTO(alias,true));
+            LOGGER.info("Certificate stored id DB with id {}", storedCert.getId());
             return certFile;
 
         } catch (Exception e) {
@@ -103,7 +108,8 @@ public class CertFactory {
             long notAfter = cert.getNotAfter().getTime();
             long now = System.currentTimeMillis();
             LOGGER.info("Certificate {} is " + (now >= notBefore && now <= notAfter ? "valid" : "not valid"), certFile.getAbsolutePath());
-            return now >= notBefore && now <= notAfter;
+            boolean isActive = PersistHelper.getInstance().isActiveCertificate(getCertSubjectName(cert));
+            return now >= notBefore && now <= notAfter && isActive;
         } catch (Exception e) {
             LOGGER.error("Exception: ", e);
             throw new KeyStoreException("Caused by: ", e);

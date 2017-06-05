@@ -20,12 +20,6 @@ public interface IKeyStore {
     File generateKeyStore() throws KeyStoreException;
 
     /**
-     * This method generate file with keystore of disable certificates.
-     * @return File of disable certificates.
-     * */
-    File generateDisableKeyStore() throws KeyStoreException;
-
-    /**
      * This method generate certificate {@link File} by users UUID.
      * @return  generated certificate file.
      * */
@@ -71,8 +65,6 @@ public interface IKeyStore {
     /**
      * This method mark Certificate as disabled.
      * @param certFile is certificate file.
-     * @param keyStoreFrom is keystore file with active certificates.
-     * @param keyStoreTo is keystore file with disable certificates.
      * */
-    void disableCert(File certFile, File keyStoreFrom, File keyStoreTo) throws KeyStoreException;
+    void disableCert(File certFile) throws KeyStoreException;
 }
