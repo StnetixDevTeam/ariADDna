@@ -16,7 +16,6 @@ import java.security.KeyStore;
 /**
  * Created by alexkotov on 20.04.17.
  */
-@Component
 public class KeyFactory {
     private static final KeyFactory KEY_FACTORY = new KeyFactory();
     private KeyFactory(){

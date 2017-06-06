@@ -29,7 +29,7 @@ public class JPAConfiguration {
     public DataSource dataSource(){
         XmlDbSettingHandler handler = null;
         try {
-            handler = (XmlDbSettingHandler) new XmlParser("settings.xml", new XmlDbSettingHandler()).getHandler();
+            handler = (XmlDbSettingHandler) new XmlParser("./../settings.xml", new XmlDbSettingHandler()).getHandler();
         } catch (XmlParserException e) {
             e.printStackTrace();
         }
