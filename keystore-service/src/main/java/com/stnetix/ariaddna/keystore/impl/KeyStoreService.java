@@ -4,7 +4,7 @@ import com.stnetix.ariaddna.keystore.IKeyStore;
 import com.stnetix.ariaddna.keystore.exceptions.KeyStoreException;
 import com.stnetix.ariaddna.keystore.utils.CertFactory;
 import com.stnetix.ariaddna.keystore.utils.KeyFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.io.File;
@@ -13,48 +13,51 @@ import java.util.UUID;
 /**
  * Its implement IKeyStore
  */
-@Component
 public class KeyStoreService implements IKeyStore {
+    @Autowired
+    private KeyFactory keyFactory;
 
+    @Autowired
+    private CertFactory certFactory;
 
     @Override
     public File generateKeyStore() throws KeyStoreException {
-        return KeyFactory.getKeyFactory().getNewKeyStore();
+        return keyFactory.getNewKeyStore();
     }
 
     @Override
     public File generateCert(UUID uuid) throws KeyStoreException {
-        return CertFactory.getCertFactory().getNewCertificate(uuid.toString());
+        return certFactory.getNewCertificate(uuid.toString());
     }
 
     @Override
     public void storeCert(File certFile, File keystore) throws KeyStoreException {
-        KeyFactory.getKeyFactory().storeCertToKeyStore(certFile, keystore);
+        keyFactory.storeCertToKeyStore(certFile, keystore);
     }
 
     @Override
     public boolean isValidCert(File certFile) throws KeyStoreException {
-        return CertFactory.getCertFactory().isValid(certFile);
+        return certFactory.isValid(certFile);
     }
 
     @Override
     public boolean isKeyStoreContainCert(File certFile, File keystore) throws KeyStoreException {
-        return KeyFactory.getKeyFactory().isCertContainsInKeyStore(certFile, keystore);
+        return keyFactory.isCertContainsInKeyStore(certFile, keystore);
     }
 
     @Override
     public File getCertByUUID(UUID uuid, File keystore) throws KeyStoreException {
-        return KeyFactory.getKeyFactory().getCertByAlias(uuid.toString(), keystore);
+        return keyFactory.getCertByAlias(uuid.toString(), keystore);
     }
 
     @Override
     public void removeCert(File certFile, File keystore) throws KeyStoreException {
-        KeyFactory.getKeyFactory().removeCertFromKeyStore(certFile, keystore);
+        keyFactory.removeCertFromKeyStore(certFile, keystore);
     }
 
     @Override
     public void disableCert(File certFile) throws KeyStoreException {
-        KeyFactory.getKeyFactory().setCertDisable(certFile);
+        keyFactory.setCertDisable(certFile);
 
     }
 }

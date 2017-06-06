@@ -4,8 +4,6 @@ import com.stnetix.ariaddna.keystore.exceptions.KeyStoreException;
 
 
 import java.io.File;
-import java.security.KeyStore;
-import java.security.cert.Certificate;
 import java.util.UUID;
 
 /**

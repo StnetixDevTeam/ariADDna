@@ -4,23 +4,13 @@ import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
 import com.stnetix.ariaddna.persistence.services.ICertificateService;
 import com.stnetix.ariaddna.persistence.services.IKeyStorePasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 /**
  * Created by alexkotov on 05.06.17.
  */
-@Component
-class PersistHelper {
-    private static PersistHelper ourInstance = new PersistHelper();
-
-    static PersistHelper getInstance() {
-        return ourInstance;
-    }
-
-    private PersistHelper() {
-    }
+public class PersistHelper {
 
     @Autowired
     private IKeyStorePasswordService keyStorePasswordService;

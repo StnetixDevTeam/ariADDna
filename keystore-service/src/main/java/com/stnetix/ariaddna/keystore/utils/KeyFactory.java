@@ -3,9 +3,6 @@ package com.stnetix.ariaddna.keystore.utils;
 
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import com.stnetix.ariaddna.keystore.exceptions.KeyStoreException;
-import com.stnetix.ariaddna.persistence.services.IKeyStorePasswordService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import sun.security.x509.X509CertImpl;
 
 import java.io.File;
@@ -16,16 +13,18 @@ import java.security.KeyStore;
 /**
  * Created by alexkotov on 20.04.17.
  */
+
 public class KeyFactory {
-    private static final KeyFactory KEY_FACTORY = new KeyFactory();
-    private KeyFactory(){
-        pass = PersistHelper.getInstance().getPassword();
+
+
+    public KeyFactory(PersistHelper persistHelper, CertFactory certFactory){
+        this.persistHelper = persistHelper;
+        this.certFactory = certFactory;
+        pass = persistHelper.getPassword();
     }
 
-    public static KeyFactory getKeyFactory() {
-        return KEY_FACTORY;
-    }
-
+    private PersistHelper persistHelper;
+    private CertFactory certFactory;
     private static final String KEYSTORE_PATH;
     private char[] pass;
     private static final AriaddnaLogger LOGGER;
@@ -49,8 +48,8 @@ public class KeyFactory {
 
     public void storeCertToKeyStore(File certFile, File keyStoreFile) throws KeyStoreException {
         try {
-            X509CertImpl cert = (X509CertImpl) CertFactory.getCertFactory().getCertByFile(certFile);
-            String alias = CertFactory.getCertFactory().getCertSubjectName(cert);
+            X509CertImpl cert = (X509CertImpl) certFactory.getCertByFile(certFile);
+            String alias = certFactory.getCertSubjectName(cert);
             LOGGER.info("Certificate with filename {} has Subject name {}", certFile.getAbsolutePath(), alias);
             FileInputStream fis = new FileInputStream(keyStoreFile);
             KeyStore keyStore = KeyStore.getInstance(KEYSTORE_FORMAT);
@@ -72,8 +71,8 @@ public class KeyFactory {
 
     public boolean isCertContainsInKeyStore(File certFile, File keyStoreFile) throws KeyStoreException {
         try (FileInputStream fis = new FileInputStream(keyStoreFile)) {
-            X509CertImpl cert = (X509CertImpl) CertFactory.getCertFactory().getCertByFile(certFile);
-            String alias = CertFactory.getCertFactory().getCertSubjectName(cert);
+            X509CertImpl cert = (X509CertImpl) certFactory.getCertByFile(certFile);
+            String alias = certFactory.getCertSubjectName(cert);
             KeyStore keyStore = KeyStore.getInstance(KEYSTORE_FORMAT);
             keyStore.load(fis, pass);
             LOGGER.info("Certificate with filename {} "+(keyStore.containsAlias(alias)?"contain":"not contain")+" in keystore with filename {}", certFile.getAbsolutePath(), keyStoreFile.getAbsolutePath());
@@ -108,8 +107,8 @@ public class KeyFactory {
 
     public void removeCertFromKeyStore(File certFile, File keyStoreFile) throws KeyStoreException {
         try {
-            X509CertImpl cert = (X509CertImpl) CertFactory.getCertFactory().getCertByFile(certFile);
-            String alias = CertFactory.getCertFactory().getCertSubjectName(cert);
+            X509CertImpl cert = (X509CertImpl) certFactory.getCertByFile(certFile);
+            String alias = certFactory.getCertSubjectName(cert);
 
             FileInputStream fis = new FileInputStream(keyStoreFile);
             KeyStore keyStore = KeyStore.getInstance(KEYSTORE_FORMAT);
@@ -122,7 +121,7 @@ public class KeyFactory {
             keyStore.store(fos, pass);
             LOGGER.info("Certificate with filename {} deleted from keyStore with filename {}", certFile.getAbsolutePath(), keyStoreFile.getAbsolutePath());
             fos.close();
-            PersistHelper.getInstance().deleteCertificate(alias);
+            persistHelper.deleteCertificate(alias);
 
         } catch (Exception e) {
             LOGGER.error("Exception: ", e);
@@ -131,9 +130,9 @@ public class KeyFactory {
     }
 
     public void setCertDisable(File certFile) throws KeyStoreException {
-        X509CertImpl cert = (X509CertImpl) CertFactory.getCertFactory().getCertByFile(certFile);
-        String alias = CertFactory.getCertFactory().getCertSubjectName(cert);
-        PersistHelper.getInstance().setCertificateDisable(alias);
+        X509CertImpl cert = (X509CertImpl) certFactory.getCertByFile(certFile);
+        String alias = certFactory.getCertSubjectName(cert);
+        persistHelper.setCertificateDisable(alias);
     }
 
     private File generateKeyStoreByName(String name) throws KeyStoreException {
