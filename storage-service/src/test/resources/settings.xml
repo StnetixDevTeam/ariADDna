@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Settings>
+	<PushNotificationServer URL="ws://127.0.0.1:8080/pushnotification" name="Ariaddna WS"/>
+	<StarageServiceDB URL="jdbc:postgresql://127.0.0.1:5432/storageDB" DriverClass="org.postgresql.Driver" login="postgres" pass="123456"/>
+</Settings>

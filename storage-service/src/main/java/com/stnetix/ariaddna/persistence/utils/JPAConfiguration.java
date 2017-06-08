@@ -15,6 +15,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -26,21 +27,26 @@ import java.util.Properties;
 public class JPAConfiguration {
 
     @Bean(destroyMethod = "shutdown")
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         XmlDbSettingHandler handler = null;
         try {
-            handler = (XmlDbSettingHandler) new XmlParser("./../settings.xml", new XmlDbSettingHandler()).getHandler();
+            URL settingURL = getClass().getClassLoader().getResource("settings.xml");
+            if (settingURL != null) {
+                handler = (XmlDbSettingHandler) new XmlParser(settingURL.getPath(), new XmlDbSettingHandler()).getHandler();
+            }
         } catch (XmlParserException e) {
             e.printStackTrace();
         }
-        HikariConfig config = new HikariConfig();
-        config.setDriverClassName(handler.getDriverClass());
-        config.setJdbcUrl(handler.getUrl());
-        config.setUsername(handler.getLogin());
-        config.setPassword(handler.getPass());
-        config.setMaximumPoolSize(5);
-
-        return new HikariDataSource(config);
+        if (handler != null) {
+            HikariConfig config = new HikariConfig();
+            config.setDriverClassName(handler.getDriverClass());
+            config.setJdbcUrl(handler.getUrl());
+            config.setUsername(handler.getLogin());
+            config.setPassword(handler.getPass());
+            config.setMaximumPoolSize(5);
+            return new HikariDataSource(config);
+        }
+        return null;
     }
 
     @Bean

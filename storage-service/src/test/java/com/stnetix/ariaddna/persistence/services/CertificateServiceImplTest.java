@@ -22,8 +22,7 @@ import static org.junit.Assert.*;
  * Created by alexkotov on 03.05.17.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfiguration.class)
-@SpringBootTest
+@SpringBootTest(classes = AppConfiguration.class)
 //Transactional mark this test to rollback all changes after test
 @Transactional
 public class CertificateServiceImplTest {
