@@ -1,12 +1,9 @@
 package com.stnetix.ariaddna.externalcloudapi.cloudinterface;
 
 import com.google.gson.JsonObject;
-import com.stnetix.ariaddna.externalcloudapi.Clouds;
-import com.stnetix.ariaddna.externalcloudapi.implementation.YandexDisk;
 
 import java.io.File;
 import java.net.URL;
-import java.util.Optional;
 
 /**
  * This is an abstract interface containing general methods for
