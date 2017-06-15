@@ -20,6 +20,10 @@ import java.net.URL;
 
 public class YandexDisk implements IAbstractCloud {
 
+    private Request request;
+
+    private JsonObject result;
+
     private OkHttpClient client;
 
     private AccessToken accessToken;
@@ -30,6 +34,10 @@ public class YandexDisk implements IAbstractCloud {
 
     public YandexDisk() {
         client = new OkHttpClient();
+    }
+
+    public YandexDisk(OkHttpClient client) {
+        this.client = client;
     }
 
     private void openOAuthPage(){
@@ -51,17 +59,13 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject uploadFile(File path) {
-        Request request;
-        JsonObject result;
-
         HttpUrl uploadPath = ULOAD_PATH.newBuilder()
-                .addQueryParameter("path", APP_ROOT + path.getName()).build();
+                .addQueryParameter("path", APP_ROOT + path.getPath()).build();
 
         request = getRequest(uploadPath, tempAccessToken);
-
         result = sendRequest(client, request);
         String href = result.get("href").toString();
-        href = href.substring(1, href.length() -1 );
+        href = href.substring(1, href.length() - 1);
         sendFileToCloud(client, href, path);
 
         return result;
@@ -69,11 +73,8 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject uploadExternalFile(File path, URL url) {
-        Request request;
-        JsonObject result;
-
         HttpUrl uploadPath = ULOAD_PATH.newBuilder()
-                .addQueryParameter("path", APP_ROOT + path.getName())
+                .addQueryParameter("path", APP_ROOT + path.getPath())
                 .addQueryParameter("url", url.toString())
                 .build();
 
@@ -85,11 +86,8 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject downloadFile(File path) {
-        Request request;
-        JsonObject result;
-
         HttpUrl downloadPath = DLOAD_PATH.newBuilder()
-                .addQueryParameter("path", APP_ROOT + path.getName())
+                .addQueryParameter("path", APP_ROOT + path.getPath())
                 .build();
 
         request = getRequest(downloadPath, tempAccessToken);
@@ -103,11 +101,8 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject copyFile(File from, File to) {
-        JsonObject result;
-        Request request;
-
         HttpUrl copyPath = COPY_PATH.newBuilder()
-                .addQueryParameter("from", APP_ROOT + from.getName())
+                .addQueryParameter("from", APP_ROOT + from.getPath())
                 .addQueryParameter("path", APP_ROOT + to.getPath())
                 .build();
 
@@ -119,15 +114,12 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject moveFile(File from, File to) {
-        JsonObject result;
-        Request request;
         HttpUrl movePath = MOVE_PATH.newBuilder()
-                .addQueryParameter("from", APP_ROOT + from.getName())
+                .addQueryParameter("from", APP_ROOT + from.getPath())
                 .addQueryParameter("path", APP_ROOT + to.getPath())
                 .build();
 
         request = postRequest(movePath, Util.EMPTY_REQUEST, tempAccessToken);
-
         result = sendRequest(client, request);
 
         return result;
@@ -135,9 +127,7 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject createDirectory(File path) {
-        JsonObject result;
         HttpUrl dirPath;
-        Request request;
 
         if(path.getParent() == null){
             dirPath = RESOURCES_PATH.newBuilder()
@@ -157,11 +147,8 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject deleteResource(File path) {
-        JsonObject result;
-        Request request;
-
         HttpUrl deletePath = RESOURCES_PATH.newBuilder()
-                .addQueryParameter("path", APP_ROOT + path.getName())
+                .addQueryParameter("path", APP_ROOT + path.getPath())
                 .build();
 
         request = deleteRequest(deletePath, tempAccessToken);
@@ -172,11 +159,8 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject getResourceMetadata(File path) {
-        JsonObject result;
-        Request request;
-
         HttpUrl resourcePath = RESOURCES_PATH.newBuilder()
-                .addQueryParameter("path", APP_ROOT + path.getName())
+                .addQueryParameter("path", APP_ROOT + path.getPath())
                 .build();
 
         request = getRequest(resourcePath, tempAccessToken);
@@ -187,9 +171,6 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject getCloudStorageMetadata() {
-        JsonObject result;
-        Request request;
-
         request = getRequest(DISK_PATH, tempAccessToken);
         result = sendRequest(client, request);
         return result;
@@ -208,7 +189,7 @@ public class YandexDisk implements IAbstractCloud {
             Request request = new Request.Builder()
                     .url(TOKEN_REQ_PATH)
                     .header("Authorization", authCred)
-                    .post(RequestBody.create(MediaTypes.JSON.getType(), bodyParam ))
+                    .post(RequestBody.create(MediaTypes.JSON.getType(), bodyParam))
                     .build();
             try {
                 Response response = client.newCall(request).execute();
@@ -226,6 +207,7 @@ public class YandexDisk implements IAbstractCloud {
 
     @Override
     public JsonObject revokeCloudStorageAuthToken() {
+        //TODO think how to do it better
         return null;
     }
 

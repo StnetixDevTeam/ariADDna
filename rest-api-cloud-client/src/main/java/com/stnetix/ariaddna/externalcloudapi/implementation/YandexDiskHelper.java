@@ -95,6 +95,7 @@ public class YandexDiskHelper {
 
     static Request getRequest(HttpUrl url, String token){
         return baseRequest.newBuilder()
+                .url(url)
                 .header("Authorization", "OAuth " + token)
                 .get()
                 .tag(null)
@@ -103,6 +104,7 @@ public class YandexDiskHelper {
 
     static Request postRequest(HttpUrl url, RequestBody body, String token){
         return baseRequest.newBuilder()
+                .url(url)
                 .header("Authorization", "OAuth " + token)
                 .post(body)
                 .tag(null)
@@ -111,6 +113,7 @@ public class YandexDiskHelper {
 
     static Request putRequest(HttpUrl url, RequestBody body, String token){
         return baseRequest.newBuilder()
+                .url(url)
                 .header("Authorization", "OAuth " + token)
                 .put(body)
                 .tag(null)
@@ -119,6 +122,7 @@ public class YandexDiskHelper {
 
     static Request deleteRequest(HttpUrl url, String token){
         return baseRequest.newBuilder()
+                .url(url)
                 .header("Authorization", "OAuth " + token)
                 .delete()
                 .tag(null)
@@ -130,7 +134,11 @@ public class YandexDiskHelper {
 
         try {
             Response response = client.newCall(request).execute();
-            result = parser.parse(response.body().string()).getAsJsonObject();
+            String str = response.body().string();
+            if(str.length() > 0) {
+                result = parser.parse(str).getAsJsonObject();
+            }
+            result.addProperty("Status Code", response.code());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -163,6 +171,8 @@ public class YandexDiskHelper {
                 }
                 bos.close();
                 fos.close();
+            } else {
+                System.out.println(response.code() + ": " + response.message());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -170,14 +180,12 @@ public class YandexDiskHelper {
     }
 
     static void sendFileToCloud(OkHttpClient client, String href, File path){
-        Response response;
-
         try {
             Request request = new Request.Builder()
                     .url(href)
                     .put(RequestBody.create(MediaTypes.JPG.getType(), path))
                     .build();
-            response = client.newCall(request).execute();
+            Response response = client.newCall(request).execute();
 
         } catch (Exception e) {
             e.printStackTrace();
