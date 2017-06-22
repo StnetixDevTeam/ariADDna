@@ -16,17 +16,17 @@ import java.io.IOException;
 public class XmlParser {
     private DefaultHandler handler;
 
-    public XmlParser(String pathFileSetting, DefaultHandler handler) throws XmlParserException {
+    public XmlParser(File filesetting, DefaultHandler handler) throws XmlParserException {
         this.handler = handler;
         try {
             SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
-            parser.parse(new File(pathFileSetting), handler);
+            parser.parse(filesetting, handler);
         } catch (ParserConfigurationException e) {
             throw new XmlParserException("Caused by: ", e);
         } catch (SAXException e) {
             throw new XmlParserException("Caused by: ", e);
         } catch (IOException e) {
-            throw new XmlParserException("Caused by: ", e);
+            e.printStackTrace();
         }
     }
 

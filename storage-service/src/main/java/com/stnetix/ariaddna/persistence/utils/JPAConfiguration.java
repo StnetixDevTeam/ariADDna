@@ -15,6 +15,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.io.*;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -29,10 +30,39 @@ public class JPAConfiguration {
     @Bean(destroyMethod = "shutdown")
     public DataSource dataSource() {
         XmlDbSettingHandler handler = null;
+        File file = null;
         try {
-            URL settingURL = getClass().getClassLoader().getResource("settings.xml");
-            if (settingURL != null) {
-                handler = (XmlDbSettingHandler) new XmlParser(settingURL.getPath(), new XmlDbSettingHandler()).getHandler();
+            String resource = "settings.xml";
+            URL settingURL = getClass().getClassLoader().getResource(resource);
+            if (settingURL.toString().startsWith("jar:")) {
+                OutputStream out = null;
+                try (InputStream input = getClass().getClassLoader().getResourceAsStream(resource)){
+                    file = File.createTempFile("tempfile", ".tmp");
+                    out = new FileOutputStream(file);
+                    int read;
+                    byte[] bytes = new byte[1024];
+
+                    while ((read = input.read(bytes)) != -1) {
+                        out.write(bytes, 0, read);
+                    }
+                    handler = (XmlDbSettingHandler) new XmlParser(file, new XmlDbSettingHandler()).getHandler();
+                    file.deleteOnExit();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if(out != null){
+                        try {
+                            out.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            } else {
+                file = new File(settingURL.getFile());
+                handler = (XmlDbSettingHandler) new XmlParser(file, new XmlDbSettingHandler()).getHandler();
             }
         } catch (XmlParserException e) {
             e.printStackTrace();
