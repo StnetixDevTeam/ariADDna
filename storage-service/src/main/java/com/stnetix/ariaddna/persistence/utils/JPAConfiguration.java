@@ -1,5 +1,6 @@
 package com.stnetix.ariaddna.persistence.utils;
 
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import com.stnetix.ariaddna.commonutils.xmlparser.XmlParser;
 import com.stnetix.ariaddna.commonutils.xmlparser.exception.XmlParserException;
 import com.stnetix.ariaddna.commonutils.xmlparser.handlers.XmlDbSettingHandler;
@@ -26,6 +27,7 @@ import java.util.Properties;
 @Configuration
 @EnableJpaRepositories(basePackages = "com.stnetix.ariaddna.persistence.repositories")
 public class JPAConfiguration {
+    private static AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(JPAConfiguration.class);
 
     @Bean(destroyMethod = "shutdown")
     public DataSource dataSource() {
@@ -48,15 +50,15 @@ public class JPAConfiguration {
                     handler = (XmlDbSettingHandler) new XmlParser(file, new XmlDbSettingHandler()).getHandler();
                     file.deleteOnExit();
                 } catch (FileNotFoundException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Caused by", e);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    LOGGER.error("Caused by", e);
                 } finally {
                     if(out != null){
                         try {
                             out.close();
                         } catch (IOException e) {
-                            e.printStackTrace();
+                            LOGGER.error("Caused by", e);
                         }
                     }
                 }
@@ -65,7 +67,7 @@ public class JPAConfiguration {
                 handler = (XmlDbSettingHandler) new XmlParser(file, new XmlDbSettingHandler()).getHandler();
             }
         } catch (XmlParserException e) {
-            e.printStackTrace();
+            LOGGER.error("Cause by", e);
         }
         if (handler != null) {
             HikariConfig config = new HikariConfig();

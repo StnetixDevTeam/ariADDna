@@ -1,5 +1,6 @@
 package com.stnetix.ariaddna.commonutils.xmlparser;
 
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import com.stnetix.ariaddna.commonutils.xmlparser.exception.XmlParserException;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -14,6 +15,7 @@ import java.io.IOException;
  * Created by alexkotov on 30.05.17.
  */
 public class XmlParser {
+    private static AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(XmlParser.class);
     private DefaultHandler handler;
 
     public XmlParser(File filesetting, DefaultHandler handler) throws XmlParserException {
@@ -26,7 +28,7 @@ public class XmlParser {
         } catch (SAXException e) {
             throw new XmlParserException("Caused by: ", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error("Caused by: ",e);
         }
     }
 
