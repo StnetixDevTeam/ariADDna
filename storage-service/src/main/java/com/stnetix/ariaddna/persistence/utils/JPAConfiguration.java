@@ -50,15 +50,15 @@ public class JPAConfiguration {
                     handler = (XmlDbSettingHandler) new XmlParser(file, new XmlDbSettingHandler()).getHandler();
                     file.deleteOnExit();
                 } catch (FileNotFoundException e) {
-                    LOGGER.error("Caused by", e);
+                    LOGGER.error("Problem with create DataSource bean. Nested exception is: ", e);
                 } catch (IOException e) {
-                    LOGGER.error("Caused by", e);
+                    LOGGER.error("Problem with create DataSource bean. Nested exception is: ", e);
                 } finally {
                     if(out != null){
                         try {
                             out.close();
                         } catch (IOException e) {
-                            LOGGER.error("Caused by", e);
+                            LOGGER.error("Problem with close output stream. Nested exception is: ", e);
                         }
                     }
                 }
@@ -67,7 +67,7 @@ public class JPAConfiguration {
                 handler = (XmlDbSettingHandler) new XmlParser(file, new XmlDbSettingHandler()).getHandler();
             }
         } catch (XmlParserException e) {
-            LOGGER.error("Cause by", e);
+            LOGGER.error("Creation of XmlParser object throws exception: ", e);
         }
         if (handler != null) {
             HikariConfig config = new HikariConfig();

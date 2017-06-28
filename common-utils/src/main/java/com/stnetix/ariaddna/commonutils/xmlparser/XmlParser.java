@@ -28,7 +28,7 @@ public class XmlParser {
         } catch (SAXException e) {
             throw new XmlParserException("Caused by: ", e);
         } catch (IOException e) {
-            LOGGER.error("Caused by: ",e);
+            LOGGER.error("Problem with parsing file with setting with path:",filesetting.getAbsolutePath(),"\nException is: ",e);
         }
     }
 
