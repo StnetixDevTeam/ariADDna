@@ -7,10 +7,15 @@ import okhttp3.*;
 import org.junit.*;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class IAbstractCloudTest {
     private static IAbstractCloud cloud;
@@ -126,5 +131,16 @@ public class IAbstractCloudTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void inet() throws UnknownHostException {
+        InetAddress address = InetAddress.getLocalHost();
+        System.out.println(address);
+
+        InetAddress add = mock(InetAddress.class);
+        when(add.getByName("www.yandex.ru")).thenReturn(InetAddress.getLocalHost());
+        address = InetAddress.getByName("www.yandex.ru");
+        System.out.println(address);
     }
 }

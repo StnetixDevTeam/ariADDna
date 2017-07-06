@@ -1,8 +1,12 @@
 package com.stnetix.ariaddna.persistence.utils;
 
+import com.stnetix.ariaddna.persistence.entities.AccessToken;
+import com.stnetix.ariaddna.persistence.repositories.AccessTokenRepository;
 import com.stnetix.ariaddna.persistence.repositories.CertificateRepository;
 import com.stnetix.ariaddna.persistence.repositories.KeyStorePasswordRepository;
+import com.stnetix.ariaddna.persistence.services.AccessTokenServiceImpl;
 import com.stnetix.ariaddna.persistence.services.CertificateServiceImpl;
+import com.stnetix.ariaddna.persistence.services.IAccessTokenService;
 import com.stnetix.ariaddna.persistence.services.KeyStorePasswordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -60,4 +64,13 @@ public class AppConfiguration {
         return repositoryFactorySupport().getRepository(KeyStorePasswordRepository.class);
     }
 
+    @Bean
+    public AccessTokenRepository accessTokenRepository(){
+        return repositoryFactorySupport().getRepository(AccessTokenRepository.class);
+    }
+
+    @Bean
+    public AccessTokenServiceImpl accessTokenServiceImpl(){
+        return new AccessTokenServiceImpl();
+    }
 }
