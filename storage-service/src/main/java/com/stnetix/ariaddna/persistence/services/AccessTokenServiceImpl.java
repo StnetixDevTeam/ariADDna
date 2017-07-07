@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 @Repository
 @Transactional(readOnly = true)
 public class AccessTokenServiceImpl implements IAccessTokenService {
@@ -30,7 +34,18 @@ public class AccessTokenServiceImpl implements IAccessTokenService {
 
     @Override
     public AccessTokenDTO getToken() {
-        //repository.
-        return null;
+        List<AccessTokenDTO> accessTokenDTOList = getAllAccessTokens();
+        if(accessTokenDTOList.size()==0){
+            AccessTokenDTO newAccessTokenDTO = new AccessTokenDTO();
+            return saveToken(newAccessTokenDTO);
+        }
+        return accessTokenDTOList.get(0);
+    }
+
+    private List<AccessTokenDTO> getAllAccessTokens(){
+        List<AccessTokenDTO> accessTokenDTOList = new ArrayList<>();
+        repository.findAll().forEach(
+                accessToken -> accessTokenDTOList.add(transformer.accessTokenEntityToDTO(accessToken)));
+        return accessTokenDTOList;
     }
 }

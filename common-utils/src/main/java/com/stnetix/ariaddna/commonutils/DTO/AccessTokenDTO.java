@@ -1,5 +1,7 @@
 package com.stnetix.ariaddna.commonutils.DTO;
 
+import java.util.UUID;
+
 public class AccessTokenDTO {
     private Long id;
 
@@ -62,15 +64,17 @@ public class AccessTokenDTO {
     }
 
     public AccessTokenDTO() {
-
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public AccessTokenDTO(String tokenType, String accessToken){
+        this();
         this.tokenType = tokenType;
         this.accessToken =  accessToken;
     }
 
     public AccessTokenDTO(String tokenType, String accessToken, Integer expiresIn, String refreshToken) {
+        this();
         this.tokenType = tokenType;
         this.accessToken = accessToken;
         this.expiresIn = expiresIn;
