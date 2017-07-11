@@ -3,11 +3,9 @@ package com.stnetix.ariaddna.persistence.utils;
 import com.stnetix.ariaddna.persistence.entities.AccessToken;
 import com.stnetix.ariaddna.persistence.repositories.AccessTokenRepository;
 import com.stnetix.ariaddna.persistence.repositories.CertificateRepository;
+import com.stnetix.ariaddna.persistence.repositories.CloudCredentialsRepository;
 import com.stnetix.ariaddna.persistence.repositories.KeyStorePasswordRepository;
-import com.stnetix.ariaddna.persistence.services.AccessTokenServiceImpl;
-import com.stnetix.ariaddna.persistence.services.CertificateServiceImpl;
-import com.stnetix.ariaddna.persistence.services.IAccessTokenService;
-import com.stnetix.ariaddna.persistence.services.KeyStorePasswordServiceImpl;
+import com.stnetix.ariaddna.persistence.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -72,5 +70,15 @@ public class AppConfiguration {
     @Bean
     public AccessTokenServiceImpl accessTokenServiceImpl(){
         return new AccessTokenServiceImpl();
+    }
+
+    @Bean
+    public CloudCredentialsRepository cloudCredentialsRepository(){
+        return repositoryFactorySupport().getRepository(CloudCredentialsRepository.class);
+    }
+
+    @Bean
+    public CloudCredentialsServiceImpl cloudCredentialsServiceImpl(){
+        return new CloudCredentialsServiceImpl();
     }
 }

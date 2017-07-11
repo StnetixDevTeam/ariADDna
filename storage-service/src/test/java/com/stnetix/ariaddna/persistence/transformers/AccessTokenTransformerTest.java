@@ -25,7 +25,6 @@ public class AccessTokenTransformerTest {
 
         Assert.assertNotEquals(accessTokenDTO, accessToken);
         Assert.assertEquals(accessTokenDTO.getId(), accessToken.getId());
-        Assert.assertEquals(accessTokenDTO.getUuid(), accessToken.getUuid());
         Assert.assertEquals(accessTokenDTO.getAccessToken(), accessToken.getAccessToken());
         Assert.assertEquals(accessTokenDTO.getRefreshToken(), accessToken.getRefreshToken());
         Assert.assertEquals(accessTokenDTO.getExpiresIn(), accessToken.getExpiresIn());
@@ -40,7 +39,6 @@ public class AccessTokenTransformerTest {
         accessTokenDTO.setRefreshToken(UUID.randomUUID().toString().replace("-", ""));
         accessTokenDTO.setExpiresIn(Integer.parseInt((new Date()).toString()));
         accessTokenDTO.setTokenType("Bearer");
-
 
         AccessToken accessToken = transformer.accessTokenDTOToEntity(accessTokenDTO);
 

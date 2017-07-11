@@ -7,6 +7,22 @@ import javax.persistence.Id;
 
 @Entity
 public class AccessToken {
+    public AccessToken() {
+
+    }
+
+    public AccessToken(String tokenType, String accessToken){
+        this.tokenType = tokenType;
+        this.accessToken =  accessToken;
+    }
+
+    public AccessToken(String tokenType, String accessToken, Integer expiresIn, String refreshToken) {
+        this.tokenType = tokenType;
+        this.accessToken = accessToken;
+        this.expiresIn = expiresIn;
+        this.refreshToken = refreshToken;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -69,19 +85,5 @@ public class AccessToken {
         this.refreshToken = refreshToken;
     }
 
-    public AccessToken() {
 
-    }
-
-    public AccessToken(String tokenType, String accessToken){
-        this.tokenType = tokenType;
-        this.accessToken =  accessToken;
-    }
-
-    public AccessToken(String tokenType, String accessToken, Integer expiresIn, String refreshToken) {
-        this.tokenType = tokenType;
-        this.accessToken = accessToken;
-        this.expiresIn = expiresIn;
-        this.refreshToken = refreshToken;
-    }
 }
