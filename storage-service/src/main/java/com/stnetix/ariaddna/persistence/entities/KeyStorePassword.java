@@ -2,15 +2,13 @@ package com.stnetix.ariaddna.persistence.entities;
 
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by alexkotov on 26.04.17.
  */
 @Entity
+@Table(name = "keystorepassword")
 public class KeyStorePassword {
 
     @Id

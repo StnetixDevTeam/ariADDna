@@ -2,12 +2,16 @@ package com.stnetix.ariaddna.persistence.services;
 
 import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
 import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
-import org.junit.Before;
 import org.junit.Test;
 
-import org.springframework.boot.SpringApplication;
-
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,16 +21,14 @@ import static org.junit.Assert.*;
 /**
  * Created by alexkotov on 03.05.17.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = AppConfiguration.class)
+//Transactional mark this test to rollback all changes after test
+@Transactional
 public class CertificateServiceImplTest {
 
-    private ConfigurableApplicationContext context;
-    private CertificateServiceImpl certificateService;
-
-    @Before
-    public void before() {
-        context = SpringApplication.run(AppConfiguration.class);
-        certificateService = context.getBean(CertificateServiceImpl.class);
-    }
+    @Autowired
+    private ICertificateService certificateService;
 
     @Test
     public void saveTest() throws Exception {
@@ -39,8 +41,7 @@ public class CertificateServiceImplTest {
 
         CertificateDTO savedCertDTO = certificateService.save(certificateDTO);
         assertNotNull(savedCertDTO);
-        assertEquals(certificateDTO.getUuid(),savedCertDTO.getUuid());
-
+        assertNotNull(savedCertDTO.getId());
 
     }
 

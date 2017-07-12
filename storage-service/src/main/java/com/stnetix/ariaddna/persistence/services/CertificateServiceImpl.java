@@ -36,6 +36,12 @@ public class CertificateServiceImpl implements ICertificateService {
     }
 
     @Override
+    public void remove(CertificateDTO certificateDTO) {
+        Certificate certificate = tranformer.certificateDTOToEntity(certificateDTO);
+        repository.delete(certificate);
+    }
+
+    @Override
     public List<CertificateDTO> getActiveCertificates() {
         List<CertificateDTO> certificateDTOList = new ArrayList<>();
         repository.getActiveCertificates().stream().forEach(certificate -> certificateDTOList.add(tranformer.certificateEntityToDTO(certificate)));

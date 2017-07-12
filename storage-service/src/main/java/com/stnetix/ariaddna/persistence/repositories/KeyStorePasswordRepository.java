@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by alexkotov on 01.05.17.
  */
-@Transactional(readOnly = true)
+@Transactional
 public interface KeyStorePasswordRepository extends CrudRepository<KeyStorePassword, Long> {
 
 

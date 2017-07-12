@@ -3,11 +3,13 @@ package com.stnetix.ariaddna.persistence.services;
 import com.stnetix.ariaddna.commonutils.DTO.KeyStorePasswordDTO;
 
 import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.boot.SpringApplication;
-import org.springframework.context.ConfigurableApplicationContext;
-
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import static org.junit.Assert.*;
@@ -15,15 +17,15 @@ import static org.junit.Assert.*;
 /**
  * Created by alexkotov on 11.05.17.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = AppConfiguration.class)
+@Transactional
+@SpringBootTest
 public class KeyStorePasswordServiceImplTest {
-    private ConfigurableApplicationContext context;
-    private KeyStorePasswordServiceImpl keyStorePasswordService;
 
-    @Before
-    public void before() {
-        context = SpringApplication.run(AppConfiguration.class);
-        keyStorePasswordService = context.getBean(KeyStorePasswordServiceImpl.class);
-    }
+    @Autowired
+    private IKeyStorePasswordService keyStorePasswordService;
+
 
     @Test
     public void saveTest() throws Exception {

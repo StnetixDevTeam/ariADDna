@@ -1,5 +1,6 @@
 package com.stnetix.ariaddna.keystore.utils;
 
+import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import com.stnetix.ariaddna.keystore.exceptions.KeyStoreException;
 import sun.security.x509.*;
@@ -18,16 +19,14 @@ import java.util.Date;
 /**
  * Created by alexkotov on 20.04.17.
  */
+
 public class CertFactory {
-    private static final CertFactory CERT_FACTORY = new CertFactory();
 
-    private CertFactory() {
+    public CertFactory(PersistHelper persistHelper) {
+        this.persistHelper = persistHelper;
     }
 
-    public static CertFactory getCertFactory() {
-        return CERT_FACTORY;
-    }
-
+    private PersistHelper persistHelper;
     private static final AriaddnaLogger LOGGER;
     private static final Date FROM;
     private static final Date TO;
@@ -37,6 +36,8 @@ public class CertFactory {
     private static final int CERTIFICATE_SIZE;
     private static final String SUBJECT_CN;
     private static final String SUBJECT_L_C;
+
+
 
     static {
         LOGGER = AriaddnaLogger.getLogger(CertFactory.class);
@@ -88,6 +89,8 @@ public class CertFactory {
                 fos.close();
             }
             LOGGER.info("Certificate generated with filename {}", certFile.getAbsolutePath());
+            CertificateDTO storedCert = persistHelper.storeCertificete(new CertificateDTO(alias,true));
+            LOGGER.info("Certificate stored id DB with id {}", storedCert.getId());
             return certFile;
 
         } catch (Exception e) {
@@ -103,7 +106,8 @@ public class CertFactory {
             long notAfter = cert.getNotAfter().getTime();
             long now = System.currentTimeMillis();
             LOGGER.info("Certificate {} is " + (now >= notBefore && now <= notAfter ? "valid" : "not valid"), certFile.getAbsolutePath());
-            return now >= notBefore && now <= notAfter;
+            boolean isActive = persistHelper.isActiveCertificate(getCertSubjectName(cert));
+            return now >= notBefore && now <= notAfter && isActive;
         } catch (Exception e) {
             LOGGER.error("Exception: ", e);
             throw new KeyStoreException("Caused by: ", e);

@@ -12,6 +12,8 @@ import java.util.List;
 public interface ICertificateService {
     CertificateDTO save(CertificateDTO certificate);
 
+    void remove(CertificateDTO certificate);
+
     List<CertificateDTO> getActiveCertificates();
 
     List<CertificateDTO> getDisableCertificates();
