@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -19,14 +20,8 @@ import java.util.UUID;
 //Transactional mark this test to rollback all changes after test
 @Transactional
 public class CloudCredentialsServiceImplTest {
-    private ConfigurableApplicationContext context;
-    private CloudCredentialsServiceImpl cloudCredentialsService;
-
-    @Before
-    public void before() {
-        context = SpringApplication.run(AppConfiguration.class);
-        cloudCredentialsService = context.getBean(CloudCredentialsServiceImpl.class);
-    }
+    @Autowired
+    private ICloudCredentialsService cloudCredentialsService;
 
     @Test
     public void saveCloudCredentials(){

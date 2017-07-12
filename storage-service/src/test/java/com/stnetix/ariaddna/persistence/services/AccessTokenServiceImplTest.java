@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -19,14 +20,8 @@ import java.util.UUID;
 //Transactional mark this test to rollback all changes after test
 @Transactional
 public class AccessTokenServiceImplTest {
-    private ConfigurableApplicationContext context;
-    private AccessTokenServiceImpl accessTokenService;
-
-    @Before
-    public void before() {
-        context = SpringApplication.run(AppConfiguration.class);
-        accessTokenService = context.getBean(AccessTokenServiceImpl.class);
-    }
+    @Autowired
+    private IAccessTokenService accessTokenService;
 
     @Test
     public void saveAccessTokenTest(){
