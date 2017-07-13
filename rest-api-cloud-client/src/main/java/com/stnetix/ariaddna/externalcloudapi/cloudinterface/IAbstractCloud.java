@@ -12,7 +12,7 @@ import java.net.URL;
  * Also here are methods for general operations with a cloud.
  * Every certain cloud storage realization must implement this interface.
  */
-public interface iAbstractCloud {
+public interface IAbstractCloud {
     /**
      * An uploadFile method implementation takes as a parameter a path to a file
      * which is stored at user's local HDD/SSD and sends it to an external cloud storage.

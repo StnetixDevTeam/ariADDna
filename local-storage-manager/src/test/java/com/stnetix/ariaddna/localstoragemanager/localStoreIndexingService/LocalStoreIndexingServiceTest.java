@@ -1,6 +1,6 @@
 package com.stnetix.ariaddna.localstoragemanager.localStoreIndexingService;
 
-import org.junit.jupiter.api.*;
+import org.junit.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,54 +12,54 @@ import java.util.Date;
 import java.util.Optional;
 
 
-class LocalStoreIndexingServiceTest {
+public class LocalStoreIndexingServiceTest {
     static Path root;
     static LocalStoreIndexingService service;
 
-    @BeforeAll
-    static void setUpAll() throws IOException {
+    @BeforeClass
+    public static void setUpAll() throws IOException {
         service = new LocalStoreIndexingService();
     }
 
 
-    @BeforeEach
-    void setUp() throws IOException {
+    @Before
+    public void setUp() throws IOException {
         root = Files.createTempDirectory("AriaddnaTemp");
     }
 
 
     @Test
-    void findFileByName() throws IOException {
+    public void findFileByName() throws IOException {
         createTempFiles(2, root);
         String fileName = "tempFile1.tmp";
         Optional<Path> result = service.findFileByName(root, fileName);
-        Assertions.assertEquals(fileName, result.get().getFileName().toString());
+        Assert.assertEquals(fileName, result.get().getFileName().toString());
     }
 
     @Test
-    void findNonexistentFile() throws IOException {
+    public void findNonexistentFile() throws IOException {
         createTempFiles(2, root);
         Optional<Path> result = service.findFileByName(root, "SomeFile.txt");
-        Assertions.assertFalse(result.isPresent());
+        Assert.assertFalse(result.isPresent());
     }
 
     @Test
-    void findFilesByMatch() throws IOException {
+    public void findFilesByMatch() throws IOException {
         String match = "*1.*";
         int filesCount = 4;
         createTempFiles(filesCount, root);
-        Assertions.assertEquals(1, service.findFiles(root, match).size());
+        Assert.assertEquals(1, service.findFiles(root, match).size());
     }
 
     @Test
-    void findAllFiles() throws IOException {
+    public void findAllFiles() throws IOException {
         int filesCount = 4;
         createTempFiles(4, root);
-        Assertions.assertEquals(filesCount, service.findAllFiles(root).size());
+        Assert.assertEquals(filesCount, service.findAllFiles(root).size());
     }
 
     @Test
-    void findFilesByCreationDate() throws IOException {
+    public void findFilesByCreationDate() throws IOException {
         int startCount = 5;
         createTempFiles(5, root);
         try {
@@ -70,40 +70,40 @@ class LocalStoreIndexingServiceTest {
         Date date = new Date();
         int newFilesCount = 5;
         createTempFiles(5, root, startCount);
-        Assertions.assertEquals(newFilesCount, service.findFilesByCreateDate(root, date).size());
+        Assert.assertEquals(newFilesCount, service.findFilesByCreateDate(root, date).size());
     }
 
     @Test
-    void findFilesInSubDirectories() throws IOException {
+    public void findFilesInSubDirectories() throws IOException {
         createTempFiles(5, root);
         Path sub = Files.createTempDirectory(root, "sub");
         createTempFiles(3, sub, 7);
         String fileName = "tempFile8.tmp";
-        Assertions.assertEquals(fileName, service.findFileByName(root, fileName).get().getFileName().toString());
+        Assert.assertEquals(fileName, service.findFileByName(root, fileName).get().getFileName().toString());
     }
 
     @Test
-    void getFileAttribute() throws IOException {
+    public void getFileAttribute() throws IOException {
         createTempFiles(1, root);
-        Path file = root.resolve("tempFile0.tmp");
+        Path file = root.resolve("temFFpFile0.tmp");
         FileAttributes attr = service.getFileAttributes(file);
-        Assertions.assertTrue(attr.getCreationTime().getTime() > 0);
-        Assertions.assertTrue(attr.getLastAccessTime().getTime() > 0);
-        Assertions.assertTrue(attr.getModifyTime().getTime() > 0);
-        Assertions.assertFalse(attr.isDirectory());
-        Assertions.assertTrue(attr.isRegularFile());
-        Assertions.assertFalse(attr.isSymbolicLinc());
+        Assert.assertTrue(attr.getCreationTime().getTime() > 0);
+        Assert.assertTrue(attr.getLastAccessTime().getTime() > 0);
+        Assert.assertTrue(attr.getModifyTime().getTime() > 0);
+        Assert.assertFalse(attr.isDirectory());
+        Assert.assertTrue(attr.isRegularFile());
+        Assert.assertFalse(attr.isSymbolicLinc());
     }
 
     @Test
-    void getLastModifyTime() throws IOException {
+    public void getLastModifyTime() throws IOException {
         createTempFiles(1, root);
         Path file = root.resolve("tempFile0.tmp");
         Date date = new Date();
         Files.write(file, "qwerty".getBytes());
         FileAttributes attr = service.getFileAttributes(file);
-        Assertions.assertTrue(attr.getCreationTime().getTime() < attr.getModifyTime().getTime());
-        Assertions.assertTrue(attr.getModifyTime().getTime() > date.getTime());
+        Assert.assertTrue(attr.getCreationTime().getTime() < attr.getModifyTime().getTime());
+        Assert.assertTrue(attr.getModifyTime().getTime() > date.getTime());
     }
 
     private static void createTempFiles(int filesCount, Path rootDir) {
@@ -127,13 +127,13 @@ class LocalStoreIndexingServiceTest {
                 .forEach(File::delete);
     }
 
-    @AfterEach
-    void tearDown() throws IOException {
+    @After
+    public void tearDown() throws IOException {
         deleteFiles(root);
     }
 
-    @AfterAll
-    static void tearDownAll() throws IOException {
+    @AfterClass
+    public static void tearDownAll() throws IOException {
     }
 
 }
