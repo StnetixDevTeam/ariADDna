@@ -36,6 +36,10 @@ public class CloudCredentials {
         return uuid;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
     private String clientId;
 
     public String getClientId() {

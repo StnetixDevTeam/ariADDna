@@ -67,7 +67,7 @@ public class AccessTokenDTO {
 
     private Integer expiresIn;
 
-    public int getExpiresIn() {
+    public Integer getExpiresIn() {
         return expiresIn;
     }
 

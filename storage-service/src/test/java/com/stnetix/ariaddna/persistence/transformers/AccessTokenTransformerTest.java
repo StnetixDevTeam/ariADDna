@@ -19,7 +19,7 @@ public class AccessTokenTransformerTest {
         accessToken.setTokenType("Bearer");
         accessToken.setAccessToken(UUID.randomUUID().toString().replace("-", ""));
         accessToken.setRefreshToken(UUID.randomUUID().toString().replace("-", ""));
-        accessToken.setExpiresIn(Integer.parseInt((new Date()).toString()));
+        accessToken.setExpiresIn(10);
 
         AccessTokenDTO accessTokenDTO = transformer.accessTokenEntityToDTO(accessToken);
 
@@ -37,7 +37,7 @@ public class AccessTokenTransformerTest {
         accessTokenDTO.setId(471L);
         accessTokenDTO.setAccessToken(UUID.randomUUID().toString().replace("-", ""));
         accessTokenDTO.setRefreshToken(UUID.randomUUID().toString().replace("-", ""));
-        accessTokenDTO.setExpiresIn(Integer.parseInt((new Date()).toString()));
+        accessTokenDTO.setExpiresIn(10);
         accessTokenDTO.setTokenType("Bearer");
 
         AccessToken accessToken = transformer.accessTokenDTOToEntity(accessTokenDTO);
