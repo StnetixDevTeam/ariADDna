@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by alexkotov on 05.06.17.
  */
-public class PersistHelper {
+public class PersistHelperImpl implements IPersistHelper {
 
     @Autowired
     private IKeyStorePasswordService keyStorePasswordService;
@@ -18,15 +18,18 @@ public class PersistHelper {
     @Autowired
     private ICertificateService certificateService;
 
-    char[] getPassword(){
+    @Override
+    public char[] getPassword(){
         return keyStorePasswordService.getPassword().getPass().toCharArray();
     }
 
-    CertificateDTO storeCertificete(CertificateDTO certificate){
+    @Override
+    public CertificateDTO storeCertificete(CertificateDTO certificate){
         return certificateService.save(certificate);
     }
 
-    void deleteCertificate(String alias){
+    @Override
+    public void deleteCertificate(String alias){
        CertificateDTO target = getTargetCert(alias);
         if(target!=null){
             certificateService.remove(target);
@@ -34,7 +37,8 @@ public class PersistHelper {
 
     }
 
-    boolean isActiveCertificate(String alias){
+    @Override
+    public boolean isActiveCertificate(String alias){
         CertificateDTO target = getTargetCert(alias);
         if(target!=null){
             return target.getActive();
@@ -42,7 +46,8 @@ public class PersistHelper {
         return false;
     }
 
-    void setCertificateDisable(String alias){
+    @Override
+    public void setCertificateDisable(String alias){
         CertificateDTO target = getTargetCert(alias);
         if(target!=null){
             target.setActive(false);

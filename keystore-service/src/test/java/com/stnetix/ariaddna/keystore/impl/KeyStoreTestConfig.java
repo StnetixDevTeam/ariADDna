@@ -1,20 +1,17 @@
-package com.stnetix.ariaddna.keystore.config;
+package com.stnetix.ariaddna.keystore.impl;
 
 import com.stnetix.ariaddna.keystore.IKeyStore;
-import com.stnetix.ariaddna.keystore.impl.KeyStoreService;
-import com.stnetix.ariaddna.keystore.utils.CertFactory;
-import com.stnetix.ariaddna.keystore.utils.IPersistHelper;
-import com.stnetix.ariaddna.keystore.utils.KeyFactory;
-import com.stnetix.ariaddna.keystore.utils.PersistHelperImpl;
+import com.stnetix.ariaddna.keystore.utils.*;
 import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
- * Created by alexkotov on 01.06.17.
+ * Created by alexkotov on 25.07.17.
  */
 @Configuration
-@Import(AppConfiguration.class)
-public class KeyStoreConfig {
+public class KeyStoreTestConfig {
     @Bean
     public IKeyStore keyStore(){
         return new KeyStoreService();
@@ -22,7 +19,7 @@ public class KeyStoreConfig {
 
     @Bean
     public IPersistHelper persistHelper(){
-        return new PersistHelperImpl();
+        return new PersistHelperTestImpl();
     }
 
     @Bean

@@ -22,11 +22,11 @@ import java.util.Date;
 
 public class CertFactory {
 
-    public CertFactory(PersistHelper persistHelper) {
+    public CertFactory(IPersistHelper persistHelper) {
         this.persistHelper = persistHelper;
     }
 
-    private PersistHelper persistHelper;
+    private IPersistHelper persistHelper;
     private static final AriaddnaLogger LOGGER;
     private static final Date FROM;
     private static final Date TO;
