@@ -18,8 +18,7 @@ import static org.junit.Assert.*;
  * Created by alexkotov on 19.04.17.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@Transactional
-@ContextConfiguration(classes = KeyStoreConfig.class)
+@ContextConfiguration(classes = KeyStoreTestConfig.class)
 public class KeyStoreServiceTest {
     @Autowired
     private IKeyStore keyStore;
