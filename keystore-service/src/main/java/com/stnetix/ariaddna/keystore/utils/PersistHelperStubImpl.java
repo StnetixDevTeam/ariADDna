@@ -9,12 +9,12 @@ import java.util.UUID;
 /**
  * Created by localadmin on 25.07.17.
  */
-public class PersistHelperTestImpl implements IPersistHelper {
+public class PersistHelperStubImpl implements IPersistHelper {
 
     private char[] pass;
     private HashSet<CertificateDTO> allCertificates;
 
-    public PersistHelperTestImpl() {
+    public PersistHelperStubImpl() {
         pass = UUID.randomUUID().toString().toCharArray();
         allCertificates = new HashSet<>();
     }
