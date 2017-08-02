@@ -109,7 +109,9 @@ public class JPAConfiguration {
     @Bean
     @Qualifier(value = "entityManager")
     public EntityManager entityManager(EntityManagerFactory entityManagerFactory) {
-        return entityManagerFactory.createEntityManager();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        LOGGER.info("Entity manager was created in entityManager() bean with name: {} ", entityManager.toString());
+        return entityManager;
     }
 
 }

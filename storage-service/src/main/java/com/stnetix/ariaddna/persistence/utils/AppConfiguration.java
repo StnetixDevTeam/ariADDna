@@ -1,5 +1,6 @@
 package com.stnetix.ariaddna.persistence.utils;
 
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import com.stnetix.ariaddna.persistence.repositories.AccessTokenRepository;
 import com.stnetix.ariaddna.persistence.repositories.CertificateRepository;
 import com.stnetix.ariaddna.persistence.repositories.CloudCredentialsRepository;
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
@@ -28,7 +30,10 @@ import javax.persistence.EntityManager;
 @EntityScan("com.stnetix.ariaddna.persistence.entities")
 @Import(JPAConfiguration.class)
 public class AppConfiguration {
-    @Autowired
+
+    private static AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(AppConfiguration.class);
+
+    @PersistenceContext
     @Qualifier(value = "entityManager")
     private EntityManager em;
 
@@ -44,6 +49,7 @@ public class AppConfiguration {
 
     @Bean
     public RepositoryFactorySupport repositoryFactorySupport(){
+        LOGGER.info("In bean repositoryFactorySupport() entity manager is : {}", em.toString());
         return new JpaRepositoryFactory(em);
     }
 
