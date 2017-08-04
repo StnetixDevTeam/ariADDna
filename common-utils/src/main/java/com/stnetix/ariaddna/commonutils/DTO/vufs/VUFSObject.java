@@ -1,7 +1,10 @@
 package com.stnetix.ariaddna.commonutils.DTO.vufs;
 
+import com.stnetix.ariaddna.commonutils.datetime.DateTime;
+
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Describes the structure of the object which represent virtual union file system.
@@ -12,6 +15,42 @@ public class VUFSObject implements Serializable {
     private int chunkSize;
     private Long fullAvailableSpace;
     private Long occupiedSpace;
+    private DateTime creationDateTime;
+    private DateTime disableDateTime;
+    private boolean isActual;
+    private UUID userUuid;
+
+    public DateTime getCreationDateTime() {
+        return creationDateTime;
+    }
+
+    public void setCreationDateTime(DateTime creationDateTime) {
+        this.creationDateTime = creationDateTime;
+    }
+
+    public DateTime getDisableDateTime() {
+        return disableDateTime;
+    }
+
+    public void setDisableDateTime(DateTime disableDateTime) {
+        this.disableDateTime = disableDateTime;
+    }
+
+    public boolean isActual() {
+        return isActual;
+    }
+
+    public void setActual(boolean actual) {
+        isActual = actual;
+    }
+
+    public UUID getUserUuid() {
+        return userUuid;
+    }
+
+    public void setUserUuid(UUID userUuid) {
+        this.userUuid = userUuid;
+    }
 
     public List<VirtualFile> getVirtualFiles() {
         return virtualFiles;

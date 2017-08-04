@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Describe the virtual file. If file has not childs - this file is folder, else - file.
+ * Describe metadata of the virtual file. Allocation strategy is value of enum {@link AllocationStrategy}.
+ * Other attributes describe platform properties about file. List of {@link ChunkFile} contains physical location on clouds.
  */
 public class VirtualFile implements Serializable{
     private Long id;

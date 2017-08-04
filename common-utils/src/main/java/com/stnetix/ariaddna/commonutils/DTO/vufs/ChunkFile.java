@@ -1,20 +1,22 @@
 package com.stnetix.ariaddna.commonutils.DTO.vufs;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
- * Describe the chunk of file
+ * Describe the chunk of file. Field url contain the place where this chunk stored.
+ * Used in class {@link VirtualFile} as metadata of part of file.
  */
 public class ChunkFile implements Serializable {
     private Long id;
-    private String url;
+    private List<String> urls;
 
-    public String getUrl() {
-        return url;
+    public List<String> getUrls() {
+        return urls;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUrls(List<String> urls) {
+        this.urls = urls;
     }
 
     public Long getId() {

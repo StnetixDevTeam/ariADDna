@@ -10,5 +10,5 @@ public enum AllocationStrategy {
     /** Each file has 2 or more copy*/
     MIRROR,
     /** Each file has 3 or more copy*/
-    HIGHT_AVAILABILITY
+    HIGH_AVAILABILITY
 }
