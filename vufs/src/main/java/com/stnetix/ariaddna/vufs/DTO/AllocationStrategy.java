@@ -1,4 +1,4 @@
-package com.stnetix.ariaddna.commonutils.DTO.vufs;
+package com.stnetix.ariaddna.vufs.DTO;
 
 /**
  * Describes the types of allocation strategy.

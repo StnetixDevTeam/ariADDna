@@ -1,4 +1,4 @@
-package com.stnetix.ariaddna.commonutils.DTO.vufs;
+package com.stnetix.ariaddna.vufs.DTO;
 
 import java.io.Serializable;
 import java.util.List;
