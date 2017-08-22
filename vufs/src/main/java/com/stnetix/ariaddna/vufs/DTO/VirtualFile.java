@@ -2,13 +2,14 @@ package com.stnetix.ariaddna.vufs.DTO;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Describe metadata of the virtual file. Allocation strategy is value of enum {@link AllocationStrategy}.
  * Other attributes describe platform properties about file. List of {@link ChunkFile} contains physical location on clouds.
  */
 public class VirtualFile implements Serializable{
-    private Long id;
+    private UUID uuid;
     private List<VirtualFile> childs;
     private AllocationStrategy allocationStrategy;
     private List<FileProperty> properties;
@@ -46,11 +47,11 @@ public class VirtualFile implements Serializable{
         this.chunks = chunks;
     }
 
-    public Long getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 }

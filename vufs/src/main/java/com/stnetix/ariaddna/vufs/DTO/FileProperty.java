@@ -1,6 +1,7 @@
 package com.stnetix.ariaddna.vufs.DTO;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * Describe file property. Used in class {@link VirtualFile} to describe basic platform
@@ -9,16 +10,16 @@ import java.io.Serializable;
  * <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/attribute/FileOwnerAttributeView.html">FileOwnerAttributeView</a> * )
  */
 public class FileProperty implements Serializable{
-    private Long id;
+    private UUID uuid;
     private String propertyName;
     private String propertyValue;
 
-    public Long getId() {
-        return id;
+    public UUID getUuid() {
+        return uuid;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
 
     public String getPropertyName() {
