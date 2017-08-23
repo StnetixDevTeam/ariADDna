@@ -34,6 +34,7 @@
         <module>keystore-service</module>
         <module>storage-service</module>
         <module>notify-server</module>
+        <module>vufs</module>
     </modules>
 
     <properties>
