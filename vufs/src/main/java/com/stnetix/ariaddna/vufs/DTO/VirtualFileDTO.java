@@ -8,18 +8,18 @@ import java.util.UUID;
  * Describe metadata of the virtual file. Allocation strategy is value of enum {@link AllocationStrategyDTO}.
  * Other attributes describe platform properties about file. List of {@link ChunkFileDTO} contains physical location on clouds.
  */
-public class VirtualFile implements Serializable{
+public class VirtualFileDTO implements Serializable{
     private UUID uuid;
-    private List<VirtualFile> childs;
+    private List<VirtualFileDTO> childs;
     private AllocationStrategyDTO allocationStrategyDTO;
     private List<FilePropertyDTO> properties;
     private List<ChunkFileDTO> chunks;
 
-    public List<VirtualFile> getChilds() {
+    public List<VirtualFileDTO> getChilds() {
         return childs;
     }
 
-    public void setChilds(List<VirtualFile> childs) {
+    public void setChilds(List<VirtualFileDTO> childs) {
         this.childs = childs;
     }
 
