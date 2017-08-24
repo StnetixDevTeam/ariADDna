@@ -9,7 +9,7 @@ import java.util.UUID;
  * See more about file attributes in (<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/attribute/BasicFileAttributeView.html">BasicFileAttributeView</a>,
  * <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/attribute/FileOwnerAttributeView.html">FileOwnerAttributeView</a> * )
  */
-public class FileProperty implements Serializable{
+public class FilePropertyDTO implements Serializable{
     private UUID uuid;
     private String propertyName;
     private String propertyValue;
