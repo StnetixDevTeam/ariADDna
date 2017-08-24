@@ -6,7 +6,7 @@ import java.util.UUID;
 
 /**
  * Describe the chunk of file. Field url contain the place where this chunk stored.
- * Used in class {@link VirtualFile} as metadata of part of file.
+ * Used in class {@link VirtualFileDTO} as metadata of part of file.
  * Field urls contain collection of url to the chunk.
  * verifyHash is MD5 hash string of the chunk byte array.
  */

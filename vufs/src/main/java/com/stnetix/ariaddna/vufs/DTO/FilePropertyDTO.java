@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * Describe file property. Used in class {@link VirtualFile} to describe basic platform
+ * Describe file property. Used in class {@link VirtualFileDTO} to describe basic platform
  * file settings (Owner, Creation and edit date an time, and related access permissions.
  * See more about file attributes in (<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/attribute/BasicFileAttributeView.html">BasicFileAttributeView</a>,
  * <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/file/attribute/FileOwnerAttributeView.html">FileOwnerAttributeView</a> * )
