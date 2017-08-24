@@ -3,7 +3,7 @@ package com.stnetix.ariaddna.vufs.DTO;
 /**
  * Describes the types of allocation strategy.
  */
-public enum AllocationStrategy {
+public enum AllocationStrategyDTO {
 
     /** Each file has one copy*/
     UNION,

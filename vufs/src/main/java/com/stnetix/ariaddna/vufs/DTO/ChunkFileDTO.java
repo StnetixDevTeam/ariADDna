@@ -10,7 +10,7 @@ import java.util.UUID;
  * Field urls contain collection of url to the chunk.
  * verifyHash is MD5 hash string of the chunk byte array.
  */
-public class ChunkFile implements Serializable {
+public class ChunkFileDTO implements Serializable {
     private UUID uuid;
     private List<String> urls;
     private String verifyHash;

@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Describe metadata of the virtual file. Allocation strategy is value of enum {@link AllocationStrategy}.
- * Other attributes describe platform properties about file. List of {@link ChunkFile} contains physical location on clouds.
+ * Describe metadata of the virtual file. Allocation strategy is value of enum {@link AllocationStrategyDTO}.
+ * Other attributes describe platform properties about file. List of {@link ChunkFileDTO} contains physical location on clouds.
  */
 public class VirtualFile implements Serializable{
     private UUID uuid;
     private List<VirtualFile> childs;
-    private AllocationStrategy allocationStrategy;
-    private List<FileProperty> properties;
-    private List<ChunkFile> chunks;
+    private AllocationStrategyDTO allocationStrategyDTO;
+    private List<FilePropertyDTO> properties;
+    private List<ChunkFileDTO> chunks;
 
     public List<VirtualFile> getChilds() {
         return childs;
@@ -23,27 +23,27 @@ public class VirtualFile implements Serializable{
         this.childs = childs;
     }
 
-    public AllocationStrategy getAllocationStrategy() {
-        return allocationStrategy;
+    public AllocationStrategyDTO getAllocationStrategyDTO() {
+        return allocationStrategyDTO;
     }
 
-    public void setAllocationStrategy(AllocationStrategy allocationStrategy) {
-        this.allocationStrategy = allocationStrategy;
+    public void setAllocationStrategyDTO(AllocationStrategyDTO allocationStrategyDTO) {
+        this.allocationStrategyDTO = allocationStrategyDTO;
     }
 
-    public List<FileProperty> getProperties() {
+    public List<FilePropertyDTO> getProperties() {
         return properties;
     }
 
-    public void setProperties(List<FileProperty> properties) {
+    public void setProperties(List<FilePropertyDTO> properties) {
         this.properties = properties;
     }
 
-    public List<ChunkFile> getChunks() {
+    public List<ChunkFileDTO> getChunks() {
         return chunks;
     }
 
-    public void setChunks(List<ChunkFile> chunks) {
+    public void setChunks(List<ChunkFileDTO> chunks) {
         this.chunks = chunks;
     }
 
