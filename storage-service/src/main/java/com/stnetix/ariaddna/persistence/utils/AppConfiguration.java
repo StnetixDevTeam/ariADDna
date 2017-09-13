@@ -1,10 +1,7 @@
 package com.stnetix.ariaddna.persistence.utils;
 
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
-import com.stnetix.ariaddna.persistence.repositories.AccessTokenRepository;
-import com.stnetix.ariaddna.persistence.repositories.CertificateRepository;
-import com.stnetix.ariaddna.persistence.repositories.CloudCredentialsRepository;
-import com.stnetix.ariaddna.persistence.repositories.KeyStorePasswordRepository;
+import com.stnetix.ariaddna.persistence.repositories.*;
 import com.stnetix.ariaddna.persistence.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -80,5 +77,15 @@ public class AppConfiguration {
     @Bean
     public CloudCredentialsServiceImpl cloudCredentialsServiceImpl(){
         return new CloudCredentialsServiceImpl();
+    }
+
+    @Bean
+    public VirtualFileRepository virtualFileRepository(){
+        return repositoryFactorySupport().getRepository(VirtualFileRepository.class);
+    }
+
+    @Bean
+    public IVirtualFileService virtualFileService(){
+        return new VirtualFileServiceImpl();
     }
 }
