@@ -1,19 +1,24 @@
 package com.stnetix.ariaddna.persistence.utils;
 
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
+import com.stnetix.ariaddna.persistence.repositories.AccessTokenRepository;
 import com.stnetix.ariaddna.persistence.repositories.CertificateRepository;
+import com.stnetix.ariaddna.persistence.repositories.CloudCredentialsRepository;
 import com.stnetix.ariaddna.persistence.repositories.KeyStorePasswordRepository;
-import com.stnetix.ariaddna.persistence.services.CertificateServiceImpl;
-import com.stnetix.ariaddna.persistence.services.ICertificateService;
-import com.stnetix.ariaddna.persistence.services.IKeyStorePasswordService;
-import com.stnetix.ariaddna.persistence.services.KeyStorePasswordServiceImpl;
+import com.stnetix.ariaddna.persistence.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 
 import javax.persistence.EntityManager;
@@ -25,7 +30,10 @@ import javax.persistence.EntityManager;
 @EntityScan("com.stnetix.ariaddna.persistence.entities")
 @Import(JPAConfiguration.class)
 public class AppConfiguration {
-    @Autowired
+
+    private static AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(AppConfiguration.class);
+
+    @PersistenceContext
     @Qualifier(value = "entityManager")
     private EntityManager em;
 
@@ -41,6 +49,7 @@ public class AppConfiguration {
 
     @Bean
     public RepositoryFactorySupport repositoryFactorySupport(){
+        LOGGER.info("In bean repositoryFactorySupport() entity manager is : {}", em.toString());
         return new JpaRepositoryFactory(em);
     }
 
@@ -53,4 +62,23 @@ public class AppConfiguration {
         return repositoryFactorySupport().getRepository(KeyStorePasswordRepository.class);
     }
 
+    @Bean
+    public AccessTokenRepository accessTokenRepository(){
+        return repositoryFactorySupport().getRepository(AccessTokenRepository.class);
+    }
+
+    @Bean
+    public AccessTokenServiceImpl accessTokenServiceImpl(){
+        return new AccessTokenServiceImpl();
+    }
+
+    @Bean
+    public CloudCredentialsRepository cloudCredentialsRepository(){
+        return repositoryFactorySupport().getRepository(CloudCredentialsRepository.class);
+    }
+
+    @Bean
+    public CloudCredentialsServiceImpl cloudCredentialsServiceImpl(){
+        return new CloudCredentialsServiceImpl();
+    }
 }

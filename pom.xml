@@ -17,17 +17,17 @@
         <module>rest-api-client</module>
         <module>server-core</module>
         <module>local-storage-manager</module>
-        
+        <module>rest-api-cloud-client</module>
         <module>keystore-service</module>
         <module>storage-service</module>
-        
         <module>notify-server</module>
-        <module>rest-api-cloud-client</module>
-
+        <module>vufs</module>
     </modules>
+
     <properties>
         <spring.version>4.3.6.RELEASE</spring.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -35,11 +35,10 @@
             <version>${spring.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-api</artifactId>
-            <version>RELEASE</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -83,5 +82,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -12,7 +12,7 @@
     <artifactId>notify-server</artifactId>
     <!--<version>1.0-SNAPSHOT</version>-->
 
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <jetty.version>9.2.11.v20150529</jetty.version>
@@ -23,6 +23,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.1.1</version>
+                <configuration> <!--Added Kotov Alexandr to build-->
+                    <webXml>src/webapp/WEB-INF/web.xml.back</webXml>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>

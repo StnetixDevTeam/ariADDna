@@ -17,13 +17,13 @@ import java.security.KeyStore;
 public class KeyFactory {
 
 
-    public KeyFactory(PersistHelper persistHelper, CertFactory certFactory){
+    public KeyFactory(IPersistHelper persistHelper, CertFactory certFactory){
         this.persistHelper = persistHelper;
         this.certFactory = certFactory;
-        pass = persistHelper.getPassword();
+        pass = this.persistHelper.getPassword();
     }
 
-    private PersistHelper persistHelper;
+    private IPersistHelper persistHelper;
     private CertFactory certFactory;
     private static final String KEYSTORE_PATH;
     private char[] pass;

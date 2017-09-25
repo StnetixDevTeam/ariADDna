@@ -1,15 +1,12 @@
 package com.stnetix.ariaddna.localstoragemanager.fileSystemWatchingService;
 
-import org.junit.jupiter.api.Test;
+import org.junit.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Created by User on 03.03.2017.
- */
 public class SimpleTest {
 
 
