@@ -1,7 +1,9 @@
 package com.stnetix.ariaddna.persistence.services;
 
+import com.stnetix.ariaddna.commonutils.DTO.UserDTO;
 import com.stnetix.ariaddna.persistence.entities.UserEntity;
 import com.stnetix.ariaddna.persistence.entities.vufs.VirtualFileEntity;
+import com.stnetix.ariaddna.vufs.DTO.VirtualFileDTO;
 
 import java.util.List;
 
@@ -9,7 +11,7 @@ import java.util.List;
  * Created by alexkotov on 12.09.17.
  */
 public interface IVirtualFileService {
-    VirtualFileEntity save(VirtualFileEntity virtualFile);
-    List<VirtualFileEntity> save(List<VirtualFileEntity> virtualFileEntities);
-    List<VirtualFileEntity> getRootVirtualFilesByUser(UserEntity user);
+    VirtualFileDTO save(VirtualFileDTO virtualFile);
+    List<VirtualFileDTO> save(List<VirtualFileDTO> virtualFileDTOs);
+    List<VirtualFileDTO> getRootVirtualFilesByUser(UserDTO userDTO);
 }
