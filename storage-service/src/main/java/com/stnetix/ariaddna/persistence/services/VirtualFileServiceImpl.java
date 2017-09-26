@@ -1,9 +1,11 @@
 package com.stnetix.ariaddna.persistence.services;
 
-import com.stnetix.ariaddna.persistence.entities.UserEntity;
-import com.stnetix.ariaddna.persistence.entities.vufs.VirtualFileEntity;
+import com.stnetix.ariaddna.commonutils.DTO.UserDTO;
 import com.stnetix.ariaddna.persistence.repositories.VirtualFileRepository;
+import com.stnetix.ariaddna.persistence.transformers.UserTransformer;
 import com.stnetix.ariaddna.persistence.transformers.VirtualFileTransformer;
+import com.stnetix.ariaddna.vufs.DTO.VirtualFileDTO;
+import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,32 +17,35 @@ import java.util.List;
  * Created by alexkotov on 13.09.17.
  */
 @Repository
-@Transactional(readOnly = true)
+@Transactional
 public class VirtualFileServiceImpl implements IVirtualFileService {
     @Autowired
     private VirtualFileRepository repository;
 
-    private VirtualFileTransformer transformer;
+    private VirtualFileTransformer virtualFileTransformer;
+
 
     public VirtualFileServiceImpl(){
-        transformer = new VirtualFileTransformer();
+        virtualFileTransformer = new VirtualFileTransformer();
     }
 
     @Override
-    public VirtualFileEntity save(VirtualFileEntity virtualFile) {
-        return repository.save(virtualFile);
+    public VirtualFileDTO save(VirtualFileDTO virtualFile) {
+        return virtualFileTransformer.virtualFileEntityToDTO(repository.save(virtualFileTransformer.virtualFileDTOToEntity(virtualFile)));
     }
 
     @Override
-    public List<VirtualFileEntity> save(List<VirtualFileEntity> virtualFileEntities) {
-        List<VirtualFileEntity> entities = new ArrayList<>();
-        virtualFileEntities.stream()
-                .forEach(virtualFileEntity -> entities.add(save(virtualFileEntity)));
-        return entities;
+    public List<VirtualFileDTO> save(List<VirtualFileDTO> virtualFileDTOs) {
+        List<VirtualFileDTO> dtos = new ArrayList<>();
+        virtualFileDTOs.stream()
+                .forEach(virtualFileDTO -> dtos.add(virtualFileTransformer.virtualFileEntityToDTO(repository.save(virtualFileTransformer.virtualFileDTOToEntity(virtualFileDTO)))));
+        return dtos;
     }
 
     @Override
-    public List<VirtualFileEntity> getRootVirtualFilesByUser(UserEntity user) {
-        return repository.getRootByUserUUID(user.getUuid());
+    public List<VirtualFileDTO> getRootVirtualFilesByUser(UserDTO userDTO) {
+        List<VirtualFileDTO> dtos = new ArrayList<>();
+        repository.getRootVirtualFileByUser(userDTO.getUuid().toString()).forEach(virtualFileEntity -> dtos.add(virtualFileTransformer.virtualFileEntityToDTO(virtualFileEntity)));
+        return dtos;
     }
 }

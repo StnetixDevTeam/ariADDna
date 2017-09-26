@@ -17,23 +17,22 @@ public class VirtualFileEntity{
     private Long id;
     private UUID uuid;
 
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "parent_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "VFILE_ID")
     private List<VirtualFileEntity> childs;
 
     @Enumerated(EnumType.STRING)
     private AllocationStrategy allocationStrategy;
 
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "vfile_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "VFILE_ID")
     private List<FilePropertyEntity> properties;
 
-    @OneToMany(orphanRemoval = true)
-    @JoinColumn(name = "vfile_id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "VFILE_ID")
     private List<ChunkFileEntity> chunks;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id")
+    @ManyToOne(cascade = CascadeType.ALL)
     private UserEntity owner;
 
     public UserEntity getOwner() {

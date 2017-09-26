@@ -1,11 +1,10 @@
 package com.stnetix.ariaddna.persistence.transformers;
 
+import com.stnetix.ariaddna.persistence.TestHelper;
 import com.stnetix.ariaddna.persistence.entities.vufs.FilePropertyEntity;
 import com.stnetix.ariaddna.vufs.DTO.FilePropertyDTO;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
-
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -13,14 +12,11 @@ import static org.junit.Assert.*;
  * Created by alexkotov on 13.09.17.
  */
 public class FilePropertyTransformerTest {
-    FilePropertyTransformer transformer = Mappers.getMapper(FilePropertyTransformer.class);
+    private FilePropertyTransformer transformer = Mappers.getMapper(FilePropertyTransformer.class);
 
     @Test
     public void filePropertyDTOToEntity() throws Exception {
-        FilePropertyDTO dto = new FilePropertyDTO();
-        dto.setUuid(UUID.randomUUID());
-        dto.setPropertyName("propertyName");
-        dto.setPropertyValue("propertyValue");
+        FilePropertyDTO dto = TestHelper.getFilePropertyDTO();
 
         FilePropertyEntity entity = transformer.filePropertyDTOToEntity(dto);
 
@@ -32,10 +28,7 @@ public class FilePropertyTransformerTest {
 
     @Test
     public void filePropertyEntityToDTO() throws Exception {
-        FilePropertyEntity entity = new FilePropertyEntity();
-        entity.setUuid(UUID.randomUUID());
-        entity.setPropertyName("propertyName");
-        entity.setPropertyValue("propertyValue");
+        FilePropertyEntity entity = TestHelper.getFilePropertyEntity();
 
         FilePropertyDTO dto = transformer.filePropertyEntityToDTO(entity);
 

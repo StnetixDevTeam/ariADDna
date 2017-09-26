@@ -1,11 +1,10 @@
 package com.stnetix.ariaddna.persistence.transformers;
 
 import com.stnetix.ariaddna.commonutils.DTO.UserDTO;
+import com.stnetix.ariaddna.persistence.TestHelper;
 import com.stnetix.ariaddna.persistence.entities.UserEntity;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
-
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -13,13 +12,11 @@ import static org.junit.Assert.*;
  * Created by alexkotov on 13.09.17.
  */
 public class UserTransformerTest {
-    UserTransformer transformer = Mappers.getMapper(UserTransformer.class);
+    private UserTransformer transformer = Mappers.getMapper(UserTransformer.class);
 
     @Test
     public void userDTOToEntity() throws Exception {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setUuid(UUID.randomUUID());
-        userDTO.setNickname("nickname");
+        UserDTO userDTO = TestHelper.getUserDTO();
 
         UserEntity userEntity = transformer.userDTOToEntity(userDTO);
         assertNotNull(userEntity);
@@ -29,9 +26,7 @@ public class UserTransformerTest {
 
     @Test
     public void userEntityToDTO() throws Exception {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setNickname("nickname");
-        userEntity.setUuid(UUID.randomUUID());
+        UserEntity userEntity = TestHelper.getUserEntity();
 
         UserDTO userDTO = transformer.userEntityToDTO(userEntity);
         assertNotNull(userDTO);

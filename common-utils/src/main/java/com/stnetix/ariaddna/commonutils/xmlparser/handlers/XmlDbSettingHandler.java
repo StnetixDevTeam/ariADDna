@@ -13,6 +13,7 @@ public class XmlDbSettingHandler extends DefaultHandler {
     private String login;
     private String pass;
     private String driverClass;
+    private String dialect;
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -22,6 +23,7 @@ public class XmlDbSettingHandler extends DefaultHandler {
             driverClass = attributes.getValue("DriverClass");
             login = attributes.getValue("login");
             pass = attributes.getValue("pass");
+            dialect = attributes.getValue("dialect");
         }
     }
 
@@ -39,5 +41,9 @@ public class XmlDbSettingHandler extends DefaultHandler {
 
     public String getDriverClass() {
         return driverClass;
+    }
+
+    public String getDialect() {
+        return dialect;
     }
 }
