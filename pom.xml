@@ -80,6 +80,30 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>3.7</version>
+                <configuration>
+                    <linkXRef>false</linkXRef>
+                    <failOnViolation>false</failOnViolation>
+                    <includeTests>true</includeTests>
+                    <verbose>true</verbose>
+                    <targetJdk>1.8</targetJdk>
+                    <rulesets>
+                        <ruleset>${project.parent.basedir}/doc/codestyle/pmd.xml</ruleset>
+                    </rulesets>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>pmd</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
