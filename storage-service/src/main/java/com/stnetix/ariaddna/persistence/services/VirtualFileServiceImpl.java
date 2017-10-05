@@ -2,10 +2,8 @@ package com.stnetix.ariaddna.persistence.services;
 
 import com.stnetix.ariaddna.commonutils.DTO.UserDTO;
 import com.stnetix.ariaddna.persistence.repositories.VirtualFileRepository;
-import com.stnetix.ariaddna.persistence.transformers.UserTransformer;
 import com.stnetix.ariaddna.persistence.transformers.VirtualFileTransformer;
 import com.stnetix.ariaddna.vufs.DTO.VirtualFileDTO;
-import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

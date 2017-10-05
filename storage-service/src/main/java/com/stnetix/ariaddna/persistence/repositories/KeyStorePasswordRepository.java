@@ -1,7 +1,6 @@
 package com.stnetix.ariaddna.persistence.repositories;
 
 import com.stnetix.ariaddna.persistence.entities.KeyStorePassword;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 

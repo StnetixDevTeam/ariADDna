@@ -3,13 +3,10 @@ package com.stnetix.ariaddna.persistence.services;
 import com.stnetix.ariaddna.commonutils.DTO.CloudCredentialsDTO;
 import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 

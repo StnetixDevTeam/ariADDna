@@ -1,8 +1,6 @@
 package com.stnetix.ariaddna.persistence.services;
 
 import com.stnetix.ariaddna.commonutils.DTO.UserDTO;
-import com.stnetix.ariaddna.persistence.entities.UserEntity;
-import com.stnetix.ariaddna.persistence.entities.vufs.VirtualFileEntity;
 import com.stnetix.ariaddna.vufs.DTO.VirtualFileDTO;
 
 import java.util.List;

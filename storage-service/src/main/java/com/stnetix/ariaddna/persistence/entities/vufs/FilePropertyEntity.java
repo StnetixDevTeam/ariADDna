@@ -1,7 +1,5 @@
 package com.stnetix.ariaddna.persistence.entities.vufs;
 
-import org.hibernate.annotations.GeneratorType;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

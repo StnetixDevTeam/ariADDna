@@ -1,14 +1,11 @@
 package com.stnetix.ariaddna.persistence.repositories;
 
-import com.stnetix.ariaddna.persistence.entities.UserEntity;
 import com.stnetix.ariaddna.persistence.entities.vufs.VirtualFileEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by alexkotov on 11.09.17.
