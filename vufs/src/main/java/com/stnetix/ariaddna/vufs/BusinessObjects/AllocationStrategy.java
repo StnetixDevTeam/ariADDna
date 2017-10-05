@@ -1,9 +1,9 @@
-package com.stnetix.ariaddna.vufs.DTO;
+package com.stnetix.ariaddna.vufs.BusinessObjects;
 
 /**
  * Describes the types of allocation strategy.
  */
-public enum AllocationStrategyDTO {
+public enum AllocationStrategy {
 
     /** Each file has one copy*/
     UNION,

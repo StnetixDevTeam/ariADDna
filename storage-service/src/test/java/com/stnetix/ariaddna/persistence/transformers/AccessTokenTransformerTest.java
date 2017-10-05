@@ -5,8 +5,6 @@ import com.stnetix.ariaddna.persistence.entities.AccessToken;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
-
-import java.util.Date;
 import java.util.UUID;
 
 public class AccessTokenTransformerTest {

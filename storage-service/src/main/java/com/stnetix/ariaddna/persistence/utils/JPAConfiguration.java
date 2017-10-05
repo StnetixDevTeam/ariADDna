@@ -28,6 +28,7 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "com.stnetix.ariaddna.persistence.repositories")
 public class JPAConfiguration {
     private static AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(JPAConfiguration.class);
+    private String dialect = null;
 
     @Bean(destroyMethod = "shutdown")
     public DataSource dataSource() {
@@ -75,6 +76,7 @@ public class JPAConfiguration {
             config.setJdbcUrl(handler.getUrl());
             config.setUsername(handler.getLogin());
             config.setPassword(handler.getPass());
+            dialect = handler.getDialect();
             config.setMaximumPoolSize(5);
             return new HikariDataSource(config);
         }
@@ -98,7 +100,7 @@ public class JPAConfiguration {
         properties.put("hibernate.format_sql", "true");
         properties.put("hibernate.use_sql_comments", "true");
         properties.put("hibernate.temp.use_jdbc_metadata_defaults", "false");
-        properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQL94Dialect");
+        properties.put("hibernate.dialect", dialect);
 
         factory.setJpaProperties(properties);
         factory.afterPropertiesSet();

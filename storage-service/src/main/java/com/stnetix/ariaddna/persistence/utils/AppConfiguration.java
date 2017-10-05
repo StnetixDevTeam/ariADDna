@@ -1,27 +1,18 @@
 package com.stnetix.ariaddna.persistence.utils;
 
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
-import com.stnetix.ariaddna.persistence.repositories.AccessTokenRepository;
-import com.stnetix.ariaddna.persistence.repositories.CertificateRepository;
-import com.stnetix.ariaddna.persistence.repositories.CloudCredentialsRepository;
-import com.stnetix.ariaddna.persistence.repositories.KeyStorePasswordRepository;
+import com.stnetix.ariaddna.persistence.repositories.*;
 import com.stnetix.ariaddna.persistence.services.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-
-import javax.persistence.EntityManager;
 
 /**
  * Created by alexkotov on 10.05.17.
@@ -80,5 +71,15 @@ public class AppConfiguration {
     @Bean
     public CloudCredentialsServiceImpl cloudCredentialsServiceImpl(){
         return new CloudCredentialsServiceImpl();
+    }
+
+    @Bean
+    public VirtualFileRepository virtualFileRepository(){
+        return repositoryFactorySupport().getRepository(VirtualFileRepository.class);
+    }
+
+    @Bean
+    public IVirtualFileService virtualFileService(){
+        return new VirtualFileServiceImpl();
     }
 }
