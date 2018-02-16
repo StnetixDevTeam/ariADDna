@@ -25,13 +25,13 @@ public class MavenUtil {
             if ((new File("pom.xml")).exists())
                 model = reader.read(new FileReader("pom.xml"));
             else
-                model = reader.read(new InputStreamReader(MavenUtil.class.getResourceAsStream("/META-INF/maven/de.scrum-master.stackoverflow/aspectj-introduce-method/pom.xml")));
+                model = reader.read(new InputStreamReader(MavenUtil.class.getResourceAsStream("/META-INF/maven/com.stnetix.ariaddna/common-utils/pom.xml")));
 
         } catch (IOException e) {
             LOGGER.error("Error in method getCurrentVersion(), caused by: ", e);
         } catch (XmlPullParserException e) {
             LOGGER.error("Error in method getCurrentVersion(), caused by: ", e);
         }
-        return model != null ? model.getVersion() : "0.0.0";
+        return model != null ? model.getParent().getVersion() : "0.0.0";
     }
 }

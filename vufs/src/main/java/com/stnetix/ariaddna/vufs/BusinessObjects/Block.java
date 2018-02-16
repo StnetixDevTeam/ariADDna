@@ -6,56 +6,56 @@ import de.greenrobot.common.hash.Murmur3A;
  * Block it is elementary unity in ariADDna storage.
  */
 public class Block {
-    private String mVersion;
-    private String mBlockUuid;
-    private Long mNumber;
-    private String mFileUuid;
-    private byte[] mPayload;
-    private Long mTimestamp;
-    private Long mSize;
+    private String version;
+    private String blockUuid;
+    private Long number;
+    private String fileUuid;
+    private byte[] payload;
+    private Long timestamp;
+    private Long size;
 
     public Block(String version, Long number, String fileUuid, byte[] payload, Long timestamp, Long size) {
-        this.mVersion = version;
-        this.mNumber = number;
-        this.mFileUuid = fileUuid;
-        this.mPayload = payload;
-        this.mTimestamp = timestamp;
-        this.mSize = size;
+        this.version = version;
+        this.number = number;
+        this.fileUuid = fileUuid;
+        this.payload = payload;
+        this.timestamp = timestamp;
+        this.size = size;
         generateBlockUuid(payload, fileUuid);
     }
 
-    private void generateBlockUuid(byte[] payload, String fileUUid){
+    private void generateBlockUuid(byte[] payload, String fileUuid) {
         Murmur3A murmur = new Murmur3A();
         murmur.update(payload);
-        murmur.update(fileUUid.getBytes());
-        mBlockUuid = String.valueOf(murmur.getValue());
+        murmur.update(fileUuid.getBytes());
+        blockUuid = String.valueOf(murmur.getValue());
     }
 
     public String getVersion() {
-        return mVersion;
+        return version;
     }
 
     public String getBlockUuid() {
-        return mBlockUuid;
+        return blockUuid;
     }
 
     public Long getNumber() {
-        return mNumber;
+        return number;
     }
 
     public String getFileUuid() {
-        return mFileUuid;
+        return fileUuid;
     }
 
     public byte[] getPayload() {
-        return mPayload;
+        return payload;
     }
 
     public Long getTimestamp() {
-        return mTimestamp;
+        return timestamp;
     }
 
     public Long getSize() {
-        return mSize;
+        return size;
     }
 }

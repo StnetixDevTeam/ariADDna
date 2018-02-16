@@ -2,100 +2,103 @@ package com.stnetix.ariaddna.vufs.BusinessObjects;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * Metafile it's one of many vertex acyclic graph and on local filesystem metafile equals local files and directory.
  */
 public class Metafile {
 
-    private String mVersion;
-    private String mFileUuid;
-    private String mParentFileUuid;
-    private Set<String> mChildFileUuidSet;
-    private List<String> mBlockUuidList;
-    private Map<String, String> mProperties;
-    private AllocationStrategy mAllocationStrategy;
-    private Map<String, String> mBlockAllocateMap;
+    private String version;
+    private String fileUuid;
+    private String parentFileUuid;
+    private Set<String> childFileUuidSet;
+    private List<String> blockUuidList;
+    private Map<String, String> properties;
+    private AllocationStrategy allocationStrategy;
+    private Map<String, String> blockAllocateMap;
 
-    public Metafile(String mVersion, String mFileUuid, String mParentFileUuid) {
-        mChildFileUuidSet = new HashSet<>();
-        mBlockUuidList = new ArrayList<>();
-        mProperties = new HashMap<>();
-        mBlockAllocateMap = new ConcurrentHashMap<>();
+    public Metafile(String version, String fileUuid, String parentFileUuid) {
+        childFileUuidSet = new CopyOnWriteArraySet<>();
+        blockUuidList = new CopyOnWriteArrayList<>();
+        properties = new ConcurrentHashMap<>();
+        blockAllocateMap = new ConcurrentHashMap<>();
 
-        this.mVersion = mVersion;
-        this.mFileUuid = mFileUuid;
-        this.mParentFileUuid = mParentFileUuid;
+        this.version = version;
+        this.fileUuid = fileUuid;
+        this.parentFileUuid = parentFileUuid;
     }
 
 
-    public boolean addChildFileUUid(String fileUuid){
-        return mChildFileUuidSet.add(fileUuid);
+    public boolean addChildFileUUid(String fileUuid) {
+        return childFileUuidSet.add(fileUuid);
     }
 
-    public boolean removeChildFileUuid(String fileUuid){
-        return mChildFileUuidSet.remove(fileUuid);
+    public boolean removeChildFileUuid(String fileUuid) {
+        return childFileUuidSet.remove(fileUuid);
     }
 
-    public boolean addBlockUuid(String blockUUid){
-        return mBlockUuidList.add(blockUUid);
+    public boolean addBlockUuid(String blockUUid) {
+        return blockUuidList.add(blockUUid);
     }
 
-    public boolean removeBlockUuid(String blockUUid){
-        return mBlockUuidList.remove(blockUUid);
+    public boolean removeBlockUuid(String blockUUid) {
+        return blockUuidList.remove(blockUUid);
     }
 
-    public void addProperty(String propName, String propValue){
-        mProperties.put(propName, propValue);
+    public void addProperty(String propName, String propValue) {
+        properties.put(propName, propValue);
     }
 
-    public void removeProperty(String propName){
-        mProperties.remove(propName);
+    public void removeProperty(String propName) {
+        properties.remove(propName);
     }
 
-    public void addBlockAllocation(String blockUuid, String cloudUuid){
-        mBlockAllocateMap.put(blockUuid, cloudUuid);
+    public void addBlockAllocation(String blockUuid, String cloudUuid) {
+        blockAllocateMap.put(blockUuid, cloudUuid);
     }
 
-    public void removeBlockAllocation(String blockUuid){
-        mBlockAllocateMap.remove(blockUuid);
+    public void removeBlockAllocation(String blockUuid) {
+        blockAllocateMap.remove(blockUuid);
     }
 
-    public void setAllocationStrategy(AllocationStrategy strategy){
-        mAllocationStrategy = strategy;
+    public void setAllocationStrategy(AllocationStrategy strategy) {
+        allocationStrategy = strategy;
     }
 
     //[GETTERS]
     public String getVersion() {
-        return mVersion;
+        return version;
     }
 
     public String getFileUuid() {
-        return mFileUuid;
+        return fileUuid;
     }
 
     public String getParentFileUuid() {
-        return mParentFileUuid;
+        return parentFileUuid;
     }
 
     public Set<String> getChildFileUuidSet() {
-        return mChildFileUuidSet;
+        return childFileUuidSet;
     }
 
     public List<String> getBlockUuidList() {
-        return mBlockUuidList;
+        return blockUuidList;
     }
 
     public Map<String, String> getProperties() {
-        return mProperties;
+        return properties;
     }
 
     public AllocationStrategy getAllocationStrategy() {
-        return mAllocationStrategy;
+        return allocationStrategy;
     }
 
     public Map<String, String> getBlockAllocateMap() {
-        return mBlockAllocateMap;
+        return blockAllocateMap;
     }
     //[END GETTERS]
 }
