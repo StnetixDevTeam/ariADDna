@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
  * Created by alexkotov on 03.02.17.
  */
 public class DateTimeTest {
+
+
     DateTime dateTime;
 
     @Before
@@ -48,5 +50,13 @@ public class DateTimeTest {
         dateTime.setTime(21, 30, 0);
         System.out.println(dateTime.getDateTime());
     }
+    @Test
+    public void getTimeInMillisec() throws Exception {
+        System.out.println(dateTime.getTimeInMillisec());
+    }
 
+    @Test
+    public void getTimeInMillisecWithSetDateTime() throws Exception {
+        System.out.println(dateTime.getTimeInMillisec(2016, 8, 21, 12, 30, 45));
+    }
 }

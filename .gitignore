@@ -626,3 +626,10 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+# keystore-sevice
+.cer
+.keystore
+
+# storage-service
+.db

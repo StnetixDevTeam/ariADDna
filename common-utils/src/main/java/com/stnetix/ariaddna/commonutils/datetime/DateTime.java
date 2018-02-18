@@ -3,6 +3,7 @@ package com.stnetix.ariaddna.commonutils.datetime;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
@@ -98,6 +99,31 @@ public class DateTime {
      * */
     public void setTime(int hour, int minute, int second) {
         dateTime = LocalDateTime.of(dateTime.toLocalDate(), LocalTime.of(hour, minute, second));
+    }
+
+    /**
+     * Method returned current datetime instance in milliseconds from the start of ERA (1970-01-01)
+     * @return long*/
+    public long getTimeInMillisec(){
+        return dateTime.atZone(ZoneId.of("UTC+0")).toInstant().toEpochMilli();
+    }
+
+    /**
+     * Method returned current datetime instance in milliseconds from the start of ERA (1970-01-01)
+     * @param year value range -999999999 to 999999999;
+     * @param month value range 1 to 12;
+     * @param day value range 1 to 31. In the default ISO calendar system, this has values from 1 to 31 in most months.
+     * April, June, September, November have days from 1 to 30, while February has days
+     * from 1 to 28, or 29 in a leap year.;
+     * @param hour value range 0 to 23;
+     * @param minute value range 0 to 59;
+     * @param second value range 0 to 59;
+     *
+     * @throws java.time.DateTimeException if any param value is not valid
+     * */
+    public long getTimeInMillisec(int year, int month, int day, int hour, int minute, int second){
+        setDateTime(year, month, day, hour, minute, second);
+        return getTimeInMillisec();
     }
 
     @Override
