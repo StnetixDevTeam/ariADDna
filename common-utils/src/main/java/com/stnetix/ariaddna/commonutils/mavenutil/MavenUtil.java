@@ -28,9 +28,9 @@ public class MavenUtil {
                 model = reader.read(new InputStreamReader(MavenUtil.class.getResourceAsStream("/META-INF/maven/com.stnetix.ariaddna/common-utils/pom.xml")));
 
         } catch (IOException e) {
-            LOGGER.error("Error in method getCurrentVersion(), caused by: ", e);
+            LOGGER.error("Can't read Pom.xml file. Exception message is: ", e.getMessage());
         } catch (XmlPullParserException e) {
-            LOGGER.error("Error in method getCurrentVersion(), caused by: ", e);
+            LOGGER.error("Can't parse Pom.xml file. Exception message is: ", e.getMessage());
         }
         return model != null ? model.getParent().getVersion() : "0.0.0";
     }

@@ -1,5 +1,6 @@
 package com.stnetix.ariaddna.vufs.BusinessObjects;
 
+import com.stnetix.ariaddna.commonutils.datetime.DateTime;
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
 
 import java.util.Set;
@@ -23,7 +24,7 @@ public class Metatable {
 
     public boolean addMetafileUUid(Metafile metafile) {
         if (metafileSet.add(metafile)) {
-            lastUpdateTimestamp = System.currentTimeMillis();
+            lastUpdateTimestamp = new DateTime().getTimeInMillisec();
             return true;
         }
         return false;
@@ -31,7 +32,7 @@ public class Metatable {
 
     public boolean removeMetafileUuid(Metafile metafile) {
         if (metafileSet.remove(metafile)) {
-            lastUpdateTimestamp = System.currentTimeMillis();
+            lastUpdateTimestamp = new DateTime().getTimeInMillisec();
             return true;
         }
         return false;
