@@ -8,10 +8,19 @@ import java.util.Set;
  * Data transfer object to Metatable {@link com.stnetix.ariaddna.vufs.BusinessObjects.Metatable} class
  */
 public class MetatableDTO {
+    private String uuid;
     private String version;
     private MetatableType type;
     private Set<MetafileDTO> metafileSet;
     private Long lastUpdateTimestamp;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
     public String getVersion() {
         return version;
