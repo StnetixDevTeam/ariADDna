@@ -2,7 +2,6 @@ package com.stnetix.ariaddna.vufs.BusinessObjects;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -18,7 +17,7 @@ public class Metafile {
     private List<String> blockUuidList;
     private Map<String, String> properties;
     private AllocationStrategy allocationStrategy;
-    private Map<String, String> blockAllocateMap;
+    private Map<String, Set<String>> blockAllocateMap;
 
     public Metafile(String version, String fileUuid, String parentFileUuid) {
         childFileUuidSet = new CopyOnWriteArraySet<>();
@@ -57,7 +56,9 @@ public class Metafile {
     }
 
     public void addBlockAllocation(String blockUuid, String cloudUuid) {
-        blockAllocateMap.put(blockUuid, cloudUuid);
+        Set<String> cloudUuids = blockAllocateMap.getOrDefault(blockUuid, new HashSet<>());
+        cloudUuids.add(cloudUuid);
+        blockAllocateMap.put(blockUuid, cloudUuids);
     }
 
     public void removeBlockAllocation(String blockUuid) {
@@ -97,7 +98,7 @@ public class Metafile {
         return allocationStrategy;
     }
 
-    public Map<String, String> getBlockAllocateMap() {
+    public Map<String, Set<String>> getBlockAllocateMap() {
         return blockAllocateMap;
     }
     //[END GETTERS]
