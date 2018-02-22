@@ -11,15 +11,17 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class Metatable {
 
+    private String uuid;
     private String version;
     private MetatableType type;
     private Set<Metafile> metafileSet;
     private Long lastUpdateTimestamp;
 
-    public Metatable(MetatableType type) {
+    public Metatable(MetatableType type, String uuid) {
         this.type = type;
         version = MavenUtil.getCurrentVersion();
         metafileSet = new CopyOnWriteArraySet<>();
+        this.uuid = uuid;
     }
 
     public boolean addMetafileUUid(Metafile metafile) {
@@ -52,5 +54,9 @@ public class Metatable {
 
     public Long getLastUpdateTimestamp() {
         return lastUpdateTimestamp;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 }

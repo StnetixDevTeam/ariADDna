@@ -3,7 +3,6 @@ package com.stnetix.ariaddna.vufs.BusinessObjects;
 import de.greenrobot.common.hash.Murmur3A;
 import org.junit.Test;
 
-import java.util.Random;
 import java.util.UUID;
 
 import static org.junit.Assert.*;
@@ -12,7 +11,6 @@ import static org.junit.Assert.*;
  * Created by vasap87 on 16.02.18.
  */
 public class BlockUuidHashTest {
-    private static final Random random = new Random(Byte.MAX_VALUE);
 
     @Test
     public void blockUuidHashTest(){
@@ -39,8 +37,6 @@ public class BlockUuidHashTest {
         long hashAfterByteArray1 = murmur3A2.getValue();
 
         assertEquals(hashAfterByteArray, hashAfterByteArray1);
-
-
 
     }
 

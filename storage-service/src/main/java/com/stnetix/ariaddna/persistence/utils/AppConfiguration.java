@@ -73,13 +73,5 @@ public class AppConfiguration {
         return new CloudCredentialsServiceImpl();
     }
 
-    @Bean
-    public VirtualFileRepository virtualFileRepository(){
-        return repositoryFactorySupport().getRepository(VirtualFileRepository.class);
-    }
 
-    @Bean
-    public IVirtualFileService virtualFileService(){
-        return new VirtualFileServiceImpl();
-    }
 }
