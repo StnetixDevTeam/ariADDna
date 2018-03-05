@@ -11,19 +11,17 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.persistence.transformers;
-
-import org.mapstruct.Mapper;
-
-import com.stnetix.ariaddna.commonutils.DTO.KeyStorePasswordDTO;
-import com.stnetix.ariaddna.persistence.entities.KeyStorePassword;
+package com.stnetix.ariaddna.vufs.businessobjects;
 
 /**
- * Created by alexkotov on 03.05.17.
+ * Describes the types of allocation strategy.
  */
-@Mapper
-public interface KeyStorePasswordTransformer {
-    KeyStorePasswordDTO keyStorePasswordEntityToDTO(KeyStorePassword keyStorePassword);
+public enum AllocationStrategy {
 
-    KeyStorePassword keyStorePasswordDTOToEntity(KeyStorePasswordDTO keyStorePasswordDTO);
+    /** Each file has one copy*/
+    UNION,
+    /** Each file has 2 or more copy*/
+    MIRROR,
+    /** Each file has 3 or more copy*/
+    HIGH_AVAILABILITY
 }

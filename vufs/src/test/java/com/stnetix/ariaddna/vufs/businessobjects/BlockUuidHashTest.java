@@ -1,11 +1,25 @@
-package com.stnetix.ariaddna.vufs.BusinessObjects;
+/*
+ * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 
-import de.greenrobot.common.hash.Murmur3A;
-import org.junit.Test;
+package com.stnetix.ariaddna.vufs.businessobjects;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.UUID;
 
-import static org.junit.Assert.*;
+import de.greenrobot.common.hash.Murmur3A;
+import org.junit.Test;
 
 /**
  * Created by vasap87 on 16.02.18.
@@ -13,11 +27,11 @@ import static org.junit.Assert.*;
 public class BlockUuidHashTest {
 
     @Test
-    public void blockUuidHashTest(){
+    public void blockUuidHashTest() {
         byte[] payload = new byte[5000];
         String uuid = UUID.randomUUID().toString();
         for (int i = 0; i < 5000; i++) {
-            payload[i] = (byte) (i%127);
+            payload[i] = (byte) (i % 127);
         }
 
         Murmur3A murmur3A = new Murmur3A();

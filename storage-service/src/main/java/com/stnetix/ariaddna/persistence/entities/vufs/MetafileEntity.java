@@ -1,27 +1,60 @@
+/*
+ * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.persistence.entities.vufs;
 
-import com.stnetix.ariaddna.vufs.BusinessObjects.AllocationStrategy;
 
-import javax.persistence.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.stnetix.ariaddna.vufs.businessobjects.AllocationStrategy;
 
 /**
- * Entity class for Metafile {@link com.stnetix.ariaddna.vufs.BusinessObjects.Metafile} class.
+ * Entity class for Metafile {@link com.stnetix.ariaddna.vufs.businessobjects.Metafile} class.
  */
 @Entity
+@Table(name = "Metafile")
 public class MetafileEntity {
-    private String version;
     @Id
+    @Column(name = "uuid")
     private String fileUuid;
+    @Column(name = "parentFileUuid", nullable = false)
     private String parentFileUuid;
+    @Column(name = "version", nullable = false, updatable = false)
+    private String version;
 
-    @OneToMany
+    @ElementCollection
+    @CollectionTable(name = "childfileuuids", joinColumns = @JoinColumn(name = "parent_uuid"))
+    @Column(name = "file_uuid")
     private Set<String> childFileUuidSet;
 
-    @OneToMany
+    @ElementCollection
+    @CollectionTable(name = "fileblockuuids", joinColumns = @JoinColumn(name = "file_uuid"))
+    @Column(name = "block_uuid")
     private List<String> blockUuidList;
 
     @ElementCollection
@@ -33,7 +66,7 @@ public class MetafileEntity {
     @Enumerated(EnumType.STRING)
     private AllocationStrategy allocationStrategy;
 
-    @OneToMany
+    @OneToMany (cascade = CascadeType.ALL)
     @MapKeyColumn(name = "block_uuid")
     private Map<String, AllocationCollection> blockAllocateMap;
 
@@ -106,14 +139,14 @@ public class MetafileEntity {
 
     public Map<String, Set<String>> getRealBlockAllocateMap() {
         Map<String, Set<String>> result = new HashMap<>();
-        for (String s: blockAllocateMap.keySet()) {
+        for (String s : blockAllocateMap.keySet()) {
             result.put(s, blockAllocateMap.get(s).getCloudUuids());
         }
         return result;
     }
 
     public void setRealBlockAllocateMap(Map<String, Set<String>> blockAllocateMap) {
-        for (String s: blockAllocateMap.keySet()) {
+        for (String s : blockAllocateMap.keySet()) {
             AllocationCollection collection = new AllocationCollection();
             collection.setCloudUuids(blockAllocateMap.get(s));
             this.blockAllocateMap.put(s, collection);

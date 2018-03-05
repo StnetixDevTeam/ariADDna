@@ -1,19 +1,33 @@
+/*
+ * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.persistence.services;
 
-import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
-import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
+import java.util.List;
+import java.util.UUID;
+
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.UUID;
-
-import static org.junit.Assert.*;
+import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
+import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
 
 /**
  * Created by alexkotov on 03.05.17.
@@ -29,7 +43,6 @@ public class CertificateServiceImplTest {
 
     @Test
     public void saveTest() throws Exception {
-
 
         CertificateDTO certificateDTO = new CertificateDTO();
         certificateDTO.setActive(true);
@@ -60,7 +73,7 @@ public class CertificateServiceImplTest {
         certificateService.save(certificateDTO3);
 
         List<CertificateDTO> certificateDTOList = certificateService.getActiveCertificates();
-        assertEquals(certificateDTOList.size(),2);
+        assertEquals(certificateDTOList.size(), 2);
     }
 
     @Test
@@ -80,7 +93,7 @@ public class CertificateServiceImplTest {
         certificateService.save(certificateDTO3);
 
         List<CertificateDTO> certificateDTOList = certificateService.getDisableCertificates();
-        assertEquals(certificateDTOList.size(),2);
+        assertEquals(certificateDTOList.size(), 2);
     }
 
     @Test
@@ -100,7 +113,7 @@ public class CertificateServiceImplTest {
         certificateService.save(certificateDTO3);
 
         List<CertificateDTO> certificateDTOList = certificateService.getAllCertificates();
-        assertEquals(certificateDTOList.size(),3);
+        assertEquals(certificateDTOList.size(), 3);
     }
 
 }
