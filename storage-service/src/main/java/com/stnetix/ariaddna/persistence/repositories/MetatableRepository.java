@@ -13,24 +13,20 @@
 
 package com.stnetix.ariaddna.persistence.repositories;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stnetix.ariaddna.persistence.entities.Certificate;
+import com.stnetix.ariaddna.persistence.entities.vufs.MetatableEntity;
 
 /**
- * Created by alexkotov on 26.04.17.
+ * 22.02.18.
  */
 @Transactional
-public interface CertificateRepository extends CrudRepository<Certificate, Long> {
+public interface MetatableRepository extends CrudRepository<MetatableEntity, String> {
 
-    @Query(value = "select c from Certificate c where c.isActive = true")
-    List<Certificate> getActiveCertificates();
-
-    @Query(value = "select c from Certificate c where c.isActive = false")
-    List<Certificate> getDisableCertificates();
-
+    @Query(value = "select m from MetatableEntity m where m.type = "
+            + "com.stnetix.ariaddna.vufs.businessobjects.MetatableType.MASTER and m.uuid = :metatableUuid")
+    MetatableEntity getMetatableEntityMaster(@Param(value = "metatableUuid") String metatableUuid);
 }

@@ -11,36 +11,40 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.persistence.entities;
+package com.stnetix.ariaddna.persistence.entities.vufs;
 
+import java.util.Set;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Created by alexkotov on 26.04.17.
+ * 22.02.18.
  */
 @Entity
-@Table(name = "certificate")
-public class Certificate {
+@Table(name = "CloudAllocation")
+public class AllocationCollection {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String uuid;
+    @ManyToOne
+    private MetafileEntity metafileEntity;
 
-    private Boolean isActive;
+    @ElementCollection
+    @CollectionTable(name = "blockalocationclouduuids", joinColumns = @JoinColumn(name = "allocation_id"))
+    @Column(name = "cloud_uuid")
+    private Set<String> cloudUuids;
 
-    public Certificate() {
-        isActive = false;
-    }
-
-    public Certificate(String uuid, Boolean isActive) {
-        this.uuid = uuid;
-        this.isActive = isActive;
+    public AllocationCollection() {
     }
 
     public Long getId() {
@@ -51,19 +55,19 @@ public class Certificate {
         this.id = id;
     }
 
-    public String getUuid() {
-        return uuid;
+    public MetafileEntity getMetafileEntity() {
+        return metafileEntity;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setMetafileEntity(MetafileEntity metafileEntity) {
+        this.metafileEntity = metafileEntity;
     }
 
-    public Boolean getActive() {
-        return isActive;
+    public Set<String> getCloudUuids() {
+        return cloudUuids;
     }
 
-    public void setActive(Boolean active) {
-        isActive = active;
+    public void setCloudUuids(Set<String> cloudUuids) {
+        this.cloudUuids = cloudUuids;
     }
 }

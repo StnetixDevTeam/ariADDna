@@ -1,13 +1,26 @@
-package com.stnetix.ariaddna.vufs.DTO;
+/*
+ * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 
-import com.stnetix.ariaddna.vufs.BusinessObjects.AllocationStrategy;
+package com.stnetix.ariaddna.vufs.dto;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.stnetix.ariaddna.vufs.businessobjects.AllocationStrategy;
+
 /**
- * Data transfer object to Metafile{@link com.stnetix.ariaddna.vufs.BusinessObjects.Metafile} class
+ * Data transfer object to Metafile{@link com.stnetix.ariaddna.vufs.businessobjects.Metafile} class
  */
 public class MetafileDTO {
     private String version;

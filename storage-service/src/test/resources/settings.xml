@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Settings>
-	<PushNotificationServer URL="ws://127.0.0.1:8080/pushnotification" name="Ariaddna WS"/>
-	<StarageServiceDB URL="jdbc:h2:file:./ariaddnatestdb;DB_CLOSE_ON_EXIT=FALSE" DriverClass="org.h2.Driver" login="sa" pass="" dialect = "org.hibernate.dialect.H2Dialect"/>
+    <PushNotificationServer URL="ws://127.0.0.1:8080/pushnotification" name="Ariaddna WS"/>
+    <StarageServiceDB URL="jdbc:h2:file:./ariaddnatestdb;DB_CLOSE_ON_EXIT=FALSE"
+                      DriverClass="org.h2.Driver" login="sa" pass=""
+                      dialect="org.hibernate.dialect.H2Dialect"/>
 </Settings>

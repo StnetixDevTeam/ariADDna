@@ -10,6 +10,7 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <springfox-version>2.6.1</springfox-version>
+        <spring-boot.version>1.5.4.RELEASE</spring-boot.version>
     </properties>
     <parent>
         <artifactId>ariaddna-platform</artifactId>
@@ -22,7 +23,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>1.5.4.RELEASE</version>
+                <version>${spring-boot.version}</version>
             </plugin>
         </plugins>
     </build>
@@ -30,12 +31,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>1.5.4.RELEASE</version>
+            <version>${spring-boot.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <version>1.5.4.RELEASE</version>
+            <version>${spring-boot.version}</version>
             <scope>provided</scope>
         </dependency>
         <!--SpringFox dependencies -->

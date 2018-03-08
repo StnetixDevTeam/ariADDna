@@ -11,19 +11,15 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.persistence.transformers;
+package com.stnetix.ariaddna.persistence.services;
 
-import org.mapstruct.Mapper;
-
-import com.stnetix.ariaddna.commonutils.DTO.KeyStorePasswordDTO;
-import com.stnetix.ariaddna.persistence.entities.KeyStorePassword;
+import com.stnetix.ariaddna.vufs.dto.MetatableDTO;
 
 /**
- * Created by alexkotov on 03.05.17.
+ * 26.02.18.
  */
-@Mapper
-public interface KeyStorePasswordTransformer {
-    KeyStorePasswordDTO keyStorePasswordEntityToDTO(KeyStorePassword keyStorePassword);
+public interface IMetatableService {
+    MetatableDTO getMetatableMaster(String metatableUuid);
 
-    KeyStorePassword keyStorePasswordDTOToEntity(KeyStorePasswordDTO keyStorePasswordDTO);
+    MetatableDTO saveMetatable(MetatableDTO metatable);
 }
