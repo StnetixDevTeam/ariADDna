@@ -18,9 +18,6 @@
             <property name="separated" value="true"/>
             <property name="option" value="top"/>
         </module>
-        <module name="RequireThis">
-            <property name="checkMethods" value="false"/>
-        </module>
         <module name="NeedBraces"/>
         <module name="OuterTypeFilename"/>
         <module name="LeftCurly"/>
