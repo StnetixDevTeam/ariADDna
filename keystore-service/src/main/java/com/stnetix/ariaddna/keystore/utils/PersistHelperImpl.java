@@ -1,11 +1,25 @@
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.keystore.utils;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.stnetix.ariaddna.commonutils.dto.CertificateDTO;
 import com.stnetix.ariaddna.persistence.services.ICertificateService;
 import com.stnetix.ariaddna.persistence.services.IKeyStorePasswordService;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  * Created by alexkotov on 05.06.17.
@@ -19,47 +33,47 @@ public class PersistHelperImpl implements IPersistHelper {
     private ICertificateService certificateService;
 
     @Override
-    public char[] getPassword(){
+    public char[] getPassword() {
         return keyStorePasswordService.getPassword().getPass().toCharArray();
     }
 
     @Override
-    public CertificateDTO storeCertificete(CertificateDTO certificate){
+    public CertificateDTO storeCertificete(CertificateDTO certificate) {
         return certificateService.save(certificate);
     }
 
     @Override
-    public void deleteCertificate(String alias){
-       CertificateDTO target = getTargetCert(alias);
-        if(target!=null){
+    public void deleteCertificate(String alias) {
+        CertificateDTO target = getTargetCert(alias);
+        if (target != null) {
             certificateService.remove(target);
         }
 
     }
 
     @Override
-    public boolean isActiveCertificate(String alias){
+    public boolean isActiveCertificate(String alias) {
         CertificateDTO target = getTargetCert(alias);
-        if(target!=null){
+        if (target != null) {
             return target.getActive();
         }
         return false;
     }
 
     @Override
-    public void setCertificateDisable(String alias){
+    public void setCertificateDisable(String alias) {
         CertificateDTO target = getTargetCert(alias);
-        if(target!=null){
+        if (target != null) {
             target.setActive(false);
             certificateService.save(target);
         }
     }
 
-    private CertificateDTO getTargetCert(String alias){
+    private CertificateDTO getTargetCert(String alias) {
         List<CertificateDTO> certList = certificateService.getAllCertificates();
         CertificateDTO target = null;
-        for (CertificateDTO cert: certList) {
-            if(cert.getUuid().equalsIgnoreCase(alias)) {
+        for (CertificateDTO cert : certList) {
+            if (cert.getUuid().equalsIgnoreCase(alias)) {
                 target = cert;
                 break;
             }

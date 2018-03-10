@@ -1,18 +1,32 @@
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.keystore.impl;
 
-import com.stnetix.ariaddna.keystore.IKeyStore;
-import com.stnetix.ariaddna.keystore.config.KeyStoreConfig;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.io.File;
+import java.util.UUID;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.io.File;
-import java.util.UUID;
-
-import static org.junit.Assert.*;
+import com.stnetix.ariaddna.keystore.IKeyStore;
 
 /**
  * Created by alexkotov on 19.04.17.
@@ -28,8 +42,8 @@ public class KeyStoreServiceTest {
         UUID uuid = UUID.randomUUID();
         File keyStoreFile = keyStore.generateKeyStore();
         File cert = keyStore.generateCert(uuid);
-        keyStore.storeCert(cert,keyStoreFile);
-        File searchedCert = keyStore.getCertByUUID(uuid,keyStoreFile);
+        keyStore.storeCert(cert, keyStoreFile);
+        File searchedCert = keyStore.getCertByUUID(uuid, keyStoreFile);
         assertTrue(searchedCert.exists());
     }
 
@@ -38,9 +52,9 @@ public class KeyStoreServiceTest {
         UUID uuid = UUID.randomUUID();
         File keyStoreFile = keyStore.generateKeyStore();
         File cert = keyStore.generateCert(uuid);
-        keyStore.storeCert(cert,keyStoreFile);
-        keyStore.removeCert(cert,keyStoreFile);
-        assertFalse(keyStore.isKeyStoreContainCert(cert,keyStoreFile));
+        keyStore.storeCert(cert, keyStoreFile);
+        keyStore.removeCert(cert, keyStoreFile);
+        assertFalse(keyStore.isKeyStoreContainCert(cert, keyStoreFile));
     }
 
     @Test
@@ -48,17 +62,17 @@ public class KeyStoreServiceTest {
         UUID uuid = UUID.randomUUID();
         File keyStoreFile = keyStore.generateKeyStore();
         File cert = keyStore.generateCert(uuid);
-        keyStore.storeCert(cert,keyStoreFile);
+        keyStore.storeCert(cert, keyStoreFile);
         keyStore.disableCert(cert);
         assertFalse(keyStore.isValidCert(cert));
-     }
+    }
 
     @Test
     public void isKeyStoreContainCert() throws Exception {
         UUID uuid = UUID.randomUUID();
         File keyStoreFile = keyStore.generateKeyStore();
         File cert = keyStore.generateCert(uuid);
-        keyStore.storeCert(cert,keyStoreFile);
+        keyStore.storeCert(cert, keyStoreFile);
         assertTrue(keyStore.isKeyStoreContainCert(cert, keyStoreFile));
     }
 
@@ -66,8 +80,8 @@ public class KeyStoreServiceTest {
     public void storeCert() throws Exception {
         File keyStoreFile = keyStore.generateKeyStore();
         File cert = keyStore.generateCert(UUID.randomUUID());
-        keyStore.storeCert(cert,keyStoreFile);
-        assertTrue(keyStore.isKeyStoreContainCert(cert,keyStoreFile));
+        keyStore.storeCert(cert, keyStoreFile);
+        assertTrue(keyStore.isKeyStoreContainCert(cert, keyStoreFile));
     }
 
     @Test
