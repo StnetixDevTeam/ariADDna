@@ -15,7 +15,7 @@ package com.stnetix.ariaddna.persistence.transformers;
 
 import org.mapstruct.Mapper;
 
-import com.stnetix.ariaddna.commonutils.DTO.CloudCredentialsDTO;
+import com.stnetix.ariaddna.commonutils.dto.CloudCredentialsDTO;
 import com.stnetix.ariaddna.persistence.entities.CloudCredentials;
 
 @Mapper

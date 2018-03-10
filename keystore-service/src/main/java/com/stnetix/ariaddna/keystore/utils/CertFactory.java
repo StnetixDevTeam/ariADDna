@@ -1,6 +1,6 @@
 package com.stnetix.ariaddna.keystore.utils;
 
-import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
+import com.stnetix.ariaddna.commonutils.dto.CertificateDTO;
 import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 import com.stnetix.ariaddna.keystore.exceptions.KeyStoreException;
 import sun.security.x509.*;

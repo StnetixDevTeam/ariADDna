@@ -21,7 +21,7 @@ import java.util.UUID;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 
-import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
+import com.stnetix.ariaddna.commonutils.dto.CertificateDTO;
 import com.stnetix.ariaddna.persistence.entities.Certificate;
 
 /**

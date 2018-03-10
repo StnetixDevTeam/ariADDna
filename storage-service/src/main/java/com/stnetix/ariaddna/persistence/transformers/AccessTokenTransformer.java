@@ -15,7 +15,7 @@ package com.stnetix.ariaddna.persistence.transformers;
 
 import org.mapstruct.Mapper;
 
-import com.stnetix.ariaddna.commonutils.DTO.AccessTokenDTO;
+import com.stnetix.ariaddna.commonutils.dto.AccessTokenDTO;
 import com.stnetix.ariaddna.persistence.entities.AccessToken;
 
 @Mapper

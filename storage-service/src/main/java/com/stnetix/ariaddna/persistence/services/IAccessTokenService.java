@@ -13,7 +13,7 @@
 
 package com.stnetix.ariaddna.persistence.services;
 
-import com.stnetix.ariaddna.commonutils.DTO.AccessTokenDTO;
+import com.stnetix.ariaddna.commonutils.dto.AccessTokenDTO;
 
 public interface IAccessTokenService {
     AccessTokenDTO saveToken(AccessTokenDTO accessToken);

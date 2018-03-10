@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotEquals;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 
-import com.stnetix.ariaddna.commonutils.DTO.KeyStorePasswordDTO;
+import com.stnetix.ariaddna.commonutils.dto.KeyStorePasswordDTO;
 import com.stnetix.ariaddna.persistence.entities.KeyStorePassword;
 
 /**

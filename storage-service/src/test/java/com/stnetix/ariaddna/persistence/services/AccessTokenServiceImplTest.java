@@ -23,7 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stnetix.ariaddna.commonutils.DTO.AccessTokenDTO;
+import com.stnetix.ariaddna.commonutils.dto.AccessTokenDTO;
 import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
