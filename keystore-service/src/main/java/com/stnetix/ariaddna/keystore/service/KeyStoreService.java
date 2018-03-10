@@ -11,7 +11,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.keystore.impl;
+package com.stnetix.ariaddna.keystore.service;
 
 import java.io.File;
 import java.util.UUID;

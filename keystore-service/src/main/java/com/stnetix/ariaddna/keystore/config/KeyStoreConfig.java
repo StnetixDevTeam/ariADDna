@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 import com.stnetix.ariaddna.keystore.IKeyStore;
-import com.stnetix.ariaddna.keystore.impl.KeyStoreService;
+import com.stnetix.ariaddna.keystore.service.KeyStoreService;
 import com.stnetix.ariaddna.keystore.utils.CertFactory;
 import com.stnetix.ariaddna.keystore.utils.IPersistHelper;
 import com.stnetix.ariaddna.keystore.utils.KeyFactory;
