@@ -13,7 +13,7 @@
         <module name="UnusedImports"/>
         <module name="RedundantImport"/>
         <module name="ImportOrder">
-            <property name="groups" value="java,javax,/^(?!com\.stnetix\.)[a-z]/"/>
+            <property name="groups" value="java,javax,javafx,/^(?!com\.stnetix\.)[a-z]/"/>
             <property name="ordered" value="true"/>
             <property name="separated" value="true"/>
             <property name="option" value="top"/>
