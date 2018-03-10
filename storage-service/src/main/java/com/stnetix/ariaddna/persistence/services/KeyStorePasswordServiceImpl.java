@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stnetix.ariaddna.commonutils.DTO.KeyStorePasswordDTO;
+import com.stnetix.ariaddna.commonutils.dto.KeyStorePasswordDTO;
 import com.stnetix.ariaddna.persistence.entities.KeyStorePassword;
 import com.stnetix.ariaddna.persistence.repositories.KeyStorePasswordRepository;
 import com.stnetix.ariaddna.persistence.transformers.KeyStorePasswordTransformer;

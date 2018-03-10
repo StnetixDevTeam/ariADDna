@@ -15,7 +15,7 @@ package com.stnetix.ariaddna.persistence.services;
 
 import java.util.List;
 
-import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
+import com.stnetix.ariaddna.commonutils.dto.CertificateDTO;
 
 /**
  * Created by alexkotov on 26.04.17.

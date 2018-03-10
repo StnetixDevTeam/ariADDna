@@ -1,6 +1,6 @@
 package com.stnetix.ariaddna.keystore.utils;
 
-import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
+import com.stnetix.ariaddna.commonutils.dto.CertificateDTO;
 
 /**
  * Created by localadmin on 25.07.17.

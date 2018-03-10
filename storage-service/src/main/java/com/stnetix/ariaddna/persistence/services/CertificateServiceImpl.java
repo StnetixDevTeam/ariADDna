@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
+import com.stnetix.ariaddna.commonutils.dto.CertificateDTO;
 import com.stnetix.ariaddna.persistence.entities.Certificate;
 import com.stnetix.ariaddna.persistence.repositories.CertificateRepository;
 import com.stnetix.ariaddna.persistence.transformers.CertificateTransformer;

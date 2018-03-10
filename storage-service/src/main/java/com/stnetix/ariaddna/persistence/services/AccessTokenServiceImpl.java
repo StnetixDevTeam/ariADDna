@@ -22,7 +22,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import com.stnetix.ariaddna.commonutils.DTO.AccessTokenDTO;
+import com.stnetix.ariaddna.commonutils.dto.AccessTokenDTO;
 import com.stnetix.ariaddna.persistence.entities.AccessToken;
 import com.stnetix.ariaddna.persistence.repositories.AccessTokenRepository;
 import com.stnetix.ariaddna.persistence.transformers.AccessTokenTransformer;

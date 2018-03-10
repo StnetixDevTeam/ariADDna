@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stnetix.ariaddna.commonutils.DTO.CloudCredentialsDTO;
+import com.stnetix.ariaddna.commonutils.dto.CloudCredentialsDTO;
 import com.stnetix.ariaddna.persistence.entities.CloudCredentials;
 import com.stnetix.ariaddna.persistence.repositories.CloudCredentialsRepository;
 import com.stnetix.ariaddna.persistence.transformers.CloudCredentialsTransformer;

@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import com.stnetix.ariaddna.commonutils.DTO.UserDTO;
+import com.stnetix.ariaddna.commonutils.dto.UserDTO;
 import com.stnetix.ariaddna.commonutils.datetime.DateTime;
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
 import com.stnetix.ariaddna.persistence.entities.UserEntity;

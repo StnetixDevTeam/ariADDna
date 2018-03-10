@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.commonutils.exception;
 
 import org.junit.Test;
@@ -19,7 +32,7 @@ public class AriaddnaExceptionTest {
         Throwable t9 = new AriaddnaException("9 уровень", t8);
         try {
             throw t9;
-        }catch (AriaddnaException e){
+        } catch (AriaddnaException e) {
             System.out.println(e.getErrorMessage());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
@@ -28,12 +41,12 @@ public class AriaddnaExceptionTest {
     }
 
     @Test
-    public void getErrorMessageTwoLevel(){
+    public void getErrorMessageTwoLevel() {
         Throwable t1 = new AriaddnaException("1 уровень");
         Throwable t2 = new AriaddnaException("2 уровень", t1);
         try {
             throw t2;
-        }catch (AriaddnaException e){
+        } catch (AriaddnaException e) {
             System.out.println(e.getErrorMessage());
         } catch (Throwable throwable) {
             throwable.printStackTrace();
@@ -41,11 +54,11 @@ public class AriaddnaExceptionTest {
     }
 
     @Test
-    public void getErrorMessageOneLevel(){
+    public void getErrorMessageOneLevel() {
         Throwable t1 = new AriaddnaException("1 уровень");
         try {
             throw t1;
-        }catch (AriaddnaException e){
+        } catch (AriaddnaException e) {
             System.out.println(e.getErrorMessage());
         } catch (Throwable throwable) {
             throwable.printStackTrace();

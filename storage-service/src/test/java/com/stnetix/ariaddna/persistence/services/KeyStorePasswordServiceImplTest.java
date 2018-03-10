@@ -23,7 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.stnetix.ariaddna.commonutils.DTO.KeyStorePasswordDTO;
+import com.stnetix.ariaddna.commonutils.dto.KeyStorePasswordDTO;
 import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
 
 /**

@@ -1,9 +1,8 @@
 package com.stnetix.ariaddna.keystore.utils;
 
-import com.stnetix.ariaddna.commonutils.DTO.CertificateDTO;
+import com.stnetix.ariaddna.commonutils.dto.CertificateDTO;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.UUID;
 
 /**

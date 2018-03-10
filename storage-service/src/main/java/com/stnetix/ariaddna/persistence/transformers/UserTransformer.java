@@ -15,7 +15,7 @@ package com.stnetix.ariaddna.persistence.transformers;
 
 import org.mapstruct.Mapper;
 
-import com.stnetix.ariaddna.commonutils.DTO.UserDTO;
+import com.stnetix.ariaddna.commonutils.dto.UserDTO;
 import com.stnetix.ariaddna.persistence.entities.UserEntity;
 
 /**

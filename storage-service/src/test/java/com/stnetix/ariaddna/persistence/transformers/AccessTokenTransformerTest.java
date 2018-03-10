@@ -19,7 +19,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 
-import com.stnetix.ariaddna.commonutils.DTO.AccessTokenDTO;
+import com.stnetix.ariaddna.commonutils.dto.AccessTokenDTO;
 import com.stnetix.ariaddna.persistence.entities.AccessToken;
 
 public class AccessTokenTransformerTest {

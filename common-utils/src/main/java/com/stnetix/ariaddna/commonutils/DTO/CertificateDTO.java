@@ -1,4 +1,17 @@
-package com.stnetix.ariaddna.commonutils.DTO;
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+package com.stnetix.ariaddna.commonutils.dto;
 
 import java.io.Serializable;
 
@@ -47,16 +60,23 @@ public class CertificateDTO implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         CertificateDTO that = (CertificateDTO) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (uuid != null ? !uuid.equals(that.uuid) : that.uuid != null) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) {
+            return false;
+        }
+        if (uuid != null ? !uuid.equals(that.uuid) : that.uuid != null) {
+            return false;
+        }
         return isActive != null ? isActive.equals(that.isActive) : that.isActive == null;
 
     }
-
 
 }

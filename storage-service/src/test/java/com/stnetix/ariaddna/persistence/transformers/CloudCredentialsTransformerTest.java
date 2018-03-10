@@ -19,7 +19,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 
-import com.stnetix.ariaddna.commonutils.DTO.CloudCredentialsDTO;
+import com.stnetix.ariaddna.commonutils.dto.CloudCredentialsDTO;
 import com.stnetix.ariaddna.persistence.entities.CloudCredentials;
 
 public class CloudCredentialsTransformerTest {

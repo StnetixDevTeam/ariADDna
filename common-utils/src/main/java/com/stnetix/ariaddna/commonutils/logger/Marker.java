@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.commonutils.logger;
 
 import java.util.Collections;
@@ -27,7 +40,8 @@ public class Marker implements org.slf4j.Marker {
 
     public synchronized void add(org.slf4j.Marker reference) {
         if (reference == null) {
-            throw new IllegalArgumentException("A null value cannot be added to a Marker as reference.");
+            throw new IllegalArgumentException(
+                    "A null value cannot be added to a Marker as reference.");
         }
 
         // no point in adding the reference multiple times
@@ -126,12 +140,15 @@ public class Marker implements org.slf4j.Marker {
     private static String SEP = ", ";
 
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+        if (obj == null) {
             return false;
-        if (!(obj instanceof org.slf4j.Marker))
+        }
+        if (!(obj instanceof org.slf4j.Marker)) {
             return false;
+        }
 
         final org.slf4j.Marker other = (org.slf4j.Marker) obj;
         return name.equals(other.getName());

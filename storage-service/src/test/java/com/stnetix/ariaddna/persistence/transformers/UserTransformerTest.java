@@ -19,7 +19,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.mapstruct.factory.Mappers;
 
-import com.stnetix.ariaddna.commonutils.DTO.UserDTO;
+import com.stnetix.ariaddna.commonutils.dto.UserDTO;
 import com.stnetix.ariaddna.persistence.TestHelper;
 import com.stnetix.ariaddna.persistence.entities.UserEntity;
 
