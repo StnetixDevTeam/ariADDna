@@ -1,6 +1,17 @@
-package com.stnetix.ariaddna.localstoragemanager.localStoreIndexingService;
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 
-import org.junit.*;
+package com.stnetix.ariaddna.localstoragemanager.service.index;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +22,15 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Optional;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.stnetix.ariaddna.localstoragemanager.bo.FileAttributes;
+import com.stnetix.ariaddna.localstoragemanager.service.LocalStoreIndexingService;
 
 public class LocalStoreIndexingServiceTest {
     static Path root;
@@ -21,12 +41,10 @@ public class LocalStoreIndexingServiceTest {
         service = new LocalStoreIndexingService();
     }
 
-
     @Before
     public void setUp() throws IOException {
-        root = Files.createTempDirectory("AriaddnaTemp");
+        root = Files.createTempDirectory("Temp");
     }
-
 
     @Test
     public void findFileByName() throws IOException {
@@ -79,13 +97,14 @@ public class LocalStoreIndexingServiceTest {
         Path sub = Files.createTempDirectory(root, "sub");
         createTempFiles(3, sub, 7);
         String fileName = "tempFile8.tmp";
-        Assert.assertEquals(fileName, service.findFileByName(root, fileName).get().getFileName().toString());
+        Assert.assertEquals(fileName,
+                service.findFileByName(root, fileName).get().getFileName().toString());
     }
 
     @Test
     public void getFileAttribute() throws IOException {
         createTempFiles(1, root);
-        Path file = root.resolve("temFFpFile0.tmp");
+        Path file = root.resolve("tempFile0.tmp");
         FileAttributes attr = service.getFileAttributes(file);
         Assert.assertTrue(attr.getCreationTime().getTime() > 0);
         Assert.assertTrue(attr.getLastAccessTime().getTime() > 0);

@@ -1,4 +1,17 @@
-package com.stnetix.ariaddna.localstoragemanager.localStoreIndexingService;
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+package com.stnetix.ariaddna.localstoragemanager.bo;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,7 +46,8 @@ public class FileAttributes {
      * @throws IOException
      */
     public FileAttributes(Path file) throws IOException {
-        BasicFileAttributes basicFileAttributes = Files.readAttributes(file, BasicFileAttributes.class);
+        BasicFileAttributes basicFileAttributes = Files
+                .readAttributes(file, BasicFileAttributes.class);
         setCreationTime(new Date(basicFileAttributes.creationTime().toMillis()));
         setModifyTime(new Date(basicFileAttributes.lastModifiedTime().toMillis()));
         setLastAccessTime(new Date(basicFileAttributes.lastAccessTime().toMillis()));
@@ -54,7 +68,8 @@ public class FileAttributes {
      * @param isSymbolicLinc
      * @param size
      */
-    public FileAttributes(Date creationTime, Date modifyTime, Date lastAccessTime, boolean isRegularFile, boolean isDirectory, boolean isSymbolicLinc, long size) {
+    public FileAttributes(Date creationTime, Date modifyTime, Date lastAccessTime,
+            boolean isRegularFile, boolean isDirectory, boolean isSymbolicLinc, long size) {
         this.creationTime = creationTime;
         this.modifyTime = modifyTime;
         this.lastAccessTime = lastAccessTime;

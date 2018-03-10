@@ -1,7 +1,21 @@
-package com.stnetix.ariaddna.localstoragemanager.fileSystemWatchingService;
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 
-import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
-import javafx.util.Pair;
+package com.stnetix.ariaddna.localstoragemanager.bo;
+
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,7 +27,11 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static java.nio.file.StandardWatchEventKinds.*;
+import javafx.util.Pair;
+
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
+import com.stnetix.ariaddna.localstoragemanager.event.FileSystemWatchEvent;
+import com.stnetix.ariaddna.localstoragemanager.service.FileSystemWatchingService;
 
 /**
  * Class for transform native event to FileSystemWatchEvent
@@ -47,7 +65,8 @@ public class Consumer implements Runnable {
      * @param queue   WatchEvent collection
      * @param service FileSystemWatchingService
      */
-    Consumer(BlockingQueue<Pair<Path, List<WatchEvent<?>>>> queue, FileSystemWatchingService service) {
+    public Consumer(BlockingQueue<Pair<Path, List<WatchEvent<?>>>> queue,
+            FileSystemWatchingService service) {
         LOGGER.debug("Consumer is started");
 
         this.queue = queue;
@@ -105,25 +124,34 @@ public class Consumer implements Runnable {
 
                                 LOGGER.debug("defined MODIFY event from {}", child);
 
-                                service.runEvents(new FileSystemWatchEvent(FileSystemWatchEvent.Type.MODIFY, child));
+                                service.runEvents(
+                                        new FileSystemWatchEvent(FileSystemWatchEvent.Type.MODIFY,
+                                                child));
                             } else {
                                 if (events.size() > 1) {
                                     if (j < events.size() - 1) {
                                         @SuppressWarnings("unchecked")
-                                        WatchEvent<Path> nextEvent = (WatchEvent<Path>) events.get(j + 1);
+                                        WatchEvent<Path> nextEvent = (WatchEvent<Path>) events
+                                                .get(j + 1);
                                         WatchEvent.Kind nextKind = nextEvent.kind();
                                         Path nextName = nextEvent.context();
                                         Path nextChild = dir.resolve(nextName);
-                                        if (kind.name().equals("ENTRY_DELETE") && nextKind.name().equals("ENTRY_CREATE") &&
+                                        if (kind.name().equals("ENTRY_DELETE") && nextKind.name()
+                                                .equals("ENTRY_CREATE") &&
                                                 child.getParent().equals(nextChild.getParent())) {
 
-                                            LOGGER.debug("Native event {}, from {}", nextKind, nextChild);
-                                            LOGGER.debug("defined RENAME event from {} to {}", child, nextChild);
+                                            LOGGER.debug("Native event {}, from {}", nextKind,
+                                                    nextChild);
+                                            LOGGER.debug("defined RENAME event from {} to {}",
+                                                    child, nextChild);
 
-                                            service.runEvents(new FileSystemWatchEvent(FileSystemWatchEvent.Type.RENAME, child, nextChild));
-                                            if (Files.isDirectory(nextChild)) service.replaceKey(child, nextChild);
+                                            service.runEvents(new FileSystemWatchEvent(
+                                                    FileSystemWatchEvent.Type.RENAME, child,
+                                                    nextChild));
+                                            if (Files.isDirectory(nextChild)) {
+                                                service.replaceKey(child, nextChild);
+                                            }
                                             j++;
-
 
                                             continue;
                                         }
@@ -135,7 +163,6 @@ public class Consumer implements Runnable {
                                     bufferQueue.add(new Pair<>(dir, event));
                                 }
                             }
-
 
                             // if directory is created, and watching recursively, then register it and its sub-directories
                             if (kind == ENTRY_CREATE) {
@@ -175,7 +202,7 @@ public class Consumer implements Runnable {
                 @SuppressWarnings("unchecked")
                 WatchEvent<Path> event = (WatchEvent<Path>) p.getValue();
                 Path name = event.context();
-                final boolean[] isMoveEvent = {false};
+                final boolean[] isMoveEvent = { false };
 
                 WatchEvent.Kind<Path> from = event.kind();
                 WatchEvent.Kind<Path> to = from.equals(ENTRY_DELETE) ? ENTRY_CREATE : ENTRY_DELETE;
@@ -186,13 +213,21 @@ public class Consumer implements Runnable {
                         Path newName = ev.context();
                         if (ev.kind().equals(to) && newName.equals(name)) {
                             if (from.equals(ENTRY_DELETE)) {
-                                LOGGER.debug("defined MOVE event from {} to {}", p.getKey().resolve(name), e.getKey().resolve(name));
+                                LOGGER.debug("defined MOVE event from {} to {}",
+                                        p.getKey().resolve(name), e.getKey().resolve(name));
 
-                                service.runEvents(new FileSystemWatchEvent(FileSystemWatchEvent.Type.MOVE, p.getKey().resolve(name), e.getKey().resolve(name)));
+                                service.runEvents(
+                                        new FileSystemWatchEvent(FileSystemWatchEvent.Type.MOVE,
+                                                p.getKey().resolve(name),
+                                                e.getKey().resolve(name)));
                             } else {
-                                LOGGER.debug("defined MOVE event from {} to {}", e.getKey().resolve(name), p.getKey().resolve(name));
+                                LOGGER.debug("defined MOVE event from {} to {}",
+                                        e.getKey().resolve(name), p.getKey().resolve(name));
 
-                                service.runEvents(new FileSystemWatchEvent(FileSystemWatchEvent.Type.MOVE, e.getKey().resolve(name), p.getKey().resolve(name)));
+                                service.runEvents(
+                                        new FileSystemWatchEvent(FileSystemWatchEvent.Type.MOVE,
+                                                e.getKey().resolve(name),
+                                                p.getKey().resolve(name)));
                             }
 
                             bufferQueue.remove(e);
@@ -205,7 +240,9 @@ public class Consumer implements Runnable {
                 });
 
                 if (!isMoveEvent[0]) {
-                    FileSystemWatchEvent.Type eventType = from.equals(ENTRY_CREATE) ? FileSystemWatchEvent.Type.CREATE : FileSystemWatchEvent.Type.DELETE;
+                    FileSystemWatchEvent.Type eventType = from.equals(ENTRY_CREATE) ?
+                            FileSystemWatchEvent.Type.CREATE :
+                            FileSystemWatchEvent.Type.DELETE;
 
                     if (from == ENTRY_CREATE) {
                         LOGGER.debug("defined CREATE event from {}", p.getKey().resolve(name));
@@ -221,10 +258,10 @@ public class Consumer implements Runnable {
                         LOGGER.debug("defined DELETE event from {}", p.getKey().resolve(name));
                     }
 
-                    service.runEvents(new FileSystemWatchEvent(eventType, p.getKey().resolve(name)));
+                    service.runEvents(
+                            new FileSystemWatchEvent(eventType, p.getKey().resolve(name)));
                     isMoveEvent[0] = false;
                 }
-
 
             }
             bufferQueue.remove(p);

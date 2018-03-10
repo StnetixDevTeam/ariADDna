@@ -1,10 +1,31 @@
-package com.stnetix.ariaddna.localstoragemanager.fileSystemWatchingService;
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 
-import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
-import javafx.util.Pair;
+package com.stnetix.ariaddna.localstoragemanager.service;
+
+import static java.nio.file.StandardWatchEventKinds.ENTRY_CREATE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_DELETE;
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.WatchEvent;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +35,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import static java.nio.file.StandardWatchEventKinds.*;
+import javafx.util.Pair;
+
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
+import com.stnetix.ariaddna.localstoragemanager.bo.Consumer;
+import com.stnetix.ariaddna.localstoragemanager.event.FileSystemEventListener;
+import com.stnetix.ariaddna.localstoragemanager.event.FileSystemWatchEvent;
 
 /**
  * File System Watching Service
@@ -30,7 +56,8 @@ import static java.nio.file.StandardWatchEventKinds.*;
  * FIXME: Tested on Windows NTFS and Linux Ext4 file systems
  */
 public class FileSystemWatchingService {
-    private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(FileSystemWatchingService.class);
+    private static final AriaddnaLogger LOGGER =
+            AriaddnaLogger.getLogger(FileSystemWatchingService.class);
 
     private Consumer consumer;
 
@@ -99,11 +126,12 @@ public class FileSystemWatchingService {
      * @param start dir with sub-directories
      * @throws IOException
      */
-    void registerDirectories(final Path start) throws IOException {
+    public void registerDirectories(final Path start) throws IOException {
         // register directory and sub-directories
         Files.walkFileTree(start, new SimpleFileVisitor<Path>() {
             @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+                    throws IOException {
                 registerDirectory(dir);
                 return FileVisitResult.CONTINUE;
             }
@@ -122,7 +150,8 @@ public class FileSystemWatchingService {
             try {
                 key = watcher.poll(50, TimeUnit.MILLISECONDS);
             } catch (InterruptedException x) {
-                LOGGER.trace("processEvent was interrupted and service stopped with message: {}", x.getMessage());
+                LOGGER.trace("processEvent was interrupted and service stopped with message: {}",
+                        x.getMessage());
                 return;
             }
 
@@ -131,7 +160,6 @@ public class FileSystemWatchingService {
             if (dir == null) {
                 continue;
             }
-
 
             //get the events list
             List<WatchEvent<?>> events = key.pollEvents();
@@ -153,7 +181,6 @@ public class FileSystemWatchingService {
                 }
             }
 
-
         }
     }
 
@@ -163,9 +190,11 @@ public class FileSystemWatchingService {
      * @param from old path
      * @param to   new path
      */
-    void replaceKey(Path from, Path to) {
+    public void replaceKey(Path from, Path to) {
         Map.Entry<WatchKey, Path> result = removeKey(from);
-        if (result != null) keys.put(result.getKey(), to);
+        if (result != null) {
+            keys.put(result.getKey(), to);
+        }
     }
 
     /**
@@ -209,7 +238,7 @@ public class FileSystemWatchingService {
      *
      * @param event
      */
-    void runEvents(FileSystemWatchEvent event) {
+    public void runEvents(FileSystemWatchEvent event) {
         listeners.forEach(l -> l.processEvent(event));
     }
 
