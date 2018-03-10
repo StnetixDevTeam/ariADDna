@@ -6,21 +6,28 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="250.0" minHeight="350.0" minWidth="200.0" prefWidth="300.0" styleClass="leftPane" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.LeftPaneSettingsController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="250.0" minHeight="350.0" minWidth="200.0"
+            prefWidth="300.0" styleClass="leftPane" stylesheets="@../styles/main.css"
+            xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.stnetix.ariaddna.desktopgui.controllers.LeftPaneSettingsController">
     <children>
-        <Button layoutX="17.0" layoutY="300.0" mnemonicParsing="false" onAction="#showBrowser" styleClass="btn" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
+        <Button layoutX="17.0" layoutY="300.0" mnemonicParsing="false" onAction="#showBrowser"
+                styleClass="btn" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0">
             <graphic>
-                <FontAwesomeIconView glyphName="LONG_ARROW_LEFT" size="28" styleClass="fontawesome" />
+                <FontAwesomeIconView glyphName="LONG_ARROW_LEFT" size="28"
+                                     styleClass="fontawesome"/>
             </graphic>
         </Button>
         <AnchorPane layoutX="17.0" layoutY="40.0" prefHeight="250.0" prefWidth="200.0">
             <children>
                 <Label layoutX="2.0" text="Settings">
                     <font>
-                        <Font size="20.0" />
+                        <Font size="20.0"/>
                     </font>
                 </Label>
-            <AnchorPane fx:id="treeViewContainer" layoutY="25.0" prefHeight="227.0" prefWidth="200.0" stylesheets="@../styles/styled-unique-expanded-tree.css" />
+                <AnchorPane fx:id="treeViewContainer" layoutY="25.0" prefHeight="227.0"
+                            prefWidth="200.0"
+                            stylesheets="@../styles/styled-unique-expanded-tree.css"/>
             </children>
         </AnchorPane>
     </children>

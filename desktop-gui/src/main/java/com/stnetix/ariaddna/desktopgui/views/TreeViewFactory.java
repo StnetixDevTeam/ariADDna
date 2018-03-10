@@ -1,3 +1,16 @@
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.desktopgui.views;
 
 import javafx.beans.property.ReadOnlyProperty;
@@ -6,6 +19,7 @@ import javafx.css.PseudoClass;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -70,7 +84,8 @@ public class TreeViewFactory {
             };
             cell.treeItemProperty().addListener((obs, oldTreeItem, newTreeItem) -> {
                 cell.pseudoClassStateChanged(subElementPseudoClass,
-                        newTreeItem != null && newTreeItem.getParent() != cell.getTreeView().getRoot());
+                        newTreeItem != null && newTreeItem.getParent() != cell.getTreeView()
+                                .getRoot());
             });
             return cell;
         });
@@ -85,7 +100,8 @@ public class TreeViewFactory {
      * @param root    root element
      * @return new branch
      */
-    private TreeItem<SimpleTreeElement> makeBranch(SimpleTreeElement element, TreeItem<SimpleTreeElement> root) {
+    private TreeItem<SimpleTreeElement> makeBranch(SimpleTreeElement element,
+            TreeItem<SimpleTreeElement> root) {
         TreeItem<SimpleTreeElement> newBranch = new TreeItem<>(element);
         root.getChildren().add(newBranch);
         return newBranch;
@@ -100,10 +116,13 @@ public class TreeViewFactory {
     public TreeView<SimpleTreeElement> getSimple() {
         TreeView<SimpleTreeElement> tree = new TreeView<>();
         TreeItem<SimpleTreeElement> root = new TreeItem<>(new SimpleTreeElement("root", 0));
+        TreeItem<SimpleTreeElement> outer1 =
+                makeBranch(new SimpleTreeElement("Folder1", 1), root);
+        TreeItem<SimpleTreeElement> outer2 =
+                makeBranch(new SimpleTreeElement("Documents", 2), root);
+        TreeItem<SimpleTreeElement> inner1;
+        TreeItem<SimpleTreeElement> inner2;
 
-        TreeItem<SimpleTreeElement> outer1, outer2, inner1, inner2;
-        outer1 = makeBranch(new SimpleTreeElement("Folder1", 1), root);
-        outer2 = makeBranch(new SimpleTreeElement("Documents", 2), root);
         makeBranch(new SimpleTreeElement("MyFotos", 3), outer1);
         makeBranch(new SimpleTreeElement("OtherFiles", 4), outer1);
         makeBranch(new SimpleTreeElement("WorkFiles", 5), root);
@@ -113,7 +132,6 @@ public class TreeViewFactory {
         tree.setPrefWidth(200);
 
         setTreeCellFactory(tree);
-
 
         tree.setShowRoot(false);
         return tree;
@@ -129,10 +147,13 @@ public class TreeViewFactory {
     public TreeView<SimpleTreeElement> getSettingsTree() {
         TreeView<SimpleTreeElement> tree = new TreeView<>();
         TreeItem<SimpleTreeElement> root = new TreeItem<>(new SimpleTreeElement("root", 0));
+        TreeItem<SimpleTreeElement> outer1 =
+                makeBranch(new SimpleTreeElement("Account", 1), root);
+        TreeItem<SimpleTreeElement> outer2 =
+                makeBranch(new SimpleTreeElement("Clouds", 2), root);
+        TreeItem<SimpleTreeElement> inner1;
+        TreeItem<SimpleTreeElement> inner2;
 
-        TreeItem<SimpleTreeElement> outer1, outer2, inner1, inner2;
-        outer1 = makeBranch(new SimpleTreeElement("Account", 1), root);
-        outer2 = makeBranch(new SimpleTreeElement("Clouds", 2), root);
         makeBranch(new SimpleTreeElement("Dropbox", 3), outer2);
         makeBranch(new SimpleTreeElement("Google Drive", 4), outer2);
         makeBranch(new SimpleTreeElement("Sync", 5), root);
@@ -142,7 +163,6 @@ public class TreeViewFactory {
         tree.setPrefWidth(200);
 
         setTreeCellFactory(tree);
-
 
         tree.setShowRoot(false);
 
@@ -171,10 +191,11 @@ public class TreeViewFactory {
 
         });
 
-        tree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                System.out.println(newValue.getValue());
-            }
-        });
+        tree.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        System.out.println(newValue.getValue());
+                    }
+                });
     }
 }

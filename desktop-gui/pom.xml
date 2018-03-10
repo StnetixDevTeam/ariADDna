@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>desktop-gui</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>com.stnetix.ariaddna</groupId>
@@ -26,9 +27,6 @@
             <artifactId>controlsfx</artifactId>
             <version>8.40.12</version>
         </dependency>
-
     </dependencies>
-
-
-
+    
 </project>
