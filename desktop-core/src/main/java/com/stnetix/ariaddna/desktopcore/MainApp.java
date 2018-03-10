@@ -11,13 +11,22 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.desktopcore.configs;
+package com.stnetix.ariaddna.desktopcore;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-@Configuration
-@ComponentScan("com.stnetix.ariaddna.commonutils")
-@ComponentScan("com.stnetix.ariaddna.desktopgui")
-public class CoreConfig{
+import com.stnetix.ariaddna.commonutils.ui.interfaces.IUi;
+import com.stnetix.ariaddna.desktopcore.configs.CoreConfig;
+
+public class MainApp {
+
+    private MainApp() {
+    }
+
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(
+                CoreConfig.class);
+        IUi ui = ctx.getBean(IUi.class);
+        ui.startUi(args);
+    }
 }
