@@ -18,7 +18,6 @@ import java.util.Set;
 
 import com.stnetix.ariaddna.persistence.entities.vufs.MetafileEntity;
 import com.stnetix.ariaddna.persistence.entities.vufs.MetatableEntity;
-import com.stnetix.ariaddna.vufs.businessobjects.MetatableType;
 import com.stnetix.ariaddna.vufs.dto.MetafileDTO;
 import com.stnetix.ariaddna.vufs.dto.MetatableDTO;
 
