@@ -1,9 +1,17 @@
-package com.stnetix.ariaddna.keystore.utils;
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 
-import com.stnetix.ariaddna.commonutils.dto.CertificateDTO;
-import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
-import com.stnetix.ariaddna.keystore.exceptions.KeyStoreException;
-import sun.security.x509.*;
+package com.stnetix.ariaddna.keystore.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,6 +23,20 @@ import java.security.PrivateKey;
 import java.security.SecureRandom;
 import java.security.cert.Certificate;
 import java.util.Date;
+
+import sun.security.x509.AlgorithmId;
+import sun.security.x509.CertificateAlgorithmId;
+import sun.security.x509.CertificateSerialNumber;
+import sun.security.x509.CertificateValidity;
+import sun.security.x509.CertificateVersion;
+import sun.security.x509.CertificateX509Key;
+import sun.security.x509.X500Name;
+import sun.security.x509.X509CertImpl;
+import sun.security.x509.X509CertInfo;
+
+import com.stnetix.ariaddna.commonutils.dto.CertificateDTO;
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
+import com.stnetix.ariaddna.keystore.exceptions.KeyStoreException;
 
 /**
  * Created by alexkotov on 20.04.17.
@@ -36,8 +58,6 @@ public class CertFactory {
     private static final int CERTIFICATE_SIZE;
     private static final String SUBJECT_CN;
     private static final String SUBJECT_L_C;
-
-
 
     static {
         LOGGER = AriaddnaLogger.getLogger(CertFactory.class);
@@ -63,7 +83,7 @@ public class CertFactory {
             X509CertInfo certInfo = new X509CertInfo();
             CertificateValidity interval = new CertificateValidity(FROM, TO);
             BigInteger sn = new BigInteger(64, new SecureRandom());
-            X500Name owner = new X500Name(SUBJECT_CN + alias + ", "+SUBJECT_L_C);
+            X500Name owner = new X500Name(SUBJECT_CN + alias + ", " + SUBJECT_L_C);
 
             certInfo.set(X509CertInfo.VALIDITY, interval);
             certInfo.set(X509CertInfo.SERIAL_NUMBER, new CertificateSerialNumber(sn));
@@ -78,7 +98,8 @@ public class CertFactory {
             cert.sign(privateKey, CRYPTO_ALGORITHM_SHA1RSA);
 
             algorithm = (AlgorithmId) cert.get(X509CertImpl.SIG_ALG);
-            certInfo.set(CertificateAlgorithmId.NAME + "." + CertificateAlgorithmId.ALGORITHM, algorithm);
+            certInfo.set(CertificateAlgorithmId.NAME + "." + CertificateAlgorithmId.ALGORITHM,
+                    algorithm);
             cert = new X509CertImpl(certInfo);
             cert.sign(privateKey, CRYPTO_ALGORITHM_SHA1RSA);
 
@@ -89,7 +110,8 @@ public class CertFactory {
                 fos.close();
             }
             LOGGER.info("Certificate generated with filename {}", certFile.getAbsolutePath());
-            CertificateDTO storedCert = persistHelper.storeCertificete(new CertificateDTO(alias,true));
+            CertificateDTO storedCert = persistHelper
+                    .storeCertificete(new CertificateDTO(alias, true));
             LOGGER.info("Certificate stored id DB with id {}", storedCert.getId());
             return certFile;
 
@@ -105,7 +127,9 @@ public class CertFactory {
             long notBefore = cert.getNotBefore().getTime();
             long notAfter = cert.getNotAfter().getTime();
             long now = System.currentTimeMillis();
-            LOGGER.info("Certificate {} is " + (now >= notBefore && now <= notAfter ? "valid" : "not valid"), certFile.getAbsolutePath());
+            LOGGER.info("Certificate {} is " + (now >= notBefore && now <= notAfter ?
+                    "valid" :
+                    "not valid"), certFile.getAbsolutePath());
             boolean isActive = persistHelper.isActiveCertificate(getCertSubjectName(cert));
             return now >= notBefore && now <= notAfter && isActive;
         } catch (Exception e) {

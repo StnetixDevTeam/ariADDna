@@ -11,35 +11,22 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.desktopgui.views;
+package com.stnetix.ariaddna.desktopcore;
 
-/**
- * Simple model for create a files tree view
- * TODO: replace with VUFS item
- * @author slonikmak
- */
-public class SimpleTreeElement {
-    private String name;
-    private int id;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-    public SimpleTreeElement(String name, int id) {
-        this.name = name;
-        this.id = id;
+import com.stnetix.ariaddna.commonutils.ui.interfaces.IUi;
+import com.stnetix.ariaddna.desktopcore.configs.CoreConfig;
+
+public class MainApp {
+
+    private MainApp() {
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return "SimpleTreeElement{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                '}';
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(
+                CoreConfig.class);
+        IUi ui = ctx.getBean(IUi.class);
+        ui.startUi(args);
     }
 }

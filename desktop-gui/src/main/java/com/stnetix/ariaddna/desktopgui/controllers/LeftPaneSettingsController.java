@@ -1,27 +1,46 @@
-package com.stnetix.ariaddna.desktopgui.controllers;
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
 
-import com.stnetix.ariaddna.desktopgui.views.*;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.TreeView;
-import javafx.scene.layout.AnchorPane;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+package com.stnetix.ariaddna.desktopgui.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TreeView;
+import javafx.scene.layout.AnchorPane;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.stnetix.ariaddna.desktopgui.views.CloudSettingsFactory;
+import com.stnetix.ariaddna.desktopgui.views.FXMLLoaderProvider;
+import com.stnetix.ariaddna.desktopgui.views.SettingsViewFactory;
+import com.stnetix.ariaddna.desktopgui.views.SimpleTreeElement;
+import com.stnetix.ariaddna.desktopgui.views.TreeViewFactory;
+import com.stnetix.ariaddna.desktopgui.views.ViewsFactory;
+
 /**
  * Controller for left pane settings view
  */
 @Component
-public class LeftPaneSettingsController implements IGuiController, Initializable{
+public class LeftPaneSettingsController implements IGuiController, Initializable {
     private MainController mainController;
     private FXMLLoaderProvider loaderProvider;
     private TreeViewFactory treeViewFactory;
     private CloudSettingsFactory cloudSettingsFactory;
-
 
     @FXML
     AnchorPane treeViewContainer;
@@ -34,7 +53,8 @@ public class LeftPaneSettingsController implements IGuiController, Initializable
     @FXML
     public void showBrowser() throws IOException {
         mainController.setLeftBorderContent(ViewsFactory.LEFT_TREE.getNode(loaderProvider));
-        mainController.setCenterBorderContent(SettingsViewFactory.FILE_BROWSER.getNode(loaderProvider));
+        mainController
+                .setCenterBorderContent(SettingsViewFactory.FILE_BROWSER.getNode(loaderProvider));
     }
 
     /**
@@ -82,25 +102,30 @@ public class LeftPaneSettingsController implements IGuiController, Initializable
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         TreeView<SimpleTreeElement> tree = treeViewFactory.getSettingsTree();
-        tree.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null){
-                String value = newValue.getValue().getName();
-                if (!newValue.getParent().getValue().getName().equals("root")){
-                    try {
-                        mainController.setCenterBorderContent(cloudSettingsFactory.getNode(value.toUpperCase().replace(" ","_"), loaderProvider));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    try {
-                        mainController.setCenterBorderContent(SettingsViewFactory.valueOf(value.toUpperCase()).getNode(loaderProvider));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+        tree.getSelectionModel().selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        String value = newValue.getValue().getName();
+                        if (!newValue.getParent().getValue().getName().equals("root")) {
+                            try {
+                                mainController.setCenterBorderContent(cloudSettingsFactory
+                                        .getNode(value.toUpperCase().replace(" ", "_"),
+                                                loaderProvider));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            try {
+                                mainController.setCenterBorderContent(
+                                        SettingsViewFactory.valueOf(value.toUpperCase())
+                                                .getNode(loaderProvider));
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-            }
-        });
+                    }
+                });
 
         treeViewContainer.getChildren().add(tree);
     }

@@ -12,13 +12,11 @@
     <artifactId>local-storage-manager</artifactId>
 
     <dependencies>
-
         <dependency>
             <groupId>com.stnetix.ariaddna</groupId>
             <artifactId>common-utils</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
 
 </project>

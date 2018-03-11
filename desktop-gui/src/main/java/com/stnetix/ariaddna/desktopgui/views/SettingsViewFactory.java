@@ -1,12 +1,25 @@
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.desktopgui.views;
 
+import java.io.IOException;
 
-import com.stnetix.ariaddna.desktopgui.controllers.SettingsTemplateController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 
-import java.io.IOException;
+import com.stnetix.ariaddna.desktopgui.controllers.SettingsTemplateController;
 
 /**
  * Center pane views factory.
@@ -14,7 +27,7 @@ import java.io.IOException;
  *
  * @author slonikmak
  */
-public enum  SettingsViewFactory {
+public enum SettingsViewFactory {
     ACCOUNT("Account", "accountSettingsPane.fxml", "AriADDna account management"),
     CLOUDS("Clouds", "cloudsSettingsPane.fxml", "Clouds management"),
     SYNC("Sync", "syncSettingsPane.fxml", "Synchronization management"),
@@ -28,7 +41,7 @@ public enum  SettingsViewFactory {
     private String fullPath = "/com/stentix/ariaddna/desktopgui/fxmlViews/";
     private String template = "settingsTemplate.fxml";
 
-    SettingsViewFactory(String name, String fileName, String header){
+    SettingsViewFactory(String name, String fileName, String header) {
         this.name = name;
         this.fileName = fileName;
         this.header = header;
@@ -41,12 +54,12 @@ public enum  SettingsViewFactory {
      * @throws IOException
      */
     public Node getNode(FXMLLoaderProvider loader) throws IOException {
-        FXMLLoader fxmlLoader = loader.get(fullPath+template);
+        FXMLLoader fxmlLoader = loader.get(fullPath + template);
         Pane parent = fxmlLoader.load();
 
         SettingsTemplateController controller = fxmlLoader.getController();
         controller.setHeaders(header, name);
-        controller.setContent(loader.get(fullPath+fileName).load());
+        controller.setContent(loader.get(fullPath + fileName).load());
         return parent;
     }
 }

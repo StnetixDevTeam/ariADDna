@@ -2,19 +2,24 @@
     -fx-bkg-color-leftpane: #afafaf;
     -fx-bkg-color-bottompane: #afafaf;
 }
+
 .tree-view, .tree-cell {
     -fx-background-color: -fx-bkg-color-leftpane;
-    -fx-text-fill: gray ;
+    -fx-text-fill: gray;
 }
+
 .tree-cell:expanded, .tree-cell:sub-tree-item {
-    -fx-background-color: -fx-bkg-color-leftpane ;
+    -fx-background-color: -fx-bkg-color-leftpane;
 }
+
 .tree-cell:selected {
-    -fx-font-weight: bold ;
+    -fx-font-weight: bold;
 }
+
 .tree-cell {
-    -fx-padding: 0.2em 0em 0.2em 0em ;
+    -fx-padding: 0.2em 0em 0.2em 0em;
 }
+
 .tree-cell:sub-tree-item {
-    -fx-padding: 0.25em ;
+    -fx-padding: 0.25em;
 }

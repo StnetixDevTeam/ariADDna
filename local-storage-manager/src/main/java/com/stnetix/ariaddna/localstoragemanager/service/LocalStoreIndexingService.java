@@ -1,4 +1,17 @@
-package com.stnetix.ariaddna.localstoragemanager.localStoreIndexingService;
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+package com.stnetix.ariaddna.localstoragemanager.service;
 
 import java.io.IOException;
 import java.nio.file.FileSystems;
@@ -11,6 +24,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.stnetix.ariaddna.localstoragemanager.bo.FileAttributes;
 
 /**
  * Service for fast search file or folder and his metainfo on localfile storage
@@ -45,7 +60,8 @@ public class LocalStoreIndexingService {
     public List<Path> findFiles(Path dir, String match) throws IOException {
         ArrayList<Path> pathArrayList = new ArrayList<>();
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + match);
-        try (Stream<Path> pathStream = Files.find(dir, Integer.MAX_VALUE, (path, basicFileAttributes) -> matcher.matches(path.getFileName()))) {
+        try (Stream<Path> pathStream = Files.find(dir, Integer.MAX_VALUE,
+                (path, basicFileAttributes) -> matcher.matches(path.getFileName()))) {
             pathArrayList.addAll(pathStream.collect(Collectors.toList()));
         }
         return pathArrayList;
@@ -74,7 +90,8 @@ public class LocalStoreIndexingService {
      */
     public List<Path> findFilesByCreateDate(Path dir, Date date) throws IOException {
         try (Stream<Path> paths = Files.find(dir, Integer.MAX_VALUE,
-                (path, basicFileAttributes) -> basicFileAttributes.creationTime().toMillis() >= date.getTime())) {
+                (path, basicFileAttributes) -> basicFileAttributes.creationTime().toMillis() >= date
+                        .getTime())) {
             return paths.collect(Collectors.toList());
         }
     }

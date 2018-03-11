@@ -11,35 +11,15 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.desktopgui.views;
+package com.stnetix.ariaddna.localstoragemanager.event;
 
 /**
- * Simple model for create a files tree view
- * TODO: replace with VUFS item
- * @author slonikmak
+ * Interface fo external event listeners
  */
-public class SimpleTreeElement {
-    private String name;
-    private int id;
-
-    public SimpleTreeElement(String name, int id) {
-        this.name = name;
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return "SimpleTreeElement{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                '}';
-    }
+@FunctionalInterface
+public interface FileSystemEventListener {
+    /**
+     * @param event FileSystemWatchEvent
+     */
+    void processEvent(FileSystemWatchEvent event);
 }

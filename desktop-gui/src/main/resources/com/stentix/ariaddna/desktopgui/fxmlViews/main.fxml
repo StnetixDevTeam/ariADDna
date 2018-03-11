@@ -4,29 +4,37 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.MainController">
-   <children>
-       <BorderPane layoutX="144.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <bottom>
-            <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-         </bottom>
-         <left>
-             <StackPane fx:id="leftBorder" minWidth="50.0" prefHeight="150.0" BorderPane.alignment="CENTER">
-               <children>
-                  <fx:include source="treeViewLeftPane.fxml" />
-               </children>
-            </StackPane>
-         </left>
-         <bottom>
-             <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" BorderPane.alignment="CENTER" />
-         </bottom>
-         <center>
-            <StackPane fx:id="centerBorder" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-               <children>
-                  <fx:include source="centerPane.fxml" />
-               </children>
-            </StackPane>
-         </center>
-      </BorderPane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="600.0" prefWidth="800.0" stylesheets="@../styles/main.css"
+            xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.stnetix.ariaddna.desktopgui.controllers.MainController">
+    <children>
+        <BorderPane layoutX="144.0" layoutY="62.0" prefHeight="200.0" prefWidth="200.0"
+                    AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <bottom>
+                <AnchorPane prefHeight="20.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+            </bottom>
+            <left>
+                <StackPane fx:id="leftBorder" minWidth="50.0" prefHeight="150.0"
+                           BorderPane.alignment="CENTER">
+                    <children>
+                        <fx:include source="treeViewLeftPane.fxml"/>
+                    </children>
+                </StackPane>
+            </left>
+            <bottom>
+                <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           minHeight="0.0" BorderPane.alignment="CENTER"/>
+            </bottom>
+            <center>
+                <StackPane fx:id="centerBorder" prefHeight="150.0" prefWidth="200.0"
+                           BorderPane.alignment="CENTER">
+                    <children>
+                        <fx:include source="centerPane.fxml"/>
+                    </children>
+                </StackPane>
+            </center>
+        </BorderPane>
+    </children>
 </AnchorPane>

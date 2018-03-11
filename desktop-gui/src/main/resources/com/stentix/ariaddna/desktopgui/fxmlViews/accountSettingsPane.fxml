@@ -3,26 +3,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.stnetix.ariaddna.desktopgui.controllers.AccountSettingsController">
-        <VBox layoutX="325.0" layoutY="149.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <AnchorPane prefHeight="24.0" prefWidth="750.0">
-                  <HBox prefHeight="33.0" prefWidth="214.0" AnchorPane.leftAnchor="20.0">
-                        <Hyperlink styleClass="btn-link" text="Sign In" />
-                        <Hyperlink styleClass="btn-link" text="Sign Up" />
-                        <Hyperlink styleClass="btn-link" text="Sign Out" />
-                  </HBox>
-            </AnchorPane>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0">
-                  <Label layoutX="24.0" layoutY="14.0" styleClass="sub-header" text="Change Password" AnchorPane.leftAnchor="25.0" />
-                  <PasswordField layoutX="25.0" layoutY="68.0" />
-                  <PasswordField layoutX="25.0" layoutY="120.0" />
-                  <Label layoutX="25.0" layoutY="46.0" text="New Password" />
-                  <Label layoutX="25.0" layoutY="100.0" text="Confirm New Password" />
-                  <Button layoutX="25.0" layoutY="155.0" mnemonicParsing="false" text="Change" />
-            </AnchorPane>
-        </VBox>
-   <stylesheets>
-      <URL value="@../styles/main.css" />
-      <URL value="@../styles/jmetro.css" />
-   </stylesheets>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="580.0" prefWidth="750.0" xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.stnetix.ariaddna.desktopgui.controllers.AccountSettingsController">
+    <VBox layoutX="325.0" layoutY="149.0" prefHeight="200.0" prefWidth="100.0"
+          AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+        <AnchorPane prefHeight="24.0" prefWidth="750.0">
+            <HBox prefHeight="33.0" prefWidth="214.0" AnchorPane.leftAnchor="20.0">
+                <Hyperlink styleClass="btn-link" text="Sign In"/>
+                <Hyperlink styleClass="btn-link" text="Sign Up"/>
+                <Hyperlink styleClass="btn-link" text="Sign Out"/>
+            </HBox>
+        </AnchorPane>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+            <Label layoutX="24.0" layoutY="14.0" styleClass="sub-header" text="Change Password"
+                   AnchorPane.leftAnchor="25.0"/>
+            <PasswordField layoutX="25.0" layoutY="68.0"/>
+            <PasswordField layoutX="25.0" layoutY="120.0"/>
+            <Label layoutX="25.0" layoutY="46.0" text="New Password"/>
+            <Label layoutX="25.0" layoutY="100.0" text="Confirm New Password"/>
+            <Button layoutX="25.0" layoutY="155.0" mnemonicParsing="false" text="Change"/>
+        </AnchorPane>
+    </VBox>
+    <stylesheets>
+        <URL value="@../styles/main.css"/>
+        <URL value="@../styles/jmetro.css"/>
+    </stylesheets>
 </AnchorPane>

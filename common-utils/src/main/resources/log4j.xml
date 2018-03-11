@@ -14,13 +14,14 @@
         <param name="File" value="ariaddna.log"/>
         <param name="Append" value="true"/>
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="current date-%d LEVEL-%-5p  Thread-[%t]  Method-%M()   Class name-%C   Message-%m%n"/>
+            <param name="ConversionPattern"
+                   value="current date-%d LEVEL-%-5p  Thread-[%t]  Method-%M()   Class name-%C   Message-%m%n"/>
         </layout>
     </appender>
 
     <root>
-        <priority value ="All" />
-        <appender-ref ref="console" />
+        <priority value="All"/>
+        <appender-ref ref="console"/>
         <appender-ref ref="file"/>
     </root>
 
