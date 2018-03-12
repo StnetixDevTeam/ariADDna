@@ -32,7 +32,7 @@ public class XmlDbSettingHandler extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes)
             throws SAXException {
 
-        if (qName.equalsIgnoreCase("StarageServiceDB")) {
+        if (qName.equalsIgnoreCase("StorageServiceDB")) {
             url = attributes.getValue("URL");
             driverClass = attributes.getValue("DriverClass");
             login = attributes.getValue("login");

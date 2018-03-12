@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Properties;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;

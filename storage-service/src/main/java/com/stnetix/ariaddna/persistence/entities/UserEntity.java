@@ -14,6 +14,7 @@
 package com.stnetix.ariaddna.persistence.entities;
 
 import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

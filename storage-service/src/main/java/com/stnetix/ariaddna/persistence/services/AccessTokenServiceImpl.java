@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import com.stnetix.ariaddna.commonutils.dto.AccessTokenDTO;
 import com.stnetix.ariaddna.persistence.entities.AccessToken;
 import com.stnetix.ariaddna.persistence.repositories.AccessTokenRepository;

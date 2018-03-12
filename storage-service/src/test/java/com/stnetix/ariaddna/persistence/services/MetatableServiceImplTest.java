@@ -17,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.UUID;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
