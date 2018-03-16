@@ -22,6 +22,7 @@
         <module>storage-service</module>
         <module>notify-server</module>
         <module>vufs</module>
+        <module>block_manipulation_service</module>
     </modules>
 
     <properties>
