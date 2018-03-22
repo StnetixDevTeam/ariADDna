@@ -1,6 +1,19 @@
 /*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+/*
  * ariADDna API
- * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point. 
+ * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point.
  *
  * OpenAPI spec version: 1.0
  * Contact: ariaddna.support@stnetix.com
@@ -10,43 +23,38 @@
  * Do not edit the class manually.
  */
 
-
 package com.stnetix.ariaddna.client.api;
 
-import com.stnetix.ariaddna.client.ApiCallback;
-import com.stnetix.ariaddna.client.ApiException;
-import com.stnetix.ariaddna.client.Configuration;
-import com.stnetix.ariaddna.client.ProgressRequestBody;
-import com.stnetix.ariaddna.client.model.CloudSetPages;
-import com.stnetix.ariaddna.client.model.InitialAllocationModel;
-import com.stnetix.ariaddna.client.model.StatisticSet;
-import com.stnetix.ariaddna.client.model.Vufs;
-import com.stnetix.ariaddna.client.ApiClient;
-import com.stnetix.ariaddna.client.ApiResponse;
-import com.stnetix.ariaddna.client.Pair;
-import com.stnetix.ariaddna.client.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
 import java.io.IOException;
-
-
-import com.stnetix.ariaddna.client.model.Cloud;
-import com.stnetix.ariaddna.client.model.Credential;
-import com.stnetix.ariaddna.client.model.Session;
-import com.stnetix.ariaddna.client.model.User;
-import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AriaddnaApi {
-    private ApiClient apiClient;
+import com.google.gson.reflect.TypeToken;
 
+import com.stnetix.ariaddna.client.ApiCallback;
+import com.stnetix.ariaddna.client.ApiClient;
+import com.stnetix.ariaddna.client.ApiException;
+import com.stnetix.ariaddna.client.ApiResponse;
+import com.stnetix.ariaddna.client.Configuration;
+import com.stnetix.ariaddna.client.Pair;
+import com.stnetix.ariaddna.client.ProgressRequestBody;
+import com.stnetix.ariaddna.client.ProgressResponseBody;
+import com.stnetix.ariaddna.client.model.Cloud;
+import com.stnetix.ariaddna.client.model.CloudSetPages;
+import com.stnetix.ariaddna.client.model.Credential;
+import com.stnetix.ariaddna.client.model.InitialAllocationModel;
+import com.stnetix.ariaddna.client.model.Session;
+import com.stnetix.ariaddna.client.model.StatisticSet;
+import com.stnetix.ariaddna.client.model.User;
+import com.stnetix.ariaddna.client.model.Vufs;
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
+
+public class AriaddnaApi {
     private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(AriaddnaApi.class);
+    private ApiClient apiClient;
 
     public AriaddnaApi() {
         this(Configuration.getDefaultApiClient());
@@ -65,11 +73,14 @@ public class AriaddnaApi {
     }
 
     /* Build call for addExternalCloudAccount */
-    private com.squareup.okhttp.Call addExternalCloudAccountCall(Cloud cloud, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addExternalCloudAccountCall(Cloud cloud,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = cloud;
-        
+
         // create path and map variables
-        String localVarPath = "/clouds".replaceAll("\\{format\\}","json");
+        String localVarPath = "/clouds".replaceAll("\\{format\\}", "json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -78,48 +89,55 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams,
+                localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call addExternalCloudAccountValidateBeforeCall(Cloud cloud, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
-        
-        com.squareup.okhttp.Call call = addExternalCloudAccountCall(cloud, progressListener, progressRequestListener);
+    private com.squareup.okhttp.Call addExternalCloudAccountValidateBeforeCall(Cloud cloud,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
+        com.squareup.okhttp.Call call = addExternalCloudAccountCall(cloud, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows one to add an external cloud account to an existing ariADDna&#39;s user. The User MUST be already registered at the cloud service to be added.
      * @param cloud A required information about an external cloud service that a user wants to include to his ariADDna. (optional)
      * @return Cloud
@@ -127,20 +145,23 @@ public class AriaddnaApi {
      */
     public Cloud addExternalCloudAccount(Cloud cloud) throws ApiException {
         ApiResponse<Cloud> resp = addExternalCloudAccountWithHttpInfo(cloud);
-        LOGGER.info("Method {addExternalCloudAccount} was called, response code is {}", resp.getStatusCode());
+        LOGGER.info("Method {addExternalCloudAccount} was called, response code is {}",
+                resp.getStatusCode());
         return resp.getData();
     }
 
     /**
-     * 
+     *
      * Allows one to add an external cloud account to an existing ariADDna&#39;s user. The User MUST be already registered at the cloud service to be added.
      * @param cloud A required information about an external cloud service that a user wants to include to his ariADDna. (optional)
      * @return ApiResponse&lt;Cloud&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
     public ApiResponse<Cloud> addExternalCloudAccountWithHttpInfo(Cloud cloud) throws ApiException {
-        com.squareup.okhttp.Call call = addExternalCloudAccountValidateBeforeCall(cloud, null, null);
-        Type localVarReturnType = new TypeToken<Cloud>(){}.getType();
+        com.squareup.okhttp.Call call = addExternalCloudAccountValidateBeforeCall(cloud, null,
+                null);
+        Type localVarReturnType = new TypeToken<Cloud>() {}
+                .getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -152,7 +173,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addExternalCloudAccountAsync(Cloud cloud, final ApiCallback<Cloud> callback) throws ApiException {
+    public com.squareup.okhttp.Call addExternalCloudAccountAsync(Cloud cloud,
+            final ApiCallback<Cloud> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -173,17 +195,23 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = addExternalCloudAccountValidateBeforeCall(cloud, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Cloud>(){}.getType();
+        com.squareup.okhttp.Call call = addExternalCloudAccountValidateBeforeCall(cloud,
+                progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<Cloud>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for addUser */
-    private com.squareup.okhttp.Call addUserCall(User user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addUserCall(User user,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = user;
-        
+
         // create path and map variables
-        String localVarPath = "/users".replaceAll("\\{format\\}","json");
+        String localVarPath = "/users".replaceAll("\\{format\\}", "json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -192,53 +220,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call addUserValidateBeforeCall(User user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call addUserValidateBeforeCall(User user,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'user' is set
         if (user == null) {
-            throw new ApiException("Missing the required parameter 'user' when calling addUser(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'user' when calling addUser(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = addUserCall(user, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = addUserCall(user, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows one to create a new user.
      * @param user A new User-object containing all specific information that makes user profile unique. (required)
      * @return User
@@ -251,7 +287,7 @@ public class AriaddnaApi {
     }
 
     /**
-     * 
+     *
      * Allows one to create a new user.
      * @param user A new User-object containing all specific information that makes user profile unique. (required)
      * @return ApiResponse&lt;User&gt;
@@ -259,7 +295,8 @@ public class AriaddnaApi {
      */
     public ApiResponse<User> addUserWithHttpInfo(User user) throws ApiException {
         com.squareup.okhttp.Call call = addUserValidateBeforeCall(user, null, null);
-        Type localVarReturnType = new TypeToken<User>(){}.getType();
+        Type localVarReturnType = new TypeToken<User>() {}
+                .getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -271,7 +308,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addUserAsync(User user, final ApiCallback<User> callback) throws ApiException {
+    public com.squareup.okhttp.Call addUserAsync(User user, final ApiCallback<User> callback)
+            throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -292,17 +330,23 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = addUserValidateBeforeCall(user, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<User>(){}.getType();
+        com.squareup.okhttp.Call call = addUserValidateBeforeCall(user, progressListener,
+                progressRequestListener);
+        Type localVarReturnType = new TypeToken<User>() {}
+                .getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for authUser */
-    private com.squareup.okhttp.Call authUserCall(Credential user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call authUserCall(Credential user,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = user;
-        
+
         // create path and map variables
-        String localVarPath = "/auth".replaceAll("\\{format\\}","json");
+        String localVarPath = "/auth".replaceAll("\\{format\\}", "json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -311,53 +355,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call authUserValidateBeforeCall(Credential user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call authUserValidateBeforeCall(Credential user,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'user' is set
         if (user == null) {
-            throw new ApiException("Missing the required parameter 'user' when calling authUser(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'user' when calling authUser(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = authUserCall(user, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = authUserCall(user, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Creating new user session.
      * @param user Authorization user credential. (required)
      * @return Session
@@ -370,7 +422,7 @@ public class AriaddnaApi {
     }
 
     /**
-     * 
+     *
      * Creating new user session.
      * @param user Authorization user credential. (required)
      * @return ApiResponse&lt;Session&gt;
@@ -378,7 +430,8 @@ public class AriaddnaApi {
      */
     public ApiResponse<Session> authUserWithHttpInfo(Credential user) throws ApiException {
         com.squareup.okhttp.Call call = authUserValidateBeforeCall(user, null, null);
-        Type localVarReturnType = new TypeToken<Session>(){}.getType();
+        Type localVarReturnType = new TypeToken<Session>() {}
+                .getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -390,7 +443,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call authUserAsync(Credential user, final ApiCallback<Session> callback) throws ApiException {
+    public com.squareup.okhttp.Call authUserAsync(Credential user,
+            final ApiCallback<Session> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -411,18 +465,25 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = authUserValidateBeforeCall(user, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Session>(){}.getType();
+        com.squareup.okhttp.Call call = authUserValidateBeforeCall(user, progressListener,
+                progressRequestListener);
+        Type localVarReturnType = new TypeToken<Session>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for changeUserPassword */
-    private com.squareup.okhttp.Call changeUserPasswordCall(String userUuid, User user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call changeUserPasswordCall(String userUuid, User user,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = user;
-        
+
         // create path and map variables
-        String localVarPath = "/users/{userUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/users/{userUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -431,58 +492,67 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call changeUserPasswordValidateBeforeCall(String userUuid, User user, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call changeUserPasswordValidateBeforeCall(String userUuid,
+            User user, final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling changeUserPassword(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling changeUserPassword(Async)");
         }
-        
+
         // verify the required parameter 'user' is set
         if (user == null) {
-            throw new ApiException("Missing the required parameter 'user' when calling changeUserPassword(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'user' when calling changeUserPassword(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = changeUserPasswordCall(userUuid, user, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = changeUserPasswordCall(userUuid, user, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Changing user password.
      * @param userUuid UUID of user to fetch. (required)
      * @param user Changed user. (required)
@@ -493,15 +563,17 @@ public class AriaddnaApi {
     }
 
     /**
-     * 
+     *
      * Changing user password.
      * @param userUuid UUID of user to fetch. (required)
      * @param user Changed user. (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> changeUserPasswordWithHttpInfo(String userUuid, User user) throws ApiException {
-        com.squareup.okhttp.Call call = changeUserPasswordValidateBeforeCall(userUuid, user, null, null);
+    public ApiResponse<Void> changeUserPasswordWithHttpInfo(String userUuid, User user)
+            throws ApiException {
+        com.squareup.okhttp.Call call = changeUserPasswordValidateBeforeCall(userUuid, user, null,
+                null);
         return apiClient.execute(call);
     }
 
@@ -514,7 +586,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call changeUserPasswordAsync(String userUuid, User user, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call changeUserPasswordAsync(String userUuid, User user,
+            final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -535,17 +608,23 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = changeUserPasswordValidateBeforeCall(userUuid, user, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = changeUserPasswordValidateBeforeCall(userUuid, user,
+                progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
+
     /* Build call for deleteExternalCloudAccount */
-    private com.squareup.okhttp.Call deleteExternalCloudAccountCall(String cloudUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteExternalCloudAccountCall(String cloudUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/clouds/{cloudUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "cloudUuid" + "\\}", apiClient.escapeString(cloudUuid.toString()));
+        String localVarPath = "/clouds/{cloudUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "cloudUuid" + "\\}",
+                        apiClient.escapeString(cloudUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -554,53 +633,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteExternalCloudAccountValidateBeforeCall(String cloudUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call deleteExternalCloudAccountValidateBeforeCall(String cloudUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'cloudUuid' is set
         if (cloudUuid == null) {
-            throw new ApiException("Missing the required parameter 'cloudUuid' when calling deleteExternalCloudAccount(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'cloudUuid' when calling deleteExternalCloudAccount(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = deleteExternalCloudAccountCall(cloudUuid, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = deleteExternalCloudAccountCall(cloudUuid, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows to delete user&#39;s external cloud account.
      * @param cloudUuid An external cloud identifier which user has inside his profile. Allows to delete external cloud profile. (required)
      * @return String
@@ -608,20 +695,24 @@ public class AriaddnaApi {
      */
     public String deleteExternalCloudAccount(String cloudUuid) throws ApiException {
         ApiResponse<String> resp = deleteExternalCloudAccountWithHttpInfo(cloudUuid);
-        LOGGER.info("Method {deleteExternalCloudAccount} was called, response code is {}", resp.getStatusCode());
+        LOGGER.info("Method {deleteExternalCloudAccount} was called, response code is {}",
+                resp.getStatusCode());
         return resp.getData();
     }
 
     /**
-     * 
+     *
      * Allows to delete user&#39;s external cloud account.
      * @param cloudUuid An external cloud identifier which user has inside his profile. Allows to delete external cloud profile. (required)
      * @return ApiResponse&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<String> deleteExternalCloudAccountWithHttpInfo(String cloudUuid) throws ApiException {
-        com.squareup.okhttp.Call call = deleteExternalCloudAccountValidateBeforeCall(cloudUuid, null, null);
-        Type localVarReturnType = new TypeToken<String>(){}.getType();
+    public ApiResponse<String> deleteExternalCloudAccountWithHttpInfo(String cloudUuid)
+            throws ApiException {
+        com.squareup.okhttp.Call call = deleteExternalCloudAccountValidateBeforeCall(cloudUuid,
+                null, null);
+        Type localVarReturnType = new TypeToken<String>() {
+                }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -633,7 +724,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteExternalCloudAccountAsync(String cloudUuid, final ApiCallback<String> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteExternalCloudAccountAsync(String cloudUuid,
+            final ApiCallback<String> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -654,18 +746,25 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteExternalCloudAccountValidateBeforeCall(cloudUuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<String>(){}.getType();
+        com.squareup.okhttp.Call call = deleteExternalCloudAccountValidateBeforeCall(cloudUuid,
+                progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<String>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for deleteUser */
-    private com.squareup.okhttp.Call deleteUserCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteUserCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/users/{userUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/users/{userUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -674,53 +773,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call deleteUserValidateBeforeCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call deleteUserValidateBeforeCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling deleteUser(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling deleteUser(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = deleteUserCall(userUuid, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = deleteUserCall(userUuid, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Deleting user.
      * @param userUuid UUID of user to delete. (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -730,7 +837,7 @@ public class AriaddnaApi {
     }
 
     /**
-     * 
+     *
      * Deleting user.
      * @param userUuid UUID of user to delete. (required)
      * @return ApiResponse&lt;Void&gt;
@@ -749,7 +856,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteUserAsync(String userUuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteUserAsync(String userUuid,
+            final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -770,17 +878,23 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = deleteUserValidateBeforeCall(userUuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = deleteUserValidateBeforeCall(userUuid, progressListener,
+                progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
+
     /* Build call for findUserByUuid */
-    private com.squareup.okhttp.Call findUserByUuidCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call findUserByUuidCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/users/{userUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/users/{userUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -789,53 +903,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call findUserByUuidValidateBeforeCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call findUserByUuidValidateBeforeCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling findUserByUuid(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling findUserByUuid(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = findUserByUuidCall(userUuid, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = findUserByUuidCall(userUuid, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * This operation allows one to get back information about certain user providing his UUID as a path parameter.
      * @param userUuid The UUID of a user to fetch. (required)
      * @return User
@@ -843,12 +965,13 @@ public class AriaddnaApi {
      */
     public User findUserByUuid(String userUuid) throws ApiException {
         ApiResponse<User> resp = findUserByUuidWithHttpInfo(userUuid);
-        LOGGER.info("Method {findUserByUuid} was called, response code is {}", resp.getStatusCode());
+        LOGGER.info("Method {findUserByUuid} was called, response code is {}",
+                resp.getStatusCode());
         return resp.getData();
     }
 
     /**
-     * 
+     *
      * This operation allows one to get back information about certain user providing his UUID as a path parameter.
      * @param userUuid The UUID of a user to fetch. (required)
      * @return ApiResponse&lt;User&gt;
@@ -856,7 +979,8 @@ public class AriaddnaApi {
      */
     public ApiResponse<User> findUserByUuidWithHttpInfo(String userUuid) throws ApiException {
         com.squareup.okhttp.Call call = findUserByUuidValidateBeforeCall(userUuid, null, null);
-        Type localVarReturnType = new TypeToken<User>(){}.getType();
+        Type localVarReturnType = new TypeToken<User>() {
+                }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -868,7 +992,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call findUserByUuidAsync(String userUuid, final ApiCallback<User> callback) throws ApiException {
+    public com.squareup.okhttp.Call findUserByUuidAsync(String userUuid,
+            final ApiCallback<User> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -889,18 +1014,25 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = findUserByUuidValidateBeforeCall(userUuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<User>(){}.getType();
+        com.squareup.okhttp.Call call = findUserByUuidValidateBeforeCall(userUuid, progressListener,
+                progressRequestListener);
+        Type localVarReturnType = new TypeToken<User>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for getCloudStatisticSet */
-    private com.squareup.okhttp.Call getCloudStatisticSetCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getCloudStatisticSetCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/stat/vufs/{userUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/stat/vufs/{userUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -909,53 +1041,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getCloudStatisticSetValidateBeforeCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call getCloudStatisticSetValidateBeforeCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling getCloudStatisticSet(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling getCloudStatisticSet(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = getCloudStatisticSetCall(userUuid, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = getCloudStatisticSetCall(userUuid, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows to get statistic object about clouds.
      * @param userUuid User UUID. (required)
      * @return StatisticSet
@@ -963,20 +1103,24 @@ public class AriaddnaApi {
      */
     public StatisticSet getCloudStatisticSet(String userUuid) throws ApiException {
         ApiResponse<StatisticSet> resp = getCloudStatisticSetWithHttpInfo(userUuid);
-        LOGGER.info("Method {getCloudStatisticSet} was called, response code is {}", resp.getStatusCode());
+        LOGGER.info("Method {getCloudStatisticSet} was called, response code is {}",
+                resp.getStatusCode());
         return resp.getData();
     }
 
     /**
-     * 
+     *
      * Allows to get statistic object about clouds.
      * @param userUuid User UUID. (required)
      * @return ApiResponse&lt;StatisticSet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<StatisticSet> getCloudStatisticSetWithHttpInfo(String userUuid) throws ApiException {
-        com.squareup.okhttp.Call call = getCloudStatisticSetValidateBeforeCall(userUuid, null, null);
-        Type localVarReturnType = new TypeToken<StatisticSet>(){}.getType();
+    public ApiResponse<StatisticSet> getCloudStatisticSetWithHttpInfo(String userUuid)
+            throws ApiException {
+        com.squareup.okhttp.Call call = getCloudStatisticSetValidateBeforeCall(userUuid, null,
+                null);
+        Type localVarReturnType = new TypeToken<StatisticSet>() {
+                }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -988,7 +1132,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getCloudStatisticSetAsync(String userUuid, final ApiCallback<StatisticSet> callback) throws ApiException {
+    public com.squareup.okhttp.Call getCloudStatisticSetAsync(String userUuid,
+            final ApiCallback<StatisticSet> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1009,19 +1154,27 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getCloudStatisticSetValidateBeforeCall(userUuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StatisticSet>(){}.getType();
+        com.squareup.okhttp.Call call = getCloudStatisticSetValidateBeforeCall(userUuid,
+                progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<StatisticSet>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for getDiffVUFS */
-    private com.squareup.okhttp.Call getDiffVUFSCall(String userUuid, Long dateTime, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getDiffVUFSCall(String userUuid, Long dateTime,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/vufs/snap/diff/{userUuid}/{dateTime}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()))
-        .replaceAll("\\{" + "dateTime" + "\\}", apiClient.escapeString(dateTime.toString()));
+        String localVarPath = "/vufs/snap/diff/{userUuid}/{dateTime}"
+                .replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()))
+                .replaceAll("\\{" + "dateTime" + "\\}",
+                        apiClient.escapeString(dateTime.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1030,58 +1183,67 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getDiffVUFSValidateBeforeCall(String userUuid, Long dateTime, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call getDiffVUFSValidateBeforeCall(String userUuid, Long dateTime,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling getDiffVUFS(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling getDiffVUFS(Async)");
         }
-        
+
         // verify the required parameter 'dateTime' is set
         if (dateTime == null) {
-            throw new ApiException("Missing the required parameter 'dateTime' when calling getDiffVUFS(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'dateTime' when calling getDiffVUFS(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = getDiffVUFSCall(userUuid, dateTime, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = getDiffVUFSCall(userUuid, dateTime, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows to get difference of previous snapshot and actual.
      * @param userUuid Current user UUID. (required)
      * @param dateTime FromDateTime of current VUFS snapshot (required)
@@ -1094,16 +1256,19 @@ public class AriaddnaApi {
     }
 
     /**
-     * 
+     *
      * Allows to get difference of previous snapshot and actual.
      * @param userUuid Current user UUID. (required)
      * @param dateTime FromDateTime of current VUFS snapshot (required)
      * @return ApiResponse&lt;Vufs&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Vufs> getDiffVUFSWithHttpInfo(String userUuid, Long dateTime) throws ApiException {
-        com.squareup.okhttp.Call call = getDiffVUFSValidateBeforeCall(userUuid, dateTime, null, null);
-        Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
+    public ApiResponse<Vufs> getDiffVUFSWithHttpInfo(String userUuid, Long dateTime)
+            throws ApiException {
+        com.squareup.okhttp.Call call = getDiffVUFSValidateBeforeCall(userUuid, dateTime, null,
+                null);
+        Type localVarReturnType = new TypeToken<Vufs>() {
+                }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1116,7 +1281,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getDiffVUFSAsync(String userUuid, Long dateTime, final ApiCallback<Vufs> callback) throws ApiException {
+    public com.squareup.okhttp.Call getDiffVUFSAsync(String userUuid, Long dateTime,
+            final ApiCallback<Vufs> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1137,18 +1303,25 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getDiffVUFSValidateBeforeCall(userUuid, dateTime, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
+        com.squareup.okhttp.Call call = getDiffVUFSValidateBeforeCall(userUuid, dateTime,
+                progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<Vufs>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for getExternalCloudAccounts */
-    private com.squareup.okhttp.Call getExternalCloudAccountsCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getExternalCloudAccountsCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/users/{userUuid}/clouds".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/users/{userUuid}/clouds".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1157,53 +1330,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getExternalCloudAccountsValidateBeforeCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call getExternalCloudAccountsValidateBeforeCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling getExternalCloudAccounts(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling getExternalCloudAccounts(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = getExternalCloudAccountsCall(userUuid, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = getExternalCloudAccountsCall(userUuid, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Returns a list of clouds which a certain user has connected to his ariADDna account.
      * @param userUuid Providing user&#39;s UUID one can access his CloudSet and add retrieve the list of available external cloud accounts. (required)
      * @return CloudSetPages
@@ -1211,20 +1392,24 @@ public class AriaddnaApi {
      */
     public CloudSetPages getExternalCloudAccounts(String userUuid) throws ApiException {
         ApiResponse<CloudSetPages> resp = getExternalCloudAccountsWithHttpInfo(userUuid);
-        LOGGER.info("Method {getExternalCloudAccounts} was called, response code is {}", resp.getStatusCode());
+        LOGGER.info("Method {getExternalCloudAccounts} was called, response code is {}",
+                resp.getStatusCode());
         return resp.getData();
     }
 
     /**
-     * 
+     *
      * Returns a list of clouds which a certain user has connected to his ariADDna account.
      * @param userUuid Providing user&#39;s UUID one can access his CloudSet and add retrieve the list of available external cloud accounts. (required)
      * @return ApiResponse&lt;CloudSetPages&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<CloudSetPages> getExternalCloudAccountsWithHttpInfo(String userUuid) throws ApiException {
-        com.squareup.okhttp.Call call = getExternalCloudAccountsValidateBeforeCall(userUuid, null, null);
-        Type localVarReturnType = new TypeToken<CloudSetPages>(){}.getType();
+    public ApiResponse<CloudSetPages> getExternalCloudAccountsWithHttpInfo(String userUuid)
+            throws ApiException {
+        com.squareup.okhttp.Call call = getExternalCloudAccountsValidateBeforeCall(userUuid, null,
+                null);
+        Type localVarReturnType = new TypeToken<CloudSetPages>() {
+                }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1236,7 +1421,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getExternalCloudAccountsAsync(String userUuid, final ApiCallback<CloudSetPages> callback) throws ApiException {
+    public com.squareup.okhttp.Call getExternalCloudAccountsAsync(String userUuid,
+            final ApiCallback<CloudSetPages> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1257,18 +1443,25 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getExternalCloudAccountsValidateBeforeCall(userUuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<CloudSetPages>(){}.getType();
+        com.squareup.okhttp.Call call = getExternalCloudAccountsValidateBeforeCall(userUuid,
+                progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<CloudSetPages>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for getHealthCheckStat */
-    private com.squareup.okhttp.Call getHealthCheckStatCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getHealthCheckStatCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/stat/vufs/health/{userUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/stat/vufs/health/{userUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1277,53 +1470,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getHealthCheckStatValidateBeforeCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call getHealthCheckStatValidateBeforeCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling getHealthCheckStat(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling getHealthCheckStat(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = getHealthCheckStatCall(userUuid, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = getHealthCheckStatCall(userUuid, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows to get health-check statistic about users Clouds.
      * @param userUuid User UUID. (required)
      * @return StatisticSet
@@ -1331,20 +1532,23 @@ public class AriaddnaApi {
      */
     public StatisticSet getHealthCheckStat(String userUuid) throws ApiException {
         ApiResponse<StatisticSet> resp = getHealthCheckStatWithHttpInfo(userUuid);
-        LOGGER.info("Method {getHealthCheckStat} was called, response code is {}", resp.getStatusCode());
+        LOGGER.info("Method {getHealthCheckStat} was called, response code is {}",
+                resp.getStatusCode());
         return resp.getData();
     }
 
     /**
-     * 
+     *
      * Allows to get health-check statistic about users Clouds.
      * @param userUuid User UUID. (required)
      * @return ApiResponse&lt;StatisticSet&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<StatisticSet> getHealthCheckStatWithHttpInfo(String userUuid) throws ApiException {
+    public ApiResponse<StatisticSet> getHealthCheckStatWithHttpInfo(String userUuid)
+            throws ApiException {
         com.squareup.okhttp.Call call = getHealthCheckStatValidateBeforeCall(userUuid, null, null);
-        Type localVarReturnType = new TypeToken<StatisticSet>(){}.getType();
+        Type localVarReturnType = new TypeToken<StatisticSet>() {
+                }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1356,7 +1560,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getHealthCheckStatAsync(String userUuid, final ApiCallback<StatisticSet> callback) throws ApiException {
+    public com.squareup.okhttp.Call getHealthCheckStatAsync(String userUuid,
+            final ApiCallback<StatisticSet> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1377,18 +1582,25 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getHealthCheckStatValidateBeforeCall(userUuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<StatisticSet>(){}.getType();
+        com.squareup.okhttp.Call call = getHealthCheckStatValidateBeforeCall(userUuid,
+                progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<StatisticSet>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for getVUFS */
-    private com.squareup.okhttp.Call getVUFSCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call getVUFSCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/vufs/snap/{userUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/vufs/snap/{userUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1397,53 +1609,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call getVUFSValidateBeforeCall(String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call getVUFSValidateBeforeCall(String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling getVUFS(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling getVUFS(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = getVUFSCall(userUuid, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = getVUFSCall(userUuid, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows to get snapshot vufs.
      * @param userUuid Current user UUID. (required)
      * @return Vufs
@@ -1456,7 +1676,7 @@ public class AriaddnaApi {
     }
 
     /**
-     * 
+     *
      * Allows to get snapshot vufs.
      * @param userUuid Current user UUID. (required)
      * @return ApiResponse&lt;Vufs&gt;
@@ -1464,7 +1684,8 @@ public class AriaddnaApi {
      */
     public ApiResponse<Vufs> getVUFSWithHttpInfo(String userUuid) throws ApiException {
         com.squareup.okhttp.Call call = getVUFSValidateBeforeCall(userUuid, null, null);
-        Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
+        Type localVarReturnType = new TypeToken<Vufs>() {
+                }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1476,7 +1697,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call getVUFSAsync(String userUuid, final ApiCallback<Vufs> callback) throws ApiException {
+    public com.squareup.okhttp.Call getVUFSAsync(String userUuid, final ApiCallback<Vufs> callback)
+            throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1497,18 +1719,24 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = getVUFSValidateBeforeCall(userUuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
+        com.squareup.okhttp.Call call = getVUFSValidateBeforeCall(userUuid, progressListener,
+                progressRequestListener);
+        Type localVarReturnType = new TypeToken<Vufs>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for logoutSession */
-    private com.squareup.okhttp.Call logoutSessionCall(String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call logoutSessionCall(String uuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = null;
-        
+
         // create path and map variables
-        String localVarPath = "/auth/{uuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
+        String localVarPath = "/auth/{uuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "uuid" + "\\}", apiClient.escapeString(uuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1517,53 +1745,61 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call logoutSessionValidateBeforeCall(String uuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call logoutSessionValidateBeforeCall(String uuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'uuid' is set
         if (uuid == null) {
-            throw new ApiException("Missing the required parameter 'uuid' when calling logoutSession(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'uuid' when calling logoutSession(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = logoutSessionCall(uuid, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = logoutSessionCall(uuid, progressListener,
+                progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Closing user session.
      * @param uuid UUID of user session. (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1573,7 +1809,7 @@ public class AriaddnaApi {
     }
 
     /**
-     * 
+     *
      * Closing user session.
      * @param uuid UUID of user session. (required)
      * @return ApiResponse&lt;Void&gt;
@@ -1592,7 +1828,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call logoutSessionAsync(String uuid, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call logoutSessionAsync(String uuid,
+            final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1613,17 +1850,24 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = logoutSessionValidateBeforeCall(uuid, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = logoutSessionValidateBeforeCall(uuid, progressListener,
+                progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
+
     /* Build call for postAllocateModel */
-    private com.squareup.okhttp.Call postAllocateModelCall(String userUuid, InitialAllocationModel initialAllocationModel, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call postAllocateModelCall(String userUuid,
+            InitialAllocationModel initialAllocationModel,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = initialAllocationModel;
-        
+
         // create path and map variables
-        String localVarPath = "/vufs/allocation/{userUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/vufs/allocation/{userUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1632,81 +1876,96 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postAllocateModelValidateBeforeCall(String userUuid, InitialAllocationModel initialAllocationModel, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call postAllocateModelValidateBeforeCall(String userUuid,
+            InitialAllocationModel initialAllocationModel,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling postAllocateModel(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling postAllocateModel(Async)");
         }
-        
+
         // verify the required parameter 'initialAllocationModel' is set
         if (initialAllocationModel == null) {
-            throw new ApiException("Missing the required parameter 'initialAllocationModel' when calling postAllocateModel(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'initialAllocationModel' when calling postAllocateModel(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = postAllocateModelCall(userUuid, initialAllocationModel, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = postAllocateModelCall(userUuid, initialAllocationModel,
+                progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows to post file allocate strategy from client to server.
      * @param userUuid User UUID. (required)
      * @param initialAllocationModel File allocation strategy. (required)
      * @return Vufs
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Vufs postAllocateModel(String userUuid, InitialAllocationModel initialAllocationModel) throws ApiException {
+    public Vufs postAllocateModel(String userUuid, InitialAllocationModel initialAllocationModel)
+            throws ApiException {
         ApiResponse<Vufs> resp = postAllocateModelWithHttpInfo(userUuid, initialAllocationModel);
-        LOGGER.info("Method {postAllocateModel} was called, response code is {}", resp.getStatusCode());
+        LOGGER.info("Method {postAllocateModel} was called, response code is {}",
+                resp.getStatusCode());
         return resp.getData();
     }
 
     /**
-     * 
+     *
      * Allows to post file allocate strategy from client to server.
      * @param userUuid User UUID. (required)
      * @param initialAllocationModel File allocation strategy. (required)
      * @return ApiResponse&lt;Vufs&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Vufs> postAllocateModelWithHttpInfo(String userUuid, InitialAllocationModel initialAllocationModel) throws ApiException {
-        com.squareup.okhttp.Call call = postAllocateModelValidateBeforeCall(userUuid, initialAllocationModel, null, null);
-        Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
+    public ApiResponse<Vufs> postAllocateModelWithHttpInfo(String userUuid,
+            InitialAllocationModel initialAllocationModel) throws ApiException {
+        com.squareup.okhttp.Call call = postAllocateModelValidateBeforeCall(userUuid,
+                initialAllocationModel, null, null);
+        Type localVarReturnType = new TypeToken<Vufs>() {
+                }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1719,7 +1978,9 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call postAllocateModelAsync(String userUuid, InitialAllocationModel initialAllocationModel, final ApiCallback<Vufs> callback) throws ApiException {
+    public com.squareup.okhttp.Call postAllocateModelAsync(String userUuid,
+            InitialAllocationModel initialAllocationModel, final ApiCallback<Vufs> callback)
+            throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1740,18 +2001,26 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = postAllocateModelValidateBeforeCall(userUuid, initialAllocationModel, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
+        com.squareup.okhttp.Call call = postAllocateModelValidateBeforeCall(userUuid,
+                initialAllocationModel, progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<Vufs>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
+
     /* Build call for postCloudStatSet */
-    private com.squareup.okhttp.Call postCloudStatSetCall(String userUuid, StatisticSet cloudStatisticSet, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call postCloudStatSetCall(String userUuid,
+            StatisticSet cloudStatisticSet,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = cloudStatisticSet;
-        
+
         // create path and map variables
-        String localVarPath = "/stat/vufs/{userUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/stat/vufs/{userUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1760,77 +2029,90 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call postCloudStatSetValidateBeforeCall(String userUuid, StatisticSet cloudStatisticSet, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call postCloudStatSetValidateBeforeCall(String userUuid,
+            StatisticSet cloudStatisticSet,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling postCloudStatSet(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling postCloudStatSet(Async)");
         }
-        
+
         // verify the required parameter 'cloudStatisticSet' is set
         if (cloudStatisticSet == null) {
-            throw new ApiException("Missing the required parameter 'cloudStatisticSet' when calling postCloudStatSet(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'cloudStatisticSet' when calling postCloudStatSet(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = postCloudStatSetCall(userUuid, cloudStatisticSet, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = postCloudStatSetCall(userUuid, cloudStatisticSet,
+                progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows to post statistic from client to server about clouds.
      * @param userUuid User UUID. (required)
      * @param cloudStatisticSet Cloud statistic set typed object. (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void postCloudStatSet(String userUuid, StatisticSet cloudStatisticSet) throws ApiException {
+    public void postCloudStatSet(String userUuid, StatisticSet cloudStatisticSet)
+            throws ApiException {
         postCloudStatSetWithHttpInfo(userUuid, cloudStatisticSet);
     }
 
     /**
-     * 
+     *
      * Allows to post statistic from client to server about clouds.
      * @param userUuid User UUID. (required)
      * @param cloudStatisticSet Cloud statistic set typed object. (required)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> postCloudStatSetWithHttpInfo(String userUuid, StatisticSet cloudStatisticSet) throws ApiException {
-        com.squareup.okhttp.Call call = postCloudStatSetValidateBeforeCall(userUuid, cloudStatisticSet, null, null);
+    public ApiResponse<Void> postCloudStatSetWithHttpInfo(String userUuid,
+            StatisticSet cloudStatisticSet) throws ApiException {
+        com.squareup.okhttp.Call call = postCloudStatSetValidateBeforeCall(userUuid,
+                cloudStatisticSet, null, null);
         return apiClient.execute(call);
     }
 
@@ -1843,7 +2125,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call postCloudStatSetAsync(String userUuid, StatisticSet cloudStatisticSet, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call postCloudStatSetAsync(String userUuid,
+            StatisticSet cloudStatisticSet, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1864,17 +2147,23 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = postCloudStatSetValidateBeforeCall(userUuid, cloudStatisticSet, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = postCloudStatSetValidateBeforeCall(userUuid,
+                cloudStatisticSet, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
+
     /* Build call for sendChangesInLFS */
-    private com.squareup.okhttp.Call sendChangesInLFSCall(Vufs localChanges, String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call sendChangesInLFSCall(Vufs localChanges, String userUuid,
+            final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         Object localVarPostBody = localChanges;
-        
+
         // create path and map variables
-        String localVarPath = "/vufs/snap/diff/{userUuid}".replaceAll("\\{format\\}","json")
-        .replaceAll("\\{" + "userUuid" + "\\}", apiClient.escapeString(userUuid.toString()));
+        String localVarPath = "/vufs/snap/diff/{userUuid}".replaceAll("\\{format\\}", "json")
+                .replaceAll("\\{" + "userUuid" + "\\}",
+                        apiClient.escapeString(userUuid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
 
@@ -1883,58 +2172,67 @@ public class AriaddnaApi {
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
 
         final String[] localVarAccepts = {
-            "application/json"
+                "application/json"
         };
         final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) localVarHeaderParams.put("Accept", localVarAccept);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
 
         final String[] localVarContentTypes = {
-            "application/json"
+                "application/json"
         };
         final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
         localVarHeaderParams.put("Content-Type", localVarContentType);
 
-        if(progressListener != null) {
-            apiClient.getHttpClient().networkInterceptors().add(new com.squareup.okhttp.Interceptor() {
-                @Override
-                public com.squareup.okhttp.Response intercept(com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
-                    com.squareup.okhttp.Response originalResponse = chain.proceed(chain.request());
-                    return originalResponse.newBuilder()
-                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                    .build();
-                }
-            });
+        if (progressListener != null) {
+            apiClient.getHttpClient().networkInterceptors()
+                    .add(new com.squareup.okhttp.Interceptor() {
+                        @Override
+                        public com.squareup.okhttp.Response intercept(
+                                com.squareup.okhttp.Interceptor.Chain chain) throws IOException {
+                            com.squareup.okhttp.Response originalResponse = chain
+                                    .proceed(chain.request());
+                            return originalResponse.newBuilder()
+                                    .body(new ProgressResponseBody(originalResponse.body(),
+                                            progressListener))
+                                    .build();
+                        }
+                    });
         }
 
-        String[] localVarAuthNames = new String[] {  };
-        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAuthNames, progressRequestListener);
+        String[] localVarAuthNames = new String[] {};
+        return apiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarPostBody,
+                localVarHeaderParams, localVarFormParams, localVarAuthNames,
+                progressRequestListener);
     }
-    
+
     @SuppressWarnings("rawtypes")
-    private com.squareup.okhttp.Call sendChangesInLFSValidateBeforeCall(Vufs localChanges, String userUuid, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
-        
+    private com.squareup.okhttp.Call sendChangesInLFSValidateBeforeCall(Vufs localChanges,
+            String userUuid, final ProgressResponseBody.ProgressListener progressListener,
+            final ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
+
         // verify the required parameter 'localChanges' is set
         if (localChanges == null) {
-            throw new ApiException("Missing the required parameter 'localChanges' when calling sendChangesInLFS(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'localChanges' when calling sendChangesInLFS(Async)");
         }
-        
+
         // verify the required parameter 'userUuid' is set
         if (userUuid == null) {
-            throw new ApiException("Missing the required parameter 'userUuid' when calling sendChangesInLFS(Async)");
+            throw new ApiException(
+                    "Missing the required parameter 'userUuid' when calling sendChangesInLFS(Async)");
         }
-        
-        
-        com.squareup.okhttp.Call call = sendChangesInLFSCall(localChanges, userUuid, progressListener, progressRequestListener);
+
+        com.squareup.okhttp.Call call = sendChangesInLFSCall(localChanges, userUuid,
+                progressListener, progressRequestListener);
         return call;
 
-        
-        
-        
-        
     }
 
     /**
-     * 
+     *
      * Allows to send changes in local file storage to server with empty Allocation model and as response get Vufs object with Allocation model.
      * @param localChanges VUFS snapshot typed object with changed in local file storage with empty Allocation model. (required)
      * @param userUuid Current user UUID. (required)
@@ -1943,21 +2241,25 @@ public class AriaddnaApi {
      */
     public Vufs sendChangesInLFS(Vufs localChanges, String userUuid) throws ApiException {
         ApiResponse<Vufs> resp = sendChangesInLFSWithHttpInfo(localChanges, userUuid);
-        LOGGER.info("Method {sendChangesInLFS} was called, response code is {}", resp.getStatusCode());
+        LOGGER.info("Method {sendChangesInLFS} was called, response code is {}",
+                resp.getStatusCode());
         return resp.getData();
     }
 
     /**
-     * 
+     *
      * Allows to send changes in local file storage to server with empty Allocation model and as response get Vufs object with Allocation model.
      * @param localChanges VUFS snapshot typed object with changed in local file storage with empty Allocation model. (required)
      * @param userUuid Current user UUID. (required)
      * @return ApiResponse&lt;Vufs&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Vufs> sendChangesInLFSWithHttpInfo(Vufs localChanges, String userUuid) throws ApiException {
-        com.squareup.okhttp.Call call = sendChangesInLFSValidateBeforeCall(localChanges, userUuid, null, null);
-        Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
+    public ApiResponse<Vufs> sendChangesInLFSWithHttpInfo(Vufs localChanges, String userUuid)
+            throws ApiException {
+        com.squareup.okhttp.Call call = sendChangesInLFSValidateBeforeCall(localChanges, userUuid,
+                null, null);
+        Type localVarReturnType = new TypeToken<Vufs>() {
+                }.getType();
         return apiClient.execute(call, localVarReturnType);
     }
 
@@ -1970,7 +2272,8 @@ public class AriaddnaApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call sendChangesInLFSAsync(Vufs localChanges, String userUuid, final ApiCallback<Vufs> callback) throws ApiException {
+    public com.squareup.okhttp.Call sendChangesInLFSAsync(Vufs localChanges, String userUuid,
+            final ApiCallback<Vufs> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1991,8 +2294,10 @@ public class AriaddnaApi {
             };
         }
 
-        com.squareup.okhttp.Call call = sendChangesInLFSValidateBeforeCall(localChanges, userUuid, progressListener, progressRequestListener);
-        Type localVarReturnType = new TypeToken<Vufs>(){}.getType();
+        com.squareup.okhttp.Call call = sendChangesInLFSValidateBeforeCall(localChanges, userUuid,
+                progressListener, progressRequestListener);
+        Type localVarReturnType = new TypeToken<Vufs>() {
+                }.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }

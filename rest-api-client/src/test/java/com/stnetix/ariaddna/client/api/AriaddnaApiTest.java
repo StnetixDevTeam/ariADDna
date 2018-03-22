@@ -1,6 +1,19 @@
 /*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+/*
  * ariADDna API
- * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point. 
+ * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point.
  *
  * OpenAPI spec version: 1.0
  * Contact: ariaddna.support@stnetix.com
@@ -10,8 +23,11 @@
  * Do not edit the class manually.
  */
 
-
 package com.stnetix.ariaddna.client.api;
+
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import com.stnetix.ariaddna.client.ApiException;
 import com.stnetix.ariaddna.client.model.Cloud;
@@ -22,9 +38,6 @@ import com.stnetix.ariaddna.client.model.Session;
 import com.stnetix.ariaddna.client.model.StatisticSet;
 import com.stnetix.ariaddna.client.model.User;
 import com.stnetix.ariaddna.client.model.Vufs;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Ignore;
 
 /**
  * API tests for AriaddnaApi
@@ -34,9 +47,8 @@ public class AriaddnaApiTest {
 
     private final AriaddnaApi api = new AriaddnaApi();
 
-    
     /**
-     * 
+     *
      *
      * Allows one to add an external cloud account to an existing ariADDna&#39;s user. The User MUST be already registered at the cloud service to be added.
      *
@@ -50,9 +62,9 @@ public class AriaddnaApiTest {
         //Check response is not null
         Assert.assertNotNull(response);
     }
-    
+
     /**
-     * 
+     *
      *
      * Allows one to create a new user.
      *
@@ -66,9 +78,9 @@ public class AriaddnaApiTest {
         //check response is not null
         Assert.assertNotNull(response);
     }
-    
+
     /**
-     * 
+     *
      *
      * Creating new user session.
      *
@@ -82,9 +94,9 @@ public class AriaddnaApiTest {
         //check response is not null
         Assert.assertNotNull(response);
     }
-    
+
     /**
-     * 
+     *
      *
      * Changing user password.
      *
@@ -99,7 +111,7 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**     *
      *
      * Allows to delete user&#39;s external cloud account.
@@ -113,9 +125,9 @@ public class AriaddnaApiTest {
         String response = api.deleteExternalCloudAccount(cloudUuid);
         Assert.assertNotNull(response);
     }
-    
+
     /**
-     * 
+     *
      *
      * Deleting user.
      *
@@ -129,9 +141,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * This operation allows one to get back information about certain user providing his UUID as a path parameter.
      *
@@ -145,9 +157,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * Allows to get statistic object about clouds.
      *
@@ -161,9 +173,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * Allows to get difference of previous snapshot and actual.
      *
@@ -178,9 +190,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * Returns a list of clouds which a certain user has connected to his ariADDna account.
      *
@@ -194,9 +206,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * Allows to get health-check statistic about users Clouds.
      *
@@ -210,9 +222,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * Allows to get snapshot vufs.
      *
@@ -226,9 +238,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * Closing user session.
      *
@@ -242,9 +254,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * Allows to post file allocate strategy from client to server.
      *
@@ -259,9 +271,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * Allows to post statistic from client to server about clouds.
      *
@@ -276,9 +288,9 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
     /**
-     * 
+     *
      *
      * Allows to send changes in local file storage to server with empty Allocation model and as response get Vufs object with Allocation model.
      *
@@ -293,5 +305,5 @@ public class AriaddnaApiTest {
 
         // TODO: test validations
     }
-    
+
 }

@@ -1,6 +1,19 @@
 /*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+/*
  * ariADDna API
- * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point. 
+ * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point.
  *
  * OpenAPI spec version: 1.0
  * Contact: ariaddna.support@stnetix.com
@@ -10,46 +23,15 @@
  * Do not edit the class manually.
  */
 
-
 package com.stnetix.ariaddna.client;
 
-import com.squareup.okhttp.Call;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.internal.http.HttpMethod;
-import com.squareup.okhttp.logging.HttpLoggingInterceptor;
-import com.squareup.okhttp.logging.HttpLoggingInterceptor.Level;
-
-import java.lang.reflect.Type;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import java.net.URLEncoder;
-import java.net.URLConnection;
-
 import java.io.File;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-
+import java.lang.reflect.Type;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.security.KeyStore;
 import java.security.SecureRandom;
@@ -57,10 +39,21 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.KeyManager;
@@ -70,28 +63,40 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
 
-import com.stnetix.ariaddna.client.auth.ApiKeyAuth;
-import com.stnetix.ariaddna.client.auth.Authentication;
-import com.stnetix.ariaddna.client.auth.HttpBasicAuth;
-import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+import com.squareup.okhttp.internal.http.HttpMethod;
+import com.squareup.okhttp.logging.HttpLoggingInterceptor;
+import com.squareup.okhttp.logging.HttpLoggingInterceptor.Level;
 import okio.BufferedSink;
 import okio.Okio;
 
+import com.stnetix.ariaddna.client.auth.ApiKeyAuth;
+import com.stnetix.ariaddna.client.auth.Authentication;
+import com.stnetix.ariaddna.client.auth.HttpBasicAuth;
 import com.stnetix.ariaddna.client.auth.OAuth;
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
 
 public class ApiClient {
     public static final double JAVA_VERSION;
+    /**
+     * The datetime format to be used when <code>lenientDatetimeFormat</code> is enabled.
+     */
+    public static final String LENIENT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
     private static final AriaddnaLogger LOGGER;
 
     static {
         JAVA_VERSION = Double.parseDouble(System.getProperty("java.specification.version"));
         LOGGER = AriaddnaLogger.getLogger(ApiClient.class);
     }
-
-    /**
-     * The datetime format to be used when <code>lenientDatetimeFormat</code> is enabled.
-     */
-    public static final String LENIENT_DATETIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 
     //private String basePath = "https://api.ariaddna.stnetix.com/v1";
     private String basePath = "http://127.0.0.1:8080/v1";
@@ -294,8 +299,9 @@ public class ApiClient {
      * @return Date
      */
     public Date parseDate(String str) {
-        if (str == null)
+        if (str == null) {
             return null;
+        }
         try {
             return dateFormat.parse(str);
         } catch (ParseException e) {
@@ -324,8 +330,9 @@ public class ApiClient {
      * @return Date representation of the string
      */
     public Date parseDatetime(String str) {
-        if (str == null)
+        if (str == null) {
             return null;
+        }
 
         DateFormat format;
         if (lenientDatetimeFormat) {
@@ -363,12 +370,13 @@ public class ApiClient {
      * @return Date representation of the string
      */
     public Date parseDateOrDatetime(String str) {
-        if (str == null)
+        if (str == null) {
             return null;
-        else if (str.length() <= dateLength)
+        } else if (str.length() <= dateLength) {
             return parseDate(str);
-        else
+        } else {
             return parseDatetime(str);
+        }
     }
 
     /**
@@ -615,7 +623,7 @@ public class ApiClient {
             return formatDatetime((Date) param);
         } else if (param instanceof Collection) {
             StringBuilder b = new StringBuilder();
-            for (Object o : (Collection)param) {
+            for (Object o : (Collection) param) {
                 if (b.length() > 0) {
                     b.append(",");
                 }
@@ -635,11 +643,13 @@ public class ApiClient {
      * @param value Value
      * @return A list of Pair objects
      */
-    public List<Pair> parameterToPairs(String collectionFormat, String name, Object value){
+    public List<Pair> parameterToPairs(String collectionFormat, String name, Object value) {
         List<Pair> params = new ArrayList<Pair>();
 
         // preconditions
-        if (name == null || name.isEmpty() || value == null) return params;
+        if (name == null || name.isEmpty() || value == null) {
+            return params;
+        }
 
         Collection valueCollection = null;
         if (value instanceof Collection) {
@@ -649,12 +659,14 @@ public class ApiClient {
             return params;
         }
 
-        if (valueCollection.isEmpty()){
+        if (valueCollection.isEmpty()) {
             return params;
         }
 
         // get the collection format
-        collectionFormat = (collectionFormat == null || collectionFormat.isEmpty() ? "csv" : collectionFormat); // default: csv
+        collectionFormat = (collectionFormat == null || collectionFormat.isEmpty() ?
+                "csv" :
+                collectionFormat); // default: csv
 
         // create the params based on the collection format
         if (collectionFormat.equals("multi")) {
@@ -677,7 +689,7 @@ public class ApiClient {
             delimiter = "|";
         }
 
-        StringBuilder sb = new StringBuilder() ;
+        StringBuilder sb = new StringBuilder();
         for (Object item : valueCollection) {
             sb.append(delimiter);
             sb.append(parameterToString(item));
@@ -800,10 +812,11 @@ public class ApiClient {
 
         String respBody;
         try {
-            if (response.body() != null)
+            if (response.body() != null) {
                 respBody = response.body().string();
-            else
+            } else {
                 respBody = null;
+            }
         } catch (IOException e) {
             throw new ApiException(e);
         }
@@ -912,14 +925,16 @@ public class ApiClient {
                 suffix = filename.substring(pos);
             }
             // File.createTempFile requires the prefix to be at least three characters long
-            if (prefix.length() < 3)
+            if (prefix.length() < 3) {
                 prefix = "download-";
+            }
         }
 
-        if (tempFolderPath == null)
+        if (tempFolderPath == null) {
             return File.createTempFile(prefix, suffix);
-        else
+        } else {
             return File.createTempFile(prefix, suffix, new File(tempFolderPath));
+        }
     }
 
     /**
@@ -949,12 +964,14 @@ public class ApiClient {
 
         try {
             Response response = call.execute();
-            LOGGER.info("Method {execute} was called, with params isExecuted: {}, returnType: {}", call.isExecuted(), returnType==null?null:returnType.getTypeName());
+            LOGGER.info("Method {execute} was called, with params isExecuted: {}, returnType: {}",
+                    call.isExecuted(), returnType == null ? null : returnType.getTypeName());
             T data = handleResponse(response, returnType);
             return new ApiResponse<T>(response.code(), response.headers().toMultimap(), data);
         } catch (IOException e) {
-            LOGGER.error("Method {execute} was called, with params :{},{}", call.isExecuted(), returnType==null?null:returnType.getTypeName());
-            LOGGER.error("Method {execute} throw exception: "+ e);
+            LOGGER.error("Method {execute} was called, with params :{},{}", call.isExecuted(),
+                    returnType == null ? null : returnType.getTypeName());
+            LOGGER.error("Method {execute} throw exception: " + e);
             throw new ApiException(e);
         }
     }
@@ -1012,7 +1029,8 @@ public class ApiClient {
      * @return Type
      */
     public <T> T handleResponse(Response response, Type returnType) throws ApiException {
-        LOGGER.info("Method {handleResponse} was called with response code: {}, returnType is {}", response.code(), returnType==null?null:returnType.getTypeName());
+        LOGGER.info("Method {handleResponse} was called with response code: {}, returnType is {}",
+                response.code(), returnType == null ? null : returnType.getTypeName());
         if (response.isSuccessful()) {
             if (returnType == null || response.code() == 204) {
                 // returning null if the returnType is not defined,
@@ -1027,12 +1045,18 @@ public class ApiClient {
                 try {
                     respBody = response.body().string();
                 } catch (IOException e) {
-                    LOGGER.error("Method {handleResponse} was called, response code: {}, exception: {}", response.code(), e.getStackTrace());
-                    throw new ApiException(response.message(), e, response.code(), response.headers().toMultimap());
+                    LOGGER.error(
+                            "Method {handleResponse} was called, response code: {}, exception: {}",
+                            response.code(), e.getStackTrace());
+                    throw new ApiException(response.message(), e, response.code(),
+                            response.headers().toMultimap());
                 }
             }
-            LOGGER.error("Method {handleResponse} was called, response.body() == null, response.code = {}, response.message() = {}, response.headers() = {}", response.code(), response.message(), response.headers().toMultimap());
-            throw new ApiException(response.message(), response.code(), response.headers().toMultimap(), respBody);
+            LOGGER.error(
+                    "Method {handleResponse} was called, response.body() == null, response.code = {}, response.message() = {}, response.headers() = {}",
+                    response.code(), response.message(), response.headers().toMultimap());
+            throw new ApiException(response.message(), response.code(),
+                    response.headers().toMultimap(), respBody);
         }
     }
 
@@ -1050,7 +1074,10 @@ public class ApiClient {
      * @return The HTTP call
      * @throws ApiException If fail to serialize the request body object
      */
-    public Call buildCall(String path, String method, List<Pair> queryParams, Object body, Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames, ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    public Call buildCall(String path, String method, List<Pair> queryParams, Object body,
+            Map<String, String> headerParams, Map<String, Object> formParams, String[] authNames,
+            ProgressRequestBody.ProgressRequestListener progressRequestListener)
+            throws ApiException {
         updateParamsForAuth(authNames, queryParams, headerParams);
 
         final String url = buildUrl(path, queryParams);
@@ -1084,8 +1111,9 @@ public class ApiClient {
 
         Request request = null;
 
-        if(progressRequestListener != null && reqBody != null) {
-            ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody, progressRequestListener);
+        if (progressRequestListener != null && reqBody != null) {
+            ProgressRequestBody progressRequestBody = new ProgressRequestBody(reqBody,
+                    progressRequestListener);
             request = reqBuilder.method(method, progressRequestBody).build();
         } else {
             request = reqBuilder.method(method, reqBody).build();
@@ -1117,7 +1145,8 @@ public class ApiClient {
                         url.append("&");
                     }
                     String value = parameterToString(param.getValue());
-                    url.append(escapeString(param.getName())).append("=").append(escapeString(value));
+                    url.append(escapeString(param.getName())).append("=")
+                            .append(escapeString(value));
                 }
             }
         }
@@ -1149,10 +1178,13 @@ public class ApiClient {
      * @param queryParams  List of query parameters
      * @param headerParams  Map of header parameters
      */
-    public void updateParamsForAuth(String[] authNames, List<Pair> queryParams, Map<String, String> headerParams) {
+    public void updateParamsForAuth(String[] authNames, List<Pair> queryParams,
+            Map<String, String> headerParams) {
         for (String authName : authNames) {
             Authentication auth = authentications.get(authName);
-            if (auth == null) throw new RuntimeException("Authentication undefined: " + authName);
+            if (auth == null) {
+                throw new RuntimeException("Authentication undefined: " + authName);
+            }
             auth.applyToParams(queryParams, headerParams);
         }
     }
@@ -1164,7 +1196,7 @@ public class ApiClient {
      * @return RequestBody
      */
     public RequestBody buildRequestBodyFormEncoding(Map<String, Object> formParams) {
-        FormEncodingBuilder formBuilder  = new FormEncodingBuilder();
+        FormEncodingBuilder formBuilder = new FormEncodingBuilder();
         for (Entry<String, Object> param : formParams.entrySet()) {
             formBuilder.add(param.getKey(), parameterToString(param.getValue()));
         }
@@ -1183,12 +1215,16 @@ public class ApiClient {
         for (Entry<String, Object> param : formParams.entrySet()) {
             if (param.getValue() instanceof File) {
                 File file = (File) param.getValue();
-                Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"; filename=\"" + file.getName() + "\"");
+                Headers partHeaders = Headers.of("Content-Disposition",
+                        "form-data; name=\"" + param.getKey() + "\"; filename=\"" + file.getName()
+                                + "\"");
                 MediaType mediaType = MediaType.parse(guessContentTypeFromFile(file));
                 mpBuilder.addPart(partHeaders, RequestBody.create(mediaType, file));
             } else {
-                Headers partHeaders = Headers.of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"");
-                mpBuilder.addPart(partHeaders, RequestBody.create(null, parameterToString(param.getValue())));
+                Headers partHeaders = Headers
+                        .of("Content-Disposition", "form-data; name=\"" + param.getKey() + "\"");
+                mpBuilder.addPart(partHeaders,
+                        RequestBody.create(null, parameterToString(param.getValue())));
             }
         }
         return mpBuilder.build();
@@ -1241,24 +1277,36 @@ public class ApiClient {
             if (!verifyingSsl) {
                 TrustManager trustAll = new X509TrustManager() {
                     @Override
-                    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+                    public void checkClientTrusted(X509Certificate[] chain, String authType)
+                            throws CertificateException {
+                    }
+
                     @Override
-                    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {}
+                    public void checkServerTrusted(X509Certificate[] chain, String authType)
+                            throws CertificateException {
+                    }
+
                     @Override
-                    public X509Certificate[] getAcceptedIssuers() { return null; }
+                    public X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
                 };
                 SSLContext sslContext = SSLContext.getInstance("TLS");
-                trustManagers = new TrustManager[]{ trustAll };
+                trustManagers = new TrustManager[] { trustAll };
                 hostnameVerifier = new HostnameVerifier() {
                     @Override
-                    public boolean verify(String hostname, SSLSession session) { return true; }
+                    public boolean verify(String hostname, SSLSession session) {
+                        return true;
+                    }
                 };
             } else if (sslCaCert != null) {
                 char[] password = null; // Any password will work.
                 CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-                Collection<? extends Certificate> certificates = certificateFactory.generateCertificates(sslCaCert);
+                Collection<? extends Certificate> certificates = certificateFactory
+                        .generateCertificates(sslCaCert);
                 if (certificates.isEmpty()) {
-                    throw new IllegalArgumentException("expected non-empty set of trusted certificates");
+                    throw new IllegalArgumentException(
+                            "expected non-empty set of trusted certificates");
                 }
                 KeyStore caKeyStore = newEmptyKeyStore(password);
                 int index = 0;
@@ -1266,7 +1314,8 @@ public class ApiClient {
                     String certificateAlias = "ca" + Integer.toString(index++);
                     caKeyStore.setCertificateEntry(certificateAlias, certificate);
                 }
-                TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+                TrustManagerFactory trustManagerFactory = TrustManagerFactory
+                        .getInstance(TrustManagerFactory.getDefaultAlgorithm());
                 trustManagerFactory.init(caKeyStore);
                 trustManagers = trustManagerFactory.getTrustManagers();
             }

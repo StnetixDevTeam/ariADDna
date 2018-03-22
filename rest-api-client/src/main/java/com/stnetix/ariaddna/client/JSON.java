@@ -1,6 +1,19 @@
 /*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+/*
  * ariADDna API
- * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point. 
+ * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point.
  *
  * OpenAPI spec version: 1.0
  * Contact: ariaddna.support@stnetix.com
@@ -10,8 +23,12 @@
  * Do not edit the class manually.
  */
 
-
 package com.stnetix.ariaddna.client;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.lang.reflect.Type;
+import java.util.Date;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -26,12 +43,6 @@ import com.google.gson.JsonSerializer;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
-import java.io.IOException;
-import java.io.StringReader;
-import java.lang.reflect.Type;
-import java.util.Date;
-
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormatter;
@@ -49,10 +60,10 @@ public class JSON {
     public JSON(ApiClient apiClient) {
         this.apiClient = apiClient;
         gson = new GsonBuilder()
-            .registerTypeAdapter(Date.class, new DateAdapter(apiClient))
-            .registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())
-            .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
-            .create();
+                .registerTypeAdapter(Date.class, new DateAdapter(apiClient))
+                .registerTypeAdapter(DateTime.class, new DateTimeTypeAdapter())
+                .registerTypeAdapter(LocalDate.class, new LocalDateTypeAdapter())
+                .create();
     }
 
     /**
@@ -106,11 +117,13 @@ public class JSON {
             // Fallback processing when failed to parse JSON form response body:
             //   return the response body string directly for the String return type;
             //   parse response body into date or datetime for the Date return type.
-            if (returnType.equals(String.class))
+            if (returnType.equals(String.class)) {
                 return (T) body;
-            else if (returnType.equals(Date.class))
+            } else if (returnType.equals(Date.class)) {
                 return (T) apiClient.parseDateOrDatetime(body);
-            else throw(e);
+            } else {
+                throw (e);
+            }
         }
     }
 }
@@ -155,7 +168,8 @@ class DateAdapter implements JsonSerializer<Date>, JsonDeserializer<Date> {
      * @throws JsonParseException if fail to parse
      */
     @Override
-    public Date deserialize(JsonElement json, Type date, JsonDeserializationContext context) throws JsonParseException {
+    public Date deserialize(JsonElement json, Type date, JsonDeserializationContext context)
+            throws JsonParseException {
         String str = json.getAsJsonPrimitive().getAsString();
         try {
             return apiClient.parseDateOrDatetime(str);
@@ -185,12 +199,12 @@ class DateTimeTypeAdapter extends TypeAdapter<DateTime> {
     @Override
     public DateTime read(JsonReader in) throws IOException {
         switch (in.peek()) {
-            case NULL:
-                in.nextNull();
-                return null;
-            default:
-                String date = in.nextString();
-                return parseFormatter.parseDateTime(date);
+        case NULL:
+            in.nextNull();
+            return null;
+        default:
+            String date = in.nextString();
+            return parseFormatter.parseDateTime(date);
         }
     }
 }
@@ -214,12 +228,12 @@ class LocalDateTypeAdapter extends TypeAdapter<LocalDate> {
     @Override
     public LocalDate read(JsonReader in) throws IOException {
         switch (in.peek()) {
-            case NULL:
-                in.nextNull();
-                return null;
-            default:
-                String date = in.nextString();
-                return formatter.parseLocalDate(date);
+        case NULL:
+            in.nextNull();
+            return null;
+        default:
+            String date = in.nextString();
+            return formatter.parseLocalDate(date);
         }
     }
 }
