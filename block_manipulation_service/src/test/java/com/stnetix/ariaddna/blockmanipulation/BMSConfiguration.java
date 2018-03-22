@@ -11,12 +11,12 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan("com.stnetix.ariaddna.blockmanipulation")
 public class BMSConfiguration {
     @Bean
-    public LocalService localService (){
+    public LocalService localService() {
         return new LocalServiceTest();
     }
 
     @Bean
-    public BlockGenerate blockGenerate (){
+    public BlockGenerate blockGenerate() {
         return new BlockGenerate();
     }
 }
