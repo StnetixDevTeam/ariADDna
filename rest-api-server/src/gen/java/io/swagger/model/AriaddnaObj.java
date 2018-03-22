@@ -1,6 +1,19 @@
 /*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
+/*
  * ariADDna API
- * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point. 
+ * #### This document contains the API description for ariADDna project. Using this API one can manage all available cloud services (DropBox, GDrive, Yandex.Disk etc.) from single point.
  *
  * OpenAPI spec version: 1.0
  * Contact: ariaddna.support@stnetix.com
@@ -10,12 +23,11 @@
  * Do not edit the class manually.
  */
 
-
 package io.swagger.model;
 
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -24,67 +36,65 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(description = "Describes abstract arriadna object.")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-02-13T15:04:21.309Z")
-public class AriaddnaObj   {
-  @JsonProperty("uuid")
-  private String uuid = null;
+public class AriaddnaObj {
+    @JsonProperty("uuid")
+    private String uuid = null;
 
-  public AriaddnaObj uuid(String uuid) {
-    this.uuid = uuid;
-    return this;
-  }
-
-   /**
-   * Object UUID.
-   * @return uuid
-  **/
-  @JsonProperty("uuid")
-  @ApiModelProperty(required = true, value = "Object UUID.")
-  public String getUuid() {
-    return uuid;
-  }
-
-  public void setUuid(String uuid) {
-    this.uuid = uuid;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
+    public AriaddnaObj uuid(String uuid) {
+        this.uuid = uuid;
+        return this;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    /**
+     * Object UUID.
+     * @return uuid
+     **/
+    @JsonProperty("uuid")
+    @ApiModelProperty(required = true, value = "Object UUID.")
+    public String getUuid() {
+        return uuid;
     }
-    AriaddnaObj ariaddnaObj = (AriaddnaObj) o;
-    return Objects.equals(this.uuid, ariaddnaObj.uuid);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(uuid);
-  }
-
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class AriaddnaObj {\n");
-    
-    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
-    return o.toString().replace("\n", "\n    ");
-  }
+
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        AriaddnaObj ariaddnaObj = (AriaddnaObj) o;
+        return Objects.equals(this.uuid, ariaddnaObj.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class AriaddnaObj {\n");
+
+        sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(java.lang.Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
 }
 

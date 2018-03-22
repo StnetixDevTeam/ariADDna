@@ -1,12 +1,27 @@
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.restapiserver.model;
 
 import java.util.Objects;
+import java.util.UUID;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.UUID;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 /**
  * Stands for an external cloud access token. For more info see https://tools.ietf.org/html/draft-ietf-oauth-v2-31.
@@ -14,69 +29,68 @@ import javax.validation.constraints.*;
 @ApiModel(description = "Stands for an external cloud access token. For more info see https://tools.ietf.org/html/draft-ietf-oauth-v2-31.")
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2017-07-24T10:27:06.657+03:00")
 
-public class CloudAccessToken   {
-  @JsonProperty("uuid")
-  private UUID uuid = null;
+public class CloudAccessToken {
+    @JsonProperty("uuid")
+    private UUID uuid = null;
 
-  public CloudAccessToken uuid(UUID uuid) {
-    this.uuid = uuid;
-    return this;
-  }
-
-   /**
-   * Object UUID.
-   * @return uuid
-  **/
-  @ApiModelProperty(required = true, value = "Object UUID.")
-  @NotNull
-
-  @Valid
-
-  public UUID getUuid() {
-    return uuid;
-  }
-
-  public void setUuid(UUID uuid) {
-    this.uuid = uuid;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
+    public CloudAccessToken uuid(UUID uuid) {
+        this.uuid = uuid;
+        return this;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    /**
+     * Object UUID.
+     * @return uuid
+     **/
+    @ApiModelProperty(required = true, value = "Object UUID.")
+    @NotNull
+
+    @Valid
+
+    public UUID getUuid() {
+        return uuid;
     }
-    CloudAccessToken cloudAccessToken = (CloudAccessToken) o;
-    return Objects.equals(this.uuid, cloudAccessToken.uuid);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(uuid);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CloudAccessToken {\n");
-    
-    sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
     }
-    return o.toString().replace("\n", "\n    ");
-  }
+
+    @Override
+    public boolean equals(java.lang.Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        CloudAccessToken cloudAccessToken = (CloudAccessToken) o;
+        return Objects.equals(this.uuid, cloudAccessToken.uuid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(uuid);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("class CloudAccessToken {\n");
+
+        sb.append("    uuid: ").append(toIndentedString(uuid)).append("\n");
+        sb.append("}");
+        return sb.toString();
+    }
+
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
+    private String toIndentedString(java.lang.Object o) {
+        if (o == null) {
+            return "null";
+        }
+        return o.toString().replace("\n", "\n    ");
+    }
 }
 
