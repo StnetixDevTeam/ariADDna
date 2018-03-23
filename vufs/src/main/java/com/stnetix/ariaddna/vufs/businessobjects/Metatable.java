@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 import com.stnetix.ariaddna.commonutils.datetime.DateTime;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableType;
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
 
 /**
@@ -30,14 +31,18 @@ public class Metatable {
     private Set<Metafile> metafileSet;
     private Long lastUpdateTimestamp;
 
-    public Metatable(MetatableType type, String uuid) {
+    public Metatable(MetatableType type, String uuid, String version) {
         this.type = type;
-        version = MavenUtil.getCurrentVersion();
+        if (version != null) {
+            this.version = version;
+        } else {
+            this.version = MavenUtil.getCurrentVersion();
+        }
         metafileSet = new CopyOnWriteArraySet<>();
         this.uuid = uuid;
     }
 
-    public boolean addMetafileUUid(Metafile metafile) {
+    public boolean addMetafile(Metafile metafile) {
         if (metafileSet.add(metafile)) {
             lastUpdateTimestamp = new DateTime().getTimeInMillisec();
             return true;
@@ -45,7 +50,7 @@ public class Metatable {
         return false;
     }
 
-    public boolean removeMetafileUuid(Metafile metafile) {
+    public boolean removeMetafile(Metafile metafile) {
         if (metafileSet.remove(metafile)) {
             lastUpdateTimestamp = new DateTime().getTimeInMillisec();
             return true;
@@ -61,7 +66,7 @@ public class Metatable {
         return type;
     }
 
-    public Set<Metafile> getMetafileUuidSet() {
+    public Set<Metafile> getMetafileSet() {
         return metafileSet;
     }
 
@@ -71,5 +76,13 @@ public class Metatable {
 
     public String getUuid() {
         return uuid;
+    }
+
+    public void setMetafileSet(Set<Metafile> metafileSet) {
+        this.metafileSet = metafileSet;
+    }
+
+    public void setLastUpdateTimestamp(Long lastUpdateTimestamp) {
+        this.lastUpdateTimestamp = lastUpdateTimestamp;
     }
 }

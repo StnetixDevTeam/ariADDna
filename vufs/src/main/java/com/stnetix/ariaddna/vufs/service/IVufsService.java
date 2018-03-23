@@ -22,13 +22,35 @@ import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
  */
 public interface IVufsService {
 
+    /**
+     * Method create empty Metafile in current master Metatable.
+     * @return created Metafile.
+     * */
     Metafile createEmptyMetafile();
 
+    /**
+     * Metod return Metafile object by Metafile uuid.
+     * @param fileUuid Metafile uuid.
+     * @return Metafile object.
+     * */
     Metafile getMetafileByUuid(String fileUuid);
 
+    /**
+     * Method add to Metafile`s block uuid collections new block.
+     * @param blockUuid new block uuid. Type String.
+     * @param metafile Metafile object.
+     * @return changed Metafile.
+     * */
     Metafile addBlockByUuidToMetafile(String blockUuid, Metafile metafile);
 
+    /**
+     * Method remove from Metafile`s block uuid collections required block.
+     * @param blockUuid block uuid. Type String.
+     * @param metafile Metafile object.
+     * @return changed Metafile.
+     * */
     Metafile removeBlockByUuidFromMetafile(String blockUuid, Metafile metafile);
+
 
     boolean addMetafileToMetatable(Metafile metafile);
 
@@ -36,5 +58,5 @@ public interface IVufsService {
 
     Set<String> getAllocationByBlockUuid(String blockUuid);
 
-    void setAllocationForBlockByUuid(String blockByUuid);
+    void setAllocationForBlockByUuid(String blockUuid, Set<String> allocationSet);
 }
