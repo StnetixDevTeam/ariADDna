@@ -1,8 +1,20 @@
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.restapiserver.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -17,22 +29,23 @@ public class SwaggerDocumentationConfig {
 
     ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-            .title("ariADDna API")
-            .description("#### This document contains the API description for ariADDna project. Using this API one can manage all available cloud configuration (DropBox, GDrive, Yandex.Disk etc.) from single point. ")
-            .license("Apache 2.0")
-            .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
-            .termsOfServiceUrl("http://www.ariaddna.stnetix.com/support")
-            .version("1.0")
-            .contact(new Contact("","", "ariaddna.support@stnetix.com"))
-            .build();
+                .title("ariADDna API")
+                .description(
+                        "#### This document contains the API description for ariADDna project. Using this API one can manage all available cloud configuration (DropBox, GDrive, Yandex.Disk etc.) from single point. ")
+                .license("Apache 2.0")
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.html")
+                .termsOfServiceUrl("http://www.ariaddna.stnetix.com/support")
+                .version("1.0")
+                .contact(new Contact("", "", "ariaddna.support@stnetix.com"))
+                .build();
     }
 
     @Bean
-    public Docket customImplementation(){
+    public Docket customImplementation() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                    .apis(RequestHandlerSelectors.basePackage("com.stnetix.ariaddna.restapiserver.api"))
-                    .build()
+                .apis(RequestHandlerSelectors.basePackage("com.stnetix.ariaddna.restapiserver.api"))
+                .build()
                 .directModelSubstitute(org.joda.time.LocalDate.class, java.sql.Date.class)
                 .directModelSubstitute(org.joda.time.DateTime.class, java.util.Date.class)
                 .apiInfo(apiInfo());
