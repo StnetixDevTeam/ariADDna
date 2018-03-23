@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -25,10 +25,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.stnetix.ariaddna.vufs.businessobjects.MetatableType;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableType;
 
 /**
- * Entity class for Metatable {@link com.stnetix.ariaddna.vufs.businessobjects.Metatable} class.
+ * Entity class for Metatable class.
  */
 @Entity
 @Table(name = "Metatable")

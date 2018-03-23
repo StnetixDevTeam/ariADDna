@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -11,15 +11,13 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.vufs.dto;
+package com.stnetix.ariaddna.commonutils.dto.vufs;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import com.stnetix.ariaddna.vufs.businessobjects.MetatableType;
-
 /**
- * Data transfer object to Metatable {@link com.stnetix.ariaddna.vufs.businessobjects.Metatable} class
+ * Data transfer object to Metatable class
  */
 public class MetatableDTO {
     private String uuid;

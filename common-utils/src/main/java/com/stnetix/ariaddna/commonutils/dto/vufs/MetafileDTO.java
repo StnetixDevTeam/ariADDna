@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -11,16 +11,14 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.vufs.dto;
+package com.stnetix.ariaddna.commonutils.dto.vufs;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.stnetix.ariaddna.vufs.businessobjects.AllocationStrategy;
-
 /**
- * Data transfer object to Metafile{@link com.stnetix.ariaddna.vufs.businessobjects.Metafile} class
+ * Data transfer object to Metafile class
  */
 public class MetafileDTO {
     private String version;

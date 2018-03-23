@@ -23,13 +23,13 @@ import java.util.UUID;
 import org.junit.Test;
 
 import com.stnetix.ariaddna.commonutils.datetime.DateTime;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetafileDTO;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableType;
 import com.stnetix.ariaddna.persistence.TestHelper;
 import com.stnetix.ariaddna.persistence.entities.vufs.AllocationCollection;
 import com.stnetix.ariaddna.persistence.entities.vufs.MetafileEntity;
 import com.stnetix.ariaddna.persistence.entities.vufs.MetatableEntity;
-import com.stnetix.ariaddna.vufs.businessobjects.MetatableType;
-import com.stnetix.ariaddna.vufs.dto.MetafileDTO;
-import com.stnetix.ariaddna.vufs.dto.MetatableDTO;
 
 /**
  * Created by vasap87 on 05.03.18.

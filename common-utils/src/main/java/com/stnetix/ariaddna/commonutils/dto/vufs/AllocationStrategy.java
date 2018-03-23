@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -11,23 +11,17 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.vufs.businessobjects;
+package com.stnetix.ariaddna.commonutils.dto.vufs;
 
 /**
- * Flag of type metatable
+ * Describes the types of allocation strategy.
  */
-public enum MetatableType {
+public enum AllocationStrategy {
 
-    MASTER {
-        @Override
-        public String toString() {
-            return "MASTER";
-        }
-    },
-    SNAPSHOT {
-        @Override
-        public String toString() {
-            return "SNAPSHOT";
-        }
-    }
+    /** Each file has one copy*/
+    UNION,
+    /** Each file has 2 or more copy*/
+    MIRROR,
+    /** Each file has 3 or more copy*/
+    HIGH_AVAILABILITY
 }

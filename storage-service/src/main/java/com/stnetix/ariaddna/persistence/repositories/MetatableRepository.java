@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -27,6 +27,6 @@ import com.stnetix.ariaddna.persistence.entities.vufs.MetatableEntity;
 public interface MetatableRepository extends CrudRepository<MetatableEntity, String> {
 
     @Query(value = "select m from MetatableEntity m where m.type = "
-            + "com.stnetix.ariaddna.vufs.businessobjects.MetatableType.MASTER and m.uuid = :metatableUuid")
+            + "com.stnetix.ariaddna.commonutils.dto.vufs.MetatableType.MASTER and m.uuid = :metatableUuid")
     MetatableEntity getMetatableEntityMaster(@Param(value = "metatableUuid") String metatableUuid);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -17,9 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
 import com.stnetix.ariaddna.persistence.repositories.MetatableRepository;
 import com.stnetix.ariaddna.persistence.transformers.MetatableTransformer;
-import com.stnetix.ariaddna.vufs.dto.MetatableDTO;
 
 /**
  * 01.03.18.

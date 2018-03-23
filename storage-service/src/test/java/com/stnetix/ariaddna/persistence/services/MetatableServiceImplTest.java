@@ -29,11 +29,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.stnetix.ariaddna.commonutils.datetime.DateTime;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableType;
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
 import com.stnetix.ariaddna.persistence.TestHelper;
 import com.stnetix.ariaddna.persistence.utils.AppConfiguration;
-import com.stnetix.ariaddna.vufs.businessobjects.MetatableType;
-import com.stnetix.ariaddna.vufs.dto.MetatableDTO;
 
 /**
  * Created by vasap87 on 05.03.18.
