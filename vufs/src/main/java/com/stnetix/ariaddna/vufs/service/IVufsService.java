@@ -51,12 +51,31 @@ public interface IVufsService {
      * */
     Metafile removeBlockByUuidFromMetafile(String blockUuid, Metafile metafile);
 
-
+    /**
+     * Method add Metafile to current Metatable.
+     * @param metafile Metafile object to add.
+     * @return true if current Metatable does not have the specified Metatable.
+     * */
     boolean addMetafileToMetatable(Metafile metafile);
 
+    /**
+     * Method remove Metafile from current Metatable.
+     * @param metafile Metafile object to remove.
+     * @return true if current Metatable has the specified Metatable.
+     * */
     boolean removeMetafileFromMetatable(Metafile metafile);
 
+    /**
+     * Method return set of cloud uuid where specified block is placed.
+     * @param blockUuid uuid of specified block.
+     * @return set of cloud uuid.
+     * */
     Set<String> getAllocationByBlockUuid(String blockUuid);
 
+    /**
+     * Method set to block uuid specified set of cloud uuid.
+     * @param blockUuid uuid of existing block.
+     * @param allocationSet set of cloud uuid.
+     * */
     void setAllocationForBlockByUuid(String blockUuid, Set<String> allocationSet);
 }

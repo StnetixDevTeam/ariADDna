@@ -23,7 +23,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
-import com.stnetix.ariaddna.userservice.IUserService;
+import com.stnetix.ariaddna.persistence.services.IMetatableService;
+import com.stnetix.ariaddna.userservice.IProfile;
 import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
 import com.stnetix.ariaddna.vufs.businessobjects.Metatable;
 import com.stnetix.ariaddna.vufs.transformers.MetatableTransformer;
@@ -32,19 +33,26 @@ import com.stnetix.ariaddna.vufs.transformers.MetatableTransformer;
  * Created by vasap87 on 12.03.18.
  */
 @Service
-@Scope(value = "prototype")
+@Scope(value = "session")
 public class VufsServiceImpl implements IVufsService {
 
     private Metatable currentMetatable;
 
-    private IUserService userService;
+    private IProfile profile;
 
     private MetatableTransformer metatableTransformer;
 
-    public VufsServiceImpl() {
-        // TODO: 23.03.18 session?
+    private IMetatableService persistingService;
+
+    @Autowired
+    public VufsServiceImpl(IProfile profile,
+            MetatableTransformer metatableTransformer,
+            IMetatableService persistingService) {
+        this.profile = profile;
+        this.metatableTransformer = metatableTransformer;
+        this.persistingService = persistingService;
         currentMetatable = metatableTransformer
-                .metatableDTOToBO(userService.getProfileBySession(1).getCurrentMasterTable());
+                .metatableDTOToBO(profile.getCurrentMasterTable());
     }
 
     @Override
@@ -64,13 +72,13 @@ public class VufsServiceImpl implements IVufsService {
 
     @Override
     public Metafile addBlockByUuidToMetafile(String blockUuid, Metafile metafile) {
-        metafile.getBlockUuidList().add(blockUuid);
+        metafile.addBlockUuid(blockUuid);
         return metafile;
     }
 
     @Override
     public Metafile removeBlockByUuidFromMetafile(String blockUuid, Metafile metafile) {
-        metafile.getBlockUuidList().remove(blockUuid);
+        metafile.removeBlockUuid(blockUuid);
         return metafile;
     }
 
@@ -87,8 +95,8 @@ public class VufsServiceImpl implements IVufsService {
     @Override
     public Set<String> getAllocationByBlockUuid(String blockUuid) {
         for (Metafile metafile : currentMetatable.getMetafileSet()) {
-            if (metafile.getBlockAllocateMap().containsKey(blockUuid)) {
-                return metafile.getBlockAllocateMap().get(blockUuid);
+            if (metafile.getBlockUuidList().contains(blockUuid)) {
+                return metafile.getBlockAllocation(blockUuid);
             }
         }
         return null;
@@ -98,21 +106,20 @@ public class VufsServiceImpl implements IVufsService {
     public void setAllocationForBlockByUuid(String blockUuid, Set<String> allocationSet) {
         for (Metafile metafile : currentMetatable.getMetafileSet()) {
             if (metafile.getBlockUuidList().contains(blockUuid)) {
-                metafile.getBlockAllocateMap().put(blockUuid, allocationSet);
+                for (String cloud : allocationSet) {
+                    metafile.addBlockAllocation(blockUuid, cloud);
+                }
                 break;
             }
         }
     }
 
-    @Autowired
-    public void setUserService(IUserService userService) {
-        this.userService = userService;
-    }
-
-    @Autowired
-    public void setMetatableTransformer(
-            MetatableTransformer metatableTransformer) {
-        this.metatableTransformer = metatableTransformer;
+    /**
+     * This method called before destroy this bean. Also as current users session will die.
+     * */
+    @PreDestroy
+    public void persistChanges() {
+        persistingService.saveMetatable(metatableTransformer.metatableBOToDTO(currentMetatable));
     }
 
 }

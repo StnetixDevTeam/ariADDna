@@ -88,6 +88,10 @@ public class Metafile implements Cloneable {
         blockAllocateMap.remove(blockUuid);
     }
 
+    public Set<String> getBlockAllocation(String blockUuid) {
+        return blockAllocateMap.getOrDefault(blockUuid, new HashSet<>());
+    }
+
     //[GETTERS AND SETTERS]
     public String getVersion() {
         return version;
