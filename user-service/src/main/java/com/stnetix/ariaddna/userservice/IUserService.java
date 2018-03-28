@@ -11,14 +11,13 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.commonutils.settings;
+package com.stnetix.ariaddna.userservice;
 
 /**
- * Created by LugovoyAV on 22.02.2018.
+ * Created by vasap87 on 15.03.18.
  */
-public final class Settings {
-    public static final String fileNameSettings = "settings.xml";
+public interface IUserService {
 
-    private Settings() {
-    }
+    IProfile getProfileBySession(Integer sessionId);
+
 }

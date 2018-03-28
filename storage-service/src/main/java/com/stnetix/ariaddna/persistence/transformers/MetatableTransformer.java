@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -16,10 +16,10 @@ package com.stnetix.ariaddna.persistence.transformers;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetafileDTO;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
 import com.stnetix.ariaddna.persistence.entities.vufs.MetafileEntity;
 import com.stnetix.ariaddna.persistence.entities.vufs.MetatableEntity;
-import com.stnetix.ariaddna.vufs.dto.MetafileDTO;
-import com.stnetix.ariaddna.vufs.dto.MetatableDTO;
 
 /**
  * 22.02.18.

@@ -23,6 +23,7 @@
         <module>notify-server</module>
         <module>vufs</module>
         <module>block_manipulation_service</module>
+        <module>user-service</module>
     </modules>
 
     <properties>

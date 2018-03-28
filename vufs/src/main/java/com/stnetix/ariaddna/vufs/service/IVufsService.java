@@ -22,19 +22,60 @@ import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
  */
 public interface IVufsService {
 
+    /**
+     * Method create empty Metafile in current master Metatable.
+     * @return created Metafile.
+     * */
     Metafile createEmptyMetafile();
 
+    /**
+     * Metod return Metafile object by Metafile uuid.
+     * @param fileUuid Metafile uuid.
+     * @return Metafile object.
+     * */
     Metafile getMetafileByUuid(String fileUuid);
 
+    /**
+     * Method add to Metafile`s block uuid collections new block.
+     * @param blockUuid new block uuid. Type String.
+     * @param metafile Metafile object.
+     * @return changed Metafile.
+     * */
     Metafile addBlockByUuidToMetafile(String blockUuid, Metafile metafile);
 
+    /**
+     * Method remove from Metafile`s block uuid collections required block.
+     * @param blockUuid block uuid. Type String.
+     * @param metafile Metafile object.
+     * @return changed Metafile.
+     * */
     Metafile removeBlockByUuidFromMetafile(String blockUuid, Metafile metafile);
 
+    /**
+     * Method add Metafile to current Metatable.
+     * @param metafile Metafile object to add.
+     * @return true if current Metatable does not have the specified Metatable.
+     * */
     boolean addMetafileToMetatable(Metafile metafile);
 
+    /**
+     * Method remove Metafile from current Metatable.
+     * @param metafile Metafile object to remove.
+     * @return true if current Metatable has the specified Metatable.
+     * */
     boolean removeMetafileFromMetatable(Metafile metafile);
 
+    /**
+     * Method return set of cloud uuid where specified block is placed.
+     * @param blockUuid uuid of specified block.
+     * @return set of cloud uuid.
+     * */
     Set<String> getAllocationByBlockUuid(String blockUuid);
 
-    void setAllocationForBlockByUuid(String blockByUuid);
+    /**
+     * Method set to block uuid specified set of cloud uuid.
+     * @param blockUuid uuid of existing block.
+     * @param allocationSet set of cloud uuid.
+     * */
+    void setAllocationForBlockByUuid(String blockUuid, Set<String> allocationSet);
 }

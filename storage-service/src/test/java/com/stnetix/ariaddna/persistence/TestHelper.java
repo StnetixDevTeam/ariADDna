@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -23,15 +23,15 @@ import java.util.UUID;
 
 import com.stnetix.ariaddna.commonutils.datetime.DateTime;
 import com.stnetix.ariaddna.commonutils.dto.UserDTO;
+import com.stnetix.ariaddna.commonutils.dto.vufs.AllocationStrategy;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetafileDTO;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableType;
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
 import com.stnetix.ariaddna.persistence.entities.UserEntity;
 import com.stnetix.ariaddna.persistence.entities.vufs.AllocationCollection;
 import com.stnetix.ariaddna.persistence.entities.vufs.MetafileEntity;
 import com.stnetix.ariaddna.persistence.entities.vufs.MetatableEntity;
-import com.stnetix.ariaddna.vufs.businessobjects.AllocationStrategy;
-import com.stnetix.ariaddna.vufs.businessobjects.MetatableType;
-import com.stnetix.ariaddna.vufs.dto.MetafileDTO;
-import com.stnetix.ariaddna.vufs.dto.MetatableDTO;
 
 /**
  * Created by alexkotov on 15.09.17.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -11,23 +11,18 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.vufs.businessobjects;
+package com.stnetix.ariaddna.userservice;
+
+import java.util.Set;
+
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
 
 /**
- * Flag of type metatable
+ * Created by vasap87 on 15.03.18.
  */
-public enum MetatableType {
+public interface IProfile {
 
-    MASTER {
-        @Override
-        public String toString() {
-            return "MASTER";
-        }
-    },
-    SNAPSHOT {
-        @Override
-        public String toString() {
-            return "SNAPSHOT";
-        }
-    }
+    Set<MetatableDTO> getMetatables();
+
+    MetatableDTO getCurrentMasterTable();
 }

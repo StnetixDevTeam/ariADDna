@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -31,10 +31,10 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.stnetix.ariaddna.vufs.businessobjects.AllocationStrategy;
+import com.stnetix.ariaddna.commonutils.dto.vufs.AllocationStrategy;
 
 /**
- * Entity class for Metafile {@link com.stnetix.ariaddna.vufs.businessobjects.Metafile} class.
+ * Entity class for Metafile class.
  */
 @Entity
 @Table(name = "Metafile")

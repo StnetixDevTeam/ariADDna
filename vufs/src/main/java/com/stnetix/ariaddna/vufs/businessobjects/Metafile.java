@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 stnetix.com. All Rights Reserved.
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy of
@@ -13,6 +13,8 @@
 
 package com.stnetix.ariaddna.vufs.businessobjects;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -21,10 +23,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import com.stnetix.ariaddna.commonutils.dto.vufs.AllocationStrategy;
+import com.stnetix.ariaddna.commonutils.logger.AriaddnaLogger;
+
 /**
- * Metafile it's one of many vertex acyclic graph and on local filesystem metafile equals local files and directory.
+ * Metafile it's one of many vertex acyclic graph and on local filesystem metafile equals local
+ * files and directory.
  */
-public class Metafile {
+public class Metafile implements Cloneable {
+
+    private static final AriaddnaLogger LOGGER = AriaddnaLogger.getLogger(Metafile.class);
 
     private String version;
     private String fileUuid;
@@ -80,7 +88,10 @@ public class Metafile {
         blockAllocateMap.remove(blockUuid);
     }
 
-    //[GETTERS]
+    public Set<String> getBlockAllocation(String blockUuid) {
+        return blockAllocateMap.getOrDefault(blockUuid, new HashSet<>());
+    }
+
     public String getVersion() {
         return version;
     }
@@ -94,15 +105,30 @@ public class Metafile {
     }
 
     public Set<String> getChildFileUuidSet() {
-        return childFileUuidSet;
+        Set<String> childFileUuidSetCopy = new HashSet<>(childFileUuidSet);
+        return childFileUuidSetCopy;
+    }
+
+    public void setChildFileUuidSet(Set<String> childFileUuidSet) {
+        this.childFileUuidSet = new CopyOnWriteArraySet<>(childFileUuidSet);
     }
 
     public List<String> getBlockUuidList() {
-        return blockUuidList;
+        List<String> blockUuidListCopy = new ArrayList<>(blockUuidList);
+        return blockUuidListCopy;
+    }
+
+    public void setBlockUuidList(List<String> blockUuidList) {
+        this.blockUuidList = new CopyOnWriteArrayList<>(blockUuidList);
     }
 
     public Map<String, String> getProperties() {
-        return properties;
+        Map<String, String> propertiesCopy = new HashMap<>(properties);
+        return propertiesCopy;
+    }
+
+    public void setProperties(Map<String, String> properties) {
+        this.properties = new ConcurrentHashMap<>(properties);
     }
 
     public AllocationStrategy getAllocationStrategy() {
@@ -114,7 +140,22 @@ public class Metafile {
     }
 
     public Map<String, Set<String>> getBlockAllocateMap() {
-        return blockAllocateMap;
+        Map<String, Set<String>> blockAllocateMapCopy = new HashMap<>(blockAllocateMap);
+        return blockAllocateMapCopy;
     }
-    //[END GETTERS]
+
+    public void setBlockAllocateMap(
+            Map<String, Set<String>> blockAllocateMap) {
+        this.blockAllocateMap = new ConcurrentHashMap<>(blockAllocateMap);
+    }
+
+    @Override
+    public Object clone() {
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            LOGGER.error("Method clone in object Metafile throw exception:", e);
+            return null;
+        }
+    }
 }

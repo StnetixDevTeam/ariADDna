@@ -11,14 +11,23 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.commonutils.settings;
+package com.stnetix.ariaddna.commonutils.dto.vufs;
 
 /**
- * Created by LugovoyAV on 22.02.2018.
+ * Flag of type metatable
  */
-public final class Settings {
-    public static final String fileNameSettings = "settings.xml";
+public enum MetatableType {
 
-    private Settings() {
+    MASTER {
+        @Override
+        public String toString() {
+            return "MASTER";
+        }
+    },
+    SNAPSHOT {
+        @Override
+        public String toString() {
+            return "SNAPSHOT";
+        }
     }
 }

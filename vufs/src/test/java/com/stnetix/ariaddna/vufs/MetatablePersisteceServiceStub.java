@@ -11,14 +11,17 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.commonutils.settings;
+package com.stnetix.ariaddna.vufs;
 
-/**
- * Created by LugovoyAV on 22.02.2018.
- */
-public final class Settings {
-    public static final String fileNameSettings = "settings.xml";
+import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
+import com.stnetix.ariaddna.persistence.services.IMetatableService;
 
-    private Settings() {
+public class MetatablePersisteceServiceStub implements IMetatableService {
+    @Override public MetatableDTO getMetatableMaster(String metatableUuid) {
+        return new MetatableDTO();
+    }
+
+    @Override public MetatableDTO saveMetatable(MetatableDTO metatable) {
+        return new MetatableDTO();
     }
 }
