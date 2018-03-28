@@ -40,7 +40,11 @@ public class MetafileTransformer {
 
     public Metafile metafileDTOToBO(MetafileDTO metafileDTO) {
         Metafile metafile = new Metafile("", "", "");
-
+        metafile.setAllocationStrategy(metafileDTO.getAllocationStrategy());
+        metafile.setBlockAllocateMap(metafileDTO.getBlockAllocateMap());
+        metafile.setProperties(metafileDTO.getProperties());
+        metafile.setBlockUuidList(metafileDTO.getBlockUuidList());
+        metafile.setChildFileUuidSet(metafileDTO.getChildFileUuidSet());
         return metafile;
     }
 

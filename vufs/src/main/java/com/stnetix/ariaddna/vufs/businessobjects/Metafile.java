@@ -92,7 +92,6 @@ public class Metafile implements Cloneable {
         return blockAllocateMap.getOrDefault(blockUuid, new HashSet<>());
     }
 
-    //[GETTERS AND SETTERS]
     public String getVersion() {
         return version;
     }
@@ -149,7 +148,6 @@ public class Metafile implements Cloneable {
             Map<String, Set<String>> blockAllocateMap) {
         this.blockAllocateMap = new ConcurrentHashMap<>(blockAllocateMap);
     }
-    //[END GETTERS]
 
     @Override
     public Object clone() {
