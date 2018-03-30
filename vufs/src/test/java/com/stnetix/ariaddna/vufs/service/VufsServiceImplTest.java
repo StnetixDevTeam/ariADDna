@@ -133,6 +133,37 @@ public class VufsServiceImplTest {
         assertEquals(resultAllocationSet.size(), 5);
     }
 
+    @Test
+    public void addMetafileAsChildToParent() {
+        Metafile parentMetafile = vufsService.createEmptyMetafile();
+        String parentMetafileUuid = parentMetafile.getFileUuid();
+        Metafile childMetafile = vufsService.createEmptyMetafile();
+        String childMetafileUuid = childMetafile.getFileUuid();
+        assertEquals(parentMetafile.getChildFileUuidSet().size(), 0);
+        assertEquals(childMetafile.getChildFileUuidSet().size(), 0);
+        vufsService.addMetafileToMetatable(parentMetafile);
+
+        boolean isAdded = vufsService.addMetafileAsChildToParent(childMetafile, parentMetafileUuid);
+        assertTrue(isAdded);
+        assertEquals(parentMetafile.getChildFileUuidSet().size(), 1);
+        assertTrue(parentMetafile.getChildFileUuidSet().contains(childMetafileUuid));
+    }
+
+    @Test
+    public void removeMetafileFromParent() {
+        Metafile parentMetafile = vufsService.createEmptyMetafile();
+        String parentMetafileUuid = parentMetafile.getFileUuid();
+        Metafile childMetafile = vufsService.createEmptyMetafile();
+        String childMetafileUuid = childMetafile.getFileUuid();
+        vufsService.addMetafileToMetatable(parentMetafile);
+        vufsService.addMetafileAsChildToParent(childMetafile, parentMetafileUuid);
+
+        boolean isRemoved = vufsService
+                .removeMetafileFromParent(childMetafileUuid, parentMetafileUuid);
+        assertTrue(isRemoved);
+        assertEquals(parentMetafile.getChildFileUuidSet().size(), 0);
+    }
+
     @After
     public void destroy() {
         vufsService = null;
