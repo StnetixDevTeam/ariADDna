@@ -1,41 +1,51 @@
+/*
+ * Copyright (c) 2018 stnetix.com. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License.  You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed
+ * under the License is distributed on an "AS IS" BASIS, without warranties or
+ * conditions of any kind, EITHER EXPRESS OR IMPLIED.  See the License for the
+ * specific language governing permissions and limitations under the License.
+ */
+
 package com.stnetix.ariaddna.externalcloudapi.implementation;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.stnetix.ariaddna.externalcloudapi.MediaTypes;
-import okhttp3.*;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-import java.io.*;
+import com.stnetix.ariaddna.externalcloudapi.MediaTypes;
 
 public class YandexDiskHelper {
 
-    private static JsonParser parser;
-
     static final String APP_ROOT = "app:/";
-
-    static Request baseRequest;
-
     static final HttpUrl DISK_PATH;
-
     static final HttpUrl RESOURCES_PATH;
-
     static final HttpUrl COPY_PATH;
-
     static final HttpUrl MOVE_PATH;
-
     static final HttpUrl DLOAD_PATH;
-
     static final HttpUrl ULOAD_PATH;
-
     static final HttpUrl FILES_PATH;
-
     static final HttpUrl VCODE_REQ_PATH;
-
     static final HttpUrl TOKEN_REQ_PATH;
-
     static final String CLIENT_ID = "141588389ce24e4e80e6ccd5db81c7a6";
-
     static final String CLIENT_SECRET = "7fbc2f7214b64d53809249b5534291d2";
+    static Request baseRequest;
+    private static JsonParser parser;
 
     static {
         parser = new JsonParser();
@@ -93,7 +103,11 @@ public class YandexDiskHelper {
                 .build();
     }
 
-    static Request getRequest(HttpUrl url, String token){
+    private YandexDiskHelper(){
+
+    }
+
+    static Request getRequest(HttpUrl url, String token) {
         return baseRequest.newBuilder()
                 .url(url)
                 .header("Authorization", "OAuth " + token)
@@ -102,7 +116,7 @@ public class YandexDiskHelper {
                 .build();
     }
 
-    static Request postRequest(HttpUrl url, RequestBody body, String token){
+    static Request postRequest(HttpUrl url, RequestBody body, String token) {
         return baseRequest.newBuilder()
                 .url(url)
                 .header("Authorization", "OAuth " + token)
@@ -111,7 +125,7 @@ public class YandexDiskHelper {
                 .build();
     }
 
-    static Request putRequest(HttpUrl url, RequestBody body, String token){
+    static Request putRequest(HttpUrl url, RequestBody body, String token) {
         return baseRequest.newBuilder()
                 .url(url)
                 .header("Authorization", "OAuth " + token)
@@ -120,7 +134,7 @@ public class YandexDiskHelper {
                 .build();
     }
 
-    static Request deleteRequest(HttpUrl url, String token){
+    static Request deleteRequest(HttpUrl url, String token) {
         return baseRequest.newBuilder()
                 .url(url)
                 .header("Authorization", "OAuth " + token)
@@ -129,13 +143,13 @@ public class YandexDiskHelper {
                 .build();
     }
 
-    static JsonObject sendRequest(OkHttpClient client, Request request){
+    static JsonObject sendRequest(OkHttpClient client, Request request) {
         JsonObject result = new JsonObject();
 
         try {
             Response response = client.newCall(request).execute();
             String str = response.body().string();
-            if(str.length() > 0) {
+            if (str.length() > 0) {
                 result = parser.parse(str).getAsJsonObject();
             }
             result.addProperty("Status Code", response.code());
@@ -146,7 +160,7 @@ public class YandexDiskHelper {
         return result;
     }
 
-    static void getFileFromCloud(OkHttpClient client, String href, File path){
+    static void getFileFromCloud(OkHttpClient client, String href, File path) {
         Request request = new Request.Builder()
                 .url(href)
                 .get()
@@ -154,7 +168,7 @@ public class YandexDiskHelper {
 
         try {
             Response response = client.newCall(request).execute();
-            if(response.code() == 200) {
+            if (response.code() == 200) {
                 if (path.exists()) {
                     path.delete();
                 }
@@ -179,7 +193,7 @@ public class YandexDiskHelper {
         }
     }
 
-    static void sendFileToCloud(OkHttpClient client, String href, File path){
+    static void sendFileToCloud(OkHttpClient client, String href, File path) {
         try {
             Request request = new Request.Builder()
                     .url(href)
