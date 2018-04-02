@@ -58,6 +58,17 @@ public class Metatable {
         return false;
     }
 
+    public boolean removeMetafileByUuid(String childMetafileUuid) {
+        Metafile metafile = null;
+        for (Metafile existMetafile : metafileSet) {
+            if (existMetafile.getFileUuid().equalsIgnoreCase(childMetafileUuid)) {
+                metafile = existMetafile;
+                break;
+            }
+        }
+        return removeMetafile(metafile);
+    }
+
     public String getVersion() {
         return version;
     }
@@ -70,19 +81,20 @@ public class Metatable {
         return metafileSet;
     }
 
+    public void setMetafileSet(Set<Metafile> metafileSet) {
+        this.metafileSet = metafileSet;
+    }
+
     public Long getLastUpdateTimestamp() {
         return lastUpdateTimestamp;
+    }
+
+    public void setLastUpdateTimestamp(Long lastUpdateTimestamp) {
+        this.lastUpdateTimestamp = lastUpdateTimestamp;
     }
 
     public String getUuid() {
         return uuid;
     }
 
-    public void setMetafileSet(Set<Metafile> metafileSet) {
-        this.metafileSet = metafileSet;
-    }
-
-    public void setLastUpdateTimestamp(Long lastUpdateTimestamp) {
-        this.lastUpdateTimestamp = lastUpdateTimestamp;
-    }
 }

@@ -158,4 +158,8 @@ public class Metafile implements Cloneable {
             return null;
         }
     }
+
+    public void setParentFileUuid(String parentFileUid) {
+        this.parentFileUuid = parentFileUid;
+    }
 }

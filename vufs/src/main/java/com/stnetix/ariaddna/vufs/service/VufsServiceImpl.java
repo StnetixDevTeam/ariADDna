@@ -114,6 +114,41 @@ public class VufsServiceImpl implements IVufsService {
         }
     }
 
+    @Override
+    public boolean addMetafileAsChildToParent(Metafile childMetafile,
+            String parentMetafileUuid) {
+        boolean isAdded = false;
+        //add Metafile to set of metafile in Metatable.
+        if (currentMetatable.addMetafile(childMetafile)) {
+            for (Metafile metafile : currentMetatable.getMetafileSet()) {
+                //parent metafile exist and its a directory.
+                if (metafile.getFileUuid().equalsIgnoreCase(parentMetafileUuid)) {
+                    isAdded = metafile.addChildFileUUid(childMetafile.getFileUuid());
+                }
+            }
+        }
+        if (isAdded) {
+            childMetafile.setParentFileUuid(parentMetafileUuid);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeMetafileFromParent(String childMetafileUuid,
+            String parentMetafileUuid) {
+        boolean isRemovedAsChild = false;
+        // Remove child metafile uuid from list of childMetafileUuidList if Metafile with parentMetafileUuid.
+        for (Metafile metafile : currentMetatable.getMetafileSet()) {
+            if (metafile.getFileUuid().equalsIgnoreCase(parentMetafileUuid)) {
+                isRemovedAsChild = metafile.removeChildFileUuid(childMetafileUuid);
+                break;
+            }
+        }
+        // If was removed from parent, remove metafile form metatable.
+        return isRemovedAsChild && currentMetatable.removeMetafileByUuid(childMetafileUuid);
+    }
+
     /**
      * This method called before destroy this bean. Also as current users session will die.
      * */

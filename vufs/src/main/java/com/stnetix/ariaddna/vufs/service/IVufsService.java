@@ -78,4 +78,20 @@ public interface IVufsService {
      * @param allocationSet set of cloud uuid.
      * */
     void setAllocationForBlockByUuid(String blockUuid, Set<String> allocationSet);
+
+    /**
+     * Method add Metafile as child to parent Metafile.
+     * @param childMetafile object of child Metafile.
+     * @param parentMetafileUuid uuid of existing parent Metafile.
+     * @return true if Metafile was added.
+     * */
+    boolean addMetafileAsChildToParent(Metafile childMetafile, String parentMetafileUuid);
+
+    /**
+     * Method remove Metafile from child of parent Metafile.
+     * @param childMetafileUuid uuid of child Metafile.
+     * @param parentMetafileUuid uuid of parent Metafile.
+     * @return true if Metafile was removed.
+     * */
+    boolean removeMetafileFromParent(String childMetafileUuid, String parentMetafileUuid);
 }
