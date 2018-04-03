@@ -11,7 +11,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.vufs.businessobjects;
+package com.stnetix.ariaddna.vufs.bo;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

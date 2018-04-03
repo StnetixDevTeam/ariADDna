@@ -22,11 +22,11 @@ import org.springframework.stereotype.Component;
 
 import com.stnetix.ariaddna.commonutils.dto.vufs.MetafileDTO;
 import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
-import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
-import com.stnetix.ariaddna.vufs.businessobjects.Metatable;
+import com.stnetix.ariaddna.vufs.bo.Metafile;
+import com.stnetix.ariaddna.vufs.bo.Metatable;
 
 /**
- * Class to transform {@link com.stnetix.ariaddna.vufs.businessobjects.Metatable} to
+ * Class to transform {@link com.stnetix.ariaddna.vufs.bo.Metatable} to
  * {@link com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO} and vice versa.
  */
 @Component
