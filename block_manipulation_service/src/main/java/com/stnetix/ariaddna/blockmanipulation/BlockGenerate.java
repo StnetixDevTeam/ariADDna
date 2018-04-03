@@ -31,8 +31,8 @@ import com.stnetix.ariaddna.commonutils.xmlparser.XmlParser;
 import com.stnetix.ariaddna.commonutils.xmlparser.exception.XmlParserException;
 import com.stnetix.ariaddna.commonutils.xmlparser.handlers.BlockManipulationSettingHandler;
 import com.stnetix.ariaddna.localstoragemanager.localservice.LocalService;
-import com.stnetix.ariaddna.vufs.businessobjects.Block;
-import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
+import com.stnetix.ariaddna.vufs.bo.Block;
+import com.stnetix.ariaddna.vufs.bo.Metafile;
 
 
 

@@ -20,8 +20,8 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.stnetix.ariaddna.vufs.businessobjects.Block;
-import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
+import com.stnetix.ariaddna.vufs.bo.Block;
+import com.stnetix.ariaddna.vufs.bo.Metafile;
 
 public class BMSTest {
 

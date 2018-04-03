@@ -15,7 +15,7 @@ package com.stnetix.ariaddna.vufs.service;
 
 import java.util.Set;
 
-import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
+import com.stnetix.ariaddna.vufs.bo.Metafile;
 
 /**
  * Created by vasap87 on 20.02.18.

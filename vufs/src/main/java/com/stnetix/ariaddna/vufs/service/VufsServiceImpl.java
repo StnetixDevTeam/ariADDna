@@ -25,8 +25,8 @@ import org.springframework.stereotype.Service;
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
 import com.stnetix.ariaddna.persistence.services.IMetatableService;
 import com.stnetix.ariaddna.userservice.IProfile;
-import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
-import com.stnetix.ariaddna.vufs.businessobjects.Metatable;
+import com.stnetix.ariaddna.vufs.bo.Metafile;
+import com.stnetix.ariaddna.vufs.bo.Metatable;
 import com.stnetix.ariaddna.vufs.transformers.MetatableTransformer;
 
 /**

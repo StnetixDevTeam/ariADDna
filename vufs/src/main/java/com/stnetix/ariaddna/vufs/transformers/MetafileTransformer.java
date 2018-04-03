@@ -16,10 +16,10 @@ package com.stnetix.ariaddna.vufs.transformers;
 import org.springframework.stereotype.Component;
 
 import com.stnetix.ariaddna.commonutils.dto.vufs.MetafileDTO;
-import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
+import com.stnetix.ariaddna.vufs.bo.Metafile;
 
 /**
- * Class to transform {@link com.stnetix.ariaddna.vufs.businessobjects.Metafile} to
+ * Class to transform {@link com.stnetix.ariaddna.vufs.bo.Metafile} to
  * {@link com.stnetix.ariaddna.commonutils.dto.vufs.MetafileDTO} and vice versa.
  */
 @Component

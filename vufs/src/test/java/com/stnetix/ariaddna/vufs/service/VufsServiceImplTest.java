@@ -31,7 +31,7 @@ import com.stnetix.ariaddna.persistence.services.IMetatableService;
 import com.stnetix.ariaddna.userservice.IProfile;
 import com.stnetix.ariaddna.vufs.MetatablePersisteceServiceStub;
 import com.stnetix.ariaddna.vufs.ProfileStub;
-import com.stnetix.ariaddna.vufs.businessobjects.Metafile;
+import com.stnetix.ariaddna.vufs.bo.Metafile;
 import com.stnetix.ariaddna.vufs.transformers.MetafileTransformer;
 import com.stnetix.ariaddna.vufs.transformers.MetatableTransformer;
 
