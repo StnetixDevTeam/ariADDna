@@ -13,7 +13,7 @@
 
 package com.stnetix.ariaddna.blockmanipulation.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +37,7 @@ public class BlockManipulationServiceImplTest {
     @Before
     public void setUp() throws Exception {
         metafile = new Metafile(MavenUtil.getCurrentVersion(), UUID.randomUUID().toString(), null);
-        blockManipulationService  = new BlockManipulationServiceImpl();
+        blockManipulationService = new BlockManipulationServiceImpl();
     }
 
     @After
@@ -82,7 +82,8 @@ public class BlockManipulationServiceImplTest {
     }
 
     @Test(expected = MetafileIsFolderException.class)
-    public void getNextBlockUuidByFolder() throws BlockDoesNotExistException, MetafileIsFolderException {
+    public void getNextBlockUuidByFolder()
+            throws BlockDoesNotExistException, MetafileIsFolderException {
         Map<String, String> properties = new HashMap<>();
         properties.put("typeOnFs", FileType.DIR.toString());
         metafile.setProperties(properties);
