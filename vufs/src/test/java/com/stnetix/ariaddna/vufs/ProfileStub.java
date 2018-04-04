@@ -65,7 +65,7 @@ public class ProfileStub implements IProfile {
         MetafileDTO metafileDTO = new MetafileDTO();
         metafileDTO.setFileUuid(fileUuid);
         metafileDTO.setVersion(MavenUtil.getCurrentVersion());
-        metafileDTO.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        metafileDTO.setAllocationStrategy(AllocationStrategy.HIGH);
         metafileDTO.setParentFileUuid(parentFileUuid);
         metafileDTO.setProperties(getFilePropertiesBySize(6));
         metafileDTO.setBlockAllocateMap(getBlockAllocateMapToDtoBySize(6));

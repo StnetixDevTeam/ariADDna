@@ -62,7 +62,7 @@ public class TestHelper {
         MetafileDTO metafileDTO = new MetafileDTO();
         metafileDTO.setFileUuid(fileUuid);
         metafileDTO.setVersion(MavenUtil.getCurrentVersion());
-        metafileDTO.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        metafileDTO.setAllocationStrategy(AllocationStrategy.HIGH);
         metafileDTO.setParentFileUuid(parentFileUuid);
         metafileDTO.setProperties(getFilePropertiesBySize(6));
         metafileDTO.setBlockAllocateMap(getBlockAllocateMapToDtoBySize(6));
@@ -88,7 +88,7 @@ public class TestHelper {
         MetafileEntity metafileEntity = new MetafileEntity();
         metafileEntity.setFileUuid(fileUuid);
         metafileEntity.setVersion(MavenUtil.getCurrentVersion());
-        metafileEntity.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        metafileEntity.setAllocationStrategy(AllocationStrategy.HIGH);
         metafileEntity.setParentFileUuid(parentFileUuid);
         metafileEntity.setProperties(getFilePropertiesBySize(6));
         metafileEntity.setBlockAllocateMap(getBlockAllocateMapToEntityBySize(6, metafileEntity));

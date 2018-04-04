@@ -60,7 +60,7 @@ public class VufsServiceImplTest {
     @Test
     public void getMetafileByUuid() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH);
         String metafileUUid = newMetafile.getFileUuid();
         vufsService.addMetafileToMetatable(newMetafile);
         Metafile result = vufsService.getMetafileByUuid(metafileUUid);
@@ -90,7 +90,7 @@ public class VufsServiceImplTest {
     @Test
     public void addMetafileToMetatable() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH);
         boolean isAdded = vufsService.addMetafileToMetatable(newMetafile);
         assertTrue(isAdded);
     }
@@ -98,7 +98,7 @@ public class VufsServiceImplTest {
     @Test
     public void removeMetafileFromMetatable() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH);
         vufsService.addMetafileToMetatable(newMetafile);
         boolean isRemoved = vufsService.removeMetafileFromMetatable(newMetafile);
         assertTrue(isRemoved);
@@ -107,7 +107,7 @@ public class VufsServiceImplTest {
     @Test
     public void getAllocationByBlockUuid() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH);
         vufsService.addMetafileToMetatable(newMetafile);
         String newBlockUuid = UUID.randomUUID().toString();
         vufsService.addBlockByUuidToMetafile(newBlockUuid, newMetafile);
@@ -119,7 +119,7 @@ public class VufsServiceImplTest {
     @Test
     public void setAllocationForBlockByUuid() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH);
         vufsService.addMetafileToMetatable(newMetafile);
         String newBlockUuid = UUID.randomUUID().toString();
         vufsService.addBlockByUuidToMetafile(newBlockUuid, newMetafile);
