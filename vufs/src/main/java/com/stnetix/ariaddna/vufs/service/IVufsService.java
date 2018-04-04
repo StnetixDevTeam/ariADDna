@@ -15,7 +15,9 @@ package com.stnetix.ariaddna.vufs.service;
 
 import java.util.Set;
 
+import com.stnetix.ariaddna.commonutils.dto.vufs.AllocationStrategy;
 import com.stnetix.ariaddna.vufs.bo.Metafile;
+import com.stnetix.ariaddna.vufs.exception.MetafileDoesNotExistException;
 
 /**
  * Created by vasap87 on 20.02.18.
@@ -94,4 +96,21 @@ public interface IVufsService {
      * @return true if Metafile was removed.
      * */
     boolean removeMetafileFromParent(String childMetafileUuid, String parentMetafileUuid);
+
+    /**
+     * Method return the current allocation strategy by uuid of Metafile.
+     * @param metafileUuid uuid of Metafile.
+     * @return AllocationStrategy of requested Metafile.
+     * @throws MetafileDoesNotExistException if metafile does not exist in current Metatable of current context.
+     * */
+    AllocationStrategy getAllocationStrategyByMetafileUuid(String metafileUuid)
+            throws MetafileDoesNotExistException;
+
+    /**
+     * Method set allocation strategy by uuid of Metafile.
+     * @param metafileUuid uuid of Metafile.
+     * @param allocationStrategy new AllocationStrategy of Metafile.
+     * */
+    void setAllocationStrategyByMetafileUuid(String metafileUuid,
+            AllocationStrategy allocationStrategy) throws MetafileDoesNotExistException;
 }
