@@ -35,7 +35,7 @@ public class MetafileCloneTest {
     @Test
     public void metafilecloneTest() {
         Metafile metafile1 = new Metafile("1", "fileuuid", "parentfileuuid");
-        metafile1.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        metafile1.setAllocationStrategy(AllocationStrategy.HA);
         Set<String> childfileUuidSet = new CopyOnWriteArraySet<>();
         for (int i = 0; i < 5; i++) {
             childfileUuidSet.add(UUID.randomUUID().toString());

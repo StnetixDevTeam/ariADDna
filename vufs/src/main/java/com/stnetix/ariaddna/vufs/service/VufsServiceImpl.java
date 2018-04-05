@@ -13,6 +13,7 @@
 
 package com.stnetix.ariaddna.vufs.service;
 
+import java.text.MessageFormat;
 import java.util.Set;
 import java.util.UUID;
 
@@ -22,11 +23,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import com.stnetix.ariaddna.commonutils.dto.vufs.AllocationStrategy;
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
 import com.stnetix.ariaddna.persistence.services.IMetatableService;
 import com.stnetix.ariaddna.userservice.IProfile;
 import com.stnetix.ariaddna.vufs.bo.Metafile;
 import com.stnetix.ariaddna.vufs.bo.Metatable;
+import com.stnetix.ariaddna.vufs.exception.MetafileDoesNotExistException;
 import com.stnetix.ariaddna.vufs.transformers.MetatableTransformer;
 
 /**
@@ -147,6 +150,44 @@ public class VufsServiceImpl implements IVufsService {
         }
         // If was removed from parent, remove metafile form metatable.
         return isRemovedAsChild && currentMetatable.removeMetafileByUuid(childMetafileUuid);
+    }
+
+    @Override
+    public AllocationStrategy getAllocationStrategyByMetafileUuid(String metafileUuid)
+            throws MetafileDoesNotExistException {
+        for (Metafile metafile : currentMetatable.getMetafileSet()) {
+            if (metafile.getFileUuid().equalsIgnoreCase(metafileUuid)) {
+                return metafile.getAllocationStrategy();
+            }
+        }
+        throw new MetafileDoesNotExistException(getExceptionInfo(currentMetatable, metafileUuid,
+                "getAllocationStrategyByMetafileUuid"));
+    }
+
+    @Override
+    public void setAllocationStrategyByMetafileUuid(String metafileUuid,
+            AllocationStrategy allocationStrategy) throws MetafileDoesNotExistException {
+        Metafile requestedMetafile = null;
+        for (Metafile metafile : currentMetatable.getMetafileSet()) {
+            if (metafile.getFileUuid().equalsIgnoreCase(metafileUuid)) {
+                requestedMetafile = metafile;
+                break;
+            }
+        }
+        if (requestedMetafile != null) {
+            requestedMetafile.setAllocationStrategy(allocationStrategy);
+        } else {
+            throw new MetafileDoesNotExistException(getExceptionInfo(currentMetatable, metafileUuid,
+                    "setAllocationStrategyByMetafileUuid"));
+        }
+    }
+
+    private String getExceptionInfo(Metatable currentMetatable, String metafileUuid,
+            String methodName) {
+        return MessageFormat
+                .format("Method: {0}. In Metatable with uuid: {1}, version: {2}, type: {3}, Metafile with uuid: {4} does not exist.",
+                        methodName, currentMetatable.getUuid(), currentMetatable.getVersion(),
+                        currentMetatable.getType(), metafileUuid);
     }
 
     /**

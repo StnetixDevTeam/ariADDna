@@ -32,6 +32,7 @@ import com.stnetix.ariaddna.userservice.IProfile;
 import com.stnetix.ariaddna.vufs.MetatablePersisteceServiceStub;
 import com.stnetix.ariaddna.vufs.ProfileStub;
 import com.stnetix.ariaddna.vufs.bo.Metafile;
+import com.stnetix.ariaddna.vufs.exception.MetafileDoesNotExistException;
 import com.stnetix.ariaddna.vufs.transformers.MetafileTransformer;
 import com.stnetix.ariaddna.vufs.transformers.MetatableTransformer;
 
@@ -60,7 +61,7 @@ public class VufsServiceImplTest {
     @Test
     public void getMetafileByUuid() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HA);
         String metafileUUid = newMetafile.getFileUuid();
         vufsService.addMetafileToMetatable(newMetafile);
         Metafile result = vufsService.getMetafileByUuid(metafileUUid);
@@ -90,7 +91,7 @@ public class VufsServiceImplTest {
     @Test
     public void addMetafileToMetatable() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HA);
         boolean isAdded = vufsService.addMetafileToMetatable(newMetafile);
         assertTrue(isAdded);
     }
@@ -98,7 +99,7 @@ public class VufsServiceImplTest {
     @Test
     public void removeMetafileFromMetatable() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HA);
         vufsService.addMetafileToMetatable(newMetafile);
         boolean isRemoved = vufsService.removeMetafileFromMetatable(newMetafile);
         assertTrue(isRemoved);
@@ -107,7 +108,7 @@ public class VufsServiceImplTest {
     @Test
     public void getAllocationByBlockUuid() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HA);
         vufsService.addMetafileToMetatable(newMetafile);
         String newBlockUuid = UUID.randomUUID().toString();
         vufsService.addBlockByUuidToMetafile(newBlockUuid, newMetafile);
@@ -119,7 +120,7 @@ public class VufsServiceImplTest {
     @Test
     public void setAllocationForBlockByUuid() {
         Metafile newMetafile = vufsService.createEmptyMetafile();
-        newMetafile.setAllocationStrategy(AllocationStrategy.HIGH_AVAILABILITY);
+        newMetafile.setAllocationStrategy(AllocationStrategy.HA);
         vufsService.addMetafileToMetatable(newMetafile);
         String newBlockUuid = UUID.randomUUID().toString();
         vufsService.addBlockByUuidToMetafile(newBlockUuid, newMetafile);
@@ -162,6 +163,44 @@ public class VufsServiceImplTest {
                 .removeMetafileFromParent(childMetafileUuid, parentMetafileUuid);
         assertTrue(isRemoved);
         assertEquals(parentMetafile.getChildFileUuidSet().size(), 0);
+    }
+
+    @Test
+    public void getAllocationStrategyByMetafileUuid() throws MetafileDoesNotExistException {
+        Metafile newMetafile = vufsService.createEmptyMetafile();
+        newMetafile.setAllocationStrategy(AllocationStrategy.UNION);
+        String metafileUUid = newMetafile.getFileUuid();
+        vufsService.addMetafileToMetatable(newMetafile);
+        AllocationStrategy result = vufsService.getAllocationStrategyByMetafileUuid(metafileUUid);
+        assertEquals(AllocationStrategy.UNION, result);
+    }
+
+    @Test(expected = MetafileDoesNotExistException.class)
+    public void getAllocationStrategyByMetafileUuidWithException()
+            throws MetafileDoesNotExistException {
+        //here throw exception
+        AllocationStrategy result = vufsService
+                .getAllocationStrategyByMetafileUuid(UUID.randomUUID().toString());
+    }
+
+    @Test
+    public void setAllocationStrategyByMetafileUuid() throws MetafileDoesNotExistException {
+        Metafile newMetafile = vufsService.createEmptyMetafile();
+        newMetafile.setAllocationStrategy(AllocationStrategy.UNION);
+        String metafileUUid = newMetafile.getFileUuid();
+        vufsService.addMetafileToMetatable(newMetafile);
+        vufsService.setAllocationStrategyByMetafileUuid(metafileUUid, AllocationStrategy.HA);
+
+        Metafile changedMetafile = vufsService.getMetafileByUuid(metafileUUid);
+        assertEquals(AllocationStrategy.HA, changedMetafile.getAllocationStrategy());
+    }
+
+    @Test(expected = MetafileDoesNotExistException.class)
+    public void setAllocationStrategyByMetafileUuidWithException()
+            throws MetafileDoesNotExistException {
+        //here throw exception
+        vufsService.setAllocationStrategyByMetafileUuid(UUID.randomUUID().toString(),
+                AllocationStrategy.HA);
     }
 
     @After

@@ -19,9 +19,24 @@ package com.stnetix.ariaddna.commonutils.dto.vufs;
 public enum AllocationStrategy {
 
     /** Each file has one copy*/
-    UNION,
+    UNION {
+        @Override
+        public String toString() {
+            return "UNION";
+        }
+    },
     /** Each file has 2 or more copy*/
-    MIRROR,
+    MIRROR {
+        @Override
+        public String toString() {
+            return "MIRROR";
+        }
+    },
     /** Each file has 3 or more copy*/
-    HIGH_AVAILABILITY
+    HA {
+        @Override
+        public String toString() {
+            return "HA";
+        }
+    }
 }
