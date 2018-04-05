@@ -33,10 +33,10 @@ public enum AllocationStrategy {
         }
     },
     /** Each file has 3 or more copy*/
-    HIGH {
+    HA {
         @Override
         public String toString() {
-            return "HIGH";
+            return "HA";
         }
     }
 }
