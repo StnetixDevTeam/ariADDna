@@ -13,15 +13,14 @@
 
 package com.stnetix.ariaddna.blockmanipulation;
 
-import static org.junit.Assert.assertFalse;
-
-import java.io.IOException;
-
+import com.stnetix.ariaddna.vufs.bo.Block;
+import com.stnetix.ariaddna.vufs.bo.Metafile;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.stnetix.ariaddna.vufs.bo.Block;
-import com.stnetix.ariaddna.vufs.bo.Metafile;
+import java.io.IOException;
+
+import static org.junit.Assert.assertFalse;
 
 public class BMSTest {
 
@@ -55,8 +54,10 @@ public class BMSTest {
         //above
         Metafile metafileAbove = new Metafile(version, "2", parentFileUuid);
         newBlock = blockGenerate.getNextBlock(metafileAbove);
+        metafileAbove.addBlockUuid(newBlock.getBlockUuid());
         assertFalse(newBlock.getSize() != blockGenerate.getBlockSize());
         newBlock = blockGenerate.getNextBlock(metafileAbove);
+        metafileAbove.addBlockUuid(newBlock.getBlockUuid());
         assertFalse(newBlock.getSize() != 1);
     }
 
