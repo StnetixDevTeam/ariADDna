@@ -41,7 +41,4 @@ public class CloudAvailableSpace {
         this.maxAvailableCloudSpace.put(cloudUuid, maxAvailableCloudSpace);
     }
 
-    public void updateAvailableCloudSpace(String cloudUuid, Long availableCloudSpace) {
-        this.availableCloudSpace.put(cloudUuid, availableCloudSpace);
-    }
 }

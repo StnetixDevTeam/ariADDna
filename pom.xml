@@ -24,6 +24,7 @@
         <module>vufs</module>
         <module>block_manipulation_service</module>
         <module>user-service</module>
+        <module>resource-policy-service</module>
     </modules>
 
     <properties>
