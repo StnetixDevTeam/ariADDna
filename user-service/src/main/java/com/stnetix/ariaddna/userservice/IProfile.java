@@ -25,4 +25,6 @@ public interface IProfile {
     Set<MetatableDTO> getMetatables();
 
     MetatableDTO getCurrentMasterTable();
+
+    CloudAvailableSpace getCloudAvailableSpace();
 }
