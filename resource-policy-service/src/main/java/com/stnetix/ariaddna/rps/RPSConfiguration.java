@@ -11,20 +11,12 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.stnetix.ariaddna.userservice;
+package com.stnetix.ariaddna.rps;
 
-import java.util.Set;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
-import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
-
-/**
- * Created by vasap87 on 15.03.18.
- */
-public interface IProfile {
-
-    Set<MetatableDTO> getMetatables();
-
-    MetatableDTO getCurrentMasterTable();
-
-    CloudAvailableSpace getCloudAvailableSpace();
+@Configuration
+@ComponentScan(basePackages = "com.stnetix.ariaddna.rps")
+public class RPSConfiguration {
 }

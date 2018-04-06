@@ -13,14 +13,15 @@
 
 package com.stnetix.ariaddna.blockmanipulation;
 
-import com.stnetix.ariaddna.vufs.bo.Block;
-import com.stnetix.ariaddna.vufs.bo.Metafile;
-import org.junit.Before;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
 
 import java.io.IOException;
 
-import static org.junit.Assert.assertFalse;
+import org.junit.Before;
+import org.junit.Test;
+
+import com.stnetix.ariaddna.vufs.bo.Block;
+import com.stnetix.ariaddna.vufs.bo.Metafile;
 
 public class BMSTest {
 

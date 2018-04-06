@@ -27,6 +27,7 @@ import com.stnetix.ariaddna.commonutils.dto.vufs.MetafileDTO;
 import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableDTO;
 import com.stnetix.ariaddna.commonutils.dto.vufs.MetatableType;
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
+import com.stnetix.ariaddna.userservice.CloudAvailableSpace;
 import com.stnetix.ariaddna.userservice.IProfile;
 
 public class ProfileStub implements IProfile {
@@ -38,6 +39,10 @@ public class ProfileStub implements IProfile {
     @Override public MetatableDTO getCurrentMasterTable() {
         return getMetatableDTO(UUID.randomUUID().toString(), MavenUtil.getCurrentVersion(),
                 MetatableType.MASTER, new DateTime().getTimeInMillisec());
+    }
+
+    @Override public CloudAvailableSpace getCloudAvailableSpace() {
+        return null;
     }
 
     public MetatableDTO getMetatableDTO(String metatableUuid, String version,
