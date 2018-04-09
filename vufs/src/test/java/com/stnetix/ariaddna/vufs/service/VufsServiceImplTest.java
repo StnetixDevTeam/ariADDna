@@ -32,6 +32,7 @@ import com.stnetix.ariaddna.userservice.IProfile;
 import com.stnetix.ariaddna.vufs.MetatablePersisteceServiceStub;
 import com.stnetix.ariaddna.vufs.ProfileStub;
 import com.stnetix.ariaddna.vufs.bo.Metafile;
+import com.stnetix.ariaddna.vufs.exception.BlockDoesNotExistInMetafileInCurrentMasterMetatableException;
 import com.stnetix.ariaddna.vufs.exception.MetafileDoesNotExistException;
 import com.stnetix.ariaddna.vufs.transformers.MetafileTransformer;
 import com.stnetix.ariaddna.vufs.transformers.MetatableTransformer;
@@ -59,7 +60,7 @@ public class VufsServiceImplTest {
     }
 
     @Test
-    public void getMetafileByUuid() {
+    public void getMetafileByUuid() throws MetafileDoesNotExistException {
         Metafile newMetafile = vufsService.createEmptyMetafile();
         newMetafile.setAllocationStrategy(AllocationStrategy.HA);
         String metafileUUid = newMetafile.getFileUuid();
@@ -106,7 +107,8 @@ public class VufsServiceImplTest {
     }
 
     @Test
-    public void getAllocationByBlockUuid() {
+    public void getAllocationByBlockUuid()
+            throws BlockDoesNotExistInMetafileInCurrentMasterMetatableException {
         Metafile newMetafile = vufsService.createEmptyMetafile();
         newMetafile.setAllocationStrategy(AllocationStrategy.HA);
         vufsService.addMetafileToMetatable(newMetafile);
@@ -118,7 +120,8 @@ public class VufsServiceImplTest {
     }
 
     @Test
-    public void setAllocationForBlockByUuid() {
+    public void setAllocationForBlockByUuid()
+            throws BlockDoesNotExistInMetafileInCurrentMasterMetatableException {
         Metafile newMetafile = vufsService.createEmptyMetafile();
         newMetafile.setAllocationStrategy(AllocationStrategy.HA);
         vufsService.addMetafileToMetatable(newMetafile);
