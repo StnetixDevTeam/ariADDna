@@ -96,7 +96,7 @@ public class AllocateServiceImpl implements IAllocateService {
             for (Map.Entry<String, Long> spaceEntry : availableSpace.entrySet()) {
                 if (spaceEntry.getValue().compareTo(blockSize) >= 0) {
                     resultLocation.add(spaceEntry.getKey());
-                    break;
+                    return resultLocation;
                 }
             }
             throw new AvailableSpaceNotExistException(exceptionMessage.toString());
@@ -109,7 +109,7 @@ public class AllocateServiceImpl implements IAllocateService {
                     resultLocation.add(spaceEntry.getKey());
                     copyCount++;
                     if (copyCount == 2) {
-                        break;
+                        return resultLocation;
                     }
                 }
             }
@@ -123,7 +123,7 @@ public class AllocateServiceImpl implements IAllocateService {
                     resultLocation.add(spaceEntry.getKey());
                     copyCount++;
                     if (copyCount == 3) {
-                        break;
+                        return resultLocation;
                     }
                 }
             }
@@ -139,7 +139,7 @@ public class AllocateServiceImpl implements IAllocateService {
     private StringBuilder getExceptionInfo(Set<Map.Entry<String, Long>> entries) {
         StringBuilder exceptionMessage = new StringBuilder();
         for (Map.Entry<String, Long> spaceEntry : entries) {
-            exceptionMessage.append("Cloud uuid:")
+            exceptionMessage.append("Cloud uuid: ")
                     .append(spaceEntry.getKey())
                     .append(" available space: ")
                     .append(spaceEntry.getValue())

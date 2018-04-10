@@ -13,7 +13,9 @@
 
 package com.stnetix.ariaddna.allocateservice.stub;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import com.stnetix.ariaddna.commonutils.dto.vufs.AllocationStrategy;
 import com.stnetix.ariaddna.vufs.bo.Metafile;
@@ -22,6 +24,7 @@ import com.stnetix.ariaddna.vufs.exception.MetafileDoesNotExistException;
 import com.stnetix.ariaddna.vufs.service.IVufsService;
 
 public class VufsServiceStub implements IVufsService {
+
     @Override
     public Metafile createEmptyMetafile() {
         return null;
@@ -56,7 +59,11 @@ public class VufsServiceStub implements IVufsService {
     @Override
     public Set<String> getAllocationByBlockUuid(String blockUuid)
             throws BlockNotExistInMetatableException {
-        return null;
+        Set<String> allocationSet = new HashSet<>();
+        for (int i = 0; i < 3; i++) {
+            allocationSet.add(UUID.randomUUID().toString());
+        }
+        return allocationSet;
     }
 
     @Override
@@ -79,7 +86,7 @@ public class VufsServiceStub implements IVufsService {
     @Override
     public AllocationStrategy getAllocationStrategyByMetafileUuid(String metafileUuid)
             throws MetafileDoesNotExistException {
-        return null;
+        return AllocationStrategy.HA;
     }
 
     @Override
