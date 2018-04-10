@@ -29,7 +29,7 @@ import com.stnetix.ariaddna.persistence.services.IMetatableService;
 import com.stnetix.ariaddna.userservice.IProfile;
 import com.stnetix.ariaddna.vufs.bo.Metafile;
 import com.stnetix.ariaddna.vufs.bo.Metatable;
-import com.stnetix.ariaddna.vufs.exception.BlockDoesNotExistInMetafileInCurrentMasterMetatableException;
+import com.stnetix.ariaddna.vufs.exception.BlockNotExistInMetatableException;
 import com.stnetix.ariaddna.vufs.exception.MetafileDoesNotExistException;
 import com.stnetix.ariaddna.vufs.transformers.MetatableTransformer;
 
@@ -99,13 +99,13 @@ public class VufsServiceImpl implements IVufsService {
 
     @Override
     public Set<String> getAllocationByBlockUuid(String blockUuid)
-            throws BlockDoesNotExistInMetafileInCurrentMasterMetatableException {
+            throws BlockNotExistInMetatableException {
         for (Metafile metafile : currentMetatable.getMetafileSet()) {
             if (metafile.getBlockUuidList().contains(blockUuid)) {
                 return metafile.getBlockAllocation(blockUuid);
             }
         }
-        throw new BlockDoesNotExistInMetafileInCurrentMasterMetatableException(MessageFormat.format(
+        throw new BlockNotExistInMetatableException(MessageFormat.format(
                 "Block with uuid: {0}, does not exist in currentMetatable with uuid: {1}, with type: {2}",
                 blockUuid, currentMetatable.getUuid(), currentMetatable.getType()));
     }

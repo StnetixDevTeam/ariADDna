@@ -17,7 +17,7 @@ import java.util.Set;
 
 import com.stnetix.ariaddna.commonutils.dto.vufs.AllocationStrategy;
 import com.stnetix.ariaddna.vufs.bo.Metafile;
-import com.stnetix.ariaddna.vufs.exception.BlockDoesNotExistInMetafileInCurrentMasterMetatableException;
+import com.stnetix.ariaddna.vufs.exception.BlockNotExistInMetatableException;
 import com.stnetix.ariaddna.vufs.exception.MetafileDoesNotExistException;
 
 /**
@@ -74,7 +74,7 @@ public interface IVufsService {
      * @return set of cloud uuid.
      * */
     Set<String> getAllocationByBlockUuid(String blockUuid)
-            throws BlockDoesNotExistInMetafileInCurrentMasterMetatableException;
+            throws BlockNotExistInMetatableException;
 
     /**
      * Method set to block uuid specified set of cloud uuid.

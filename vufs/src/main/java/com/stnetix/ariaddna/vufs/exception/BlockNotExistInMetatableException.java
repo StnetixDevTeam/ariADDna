@@ -13,26 +13,26 @@
 
 package com.stnetix.ariaddna.vufs.exception;
 
-public class BlockDoesNotExistInMetafileInCurrentMasterMetatableException extends VufsException {
-    public BlockDoesNotExistInMetafileInCurrentMasterMetatableException(Throwable cause) {
+public class BlockNotExistInMetatableException extends VufsException {
+    public BlockNotExistInMetatableException(Throwable cause) {
         super(cause);
     }
 
-    public BlockDoesNotExistInMetafileInCurrentMasterMetatableException(String traceMessage) {
+    public BlockNotExistInMetatableException(String traceMessage) {
         super(traceMessage);
     }
 
-    public BlockDoesNotExistInMetafileInCurrentMasterMetatableException(String traceMessage,
+    public BlockNotExistInMetatableException(String traceMessage,
             String errorMessage) {
         super(traceMessage, errorMessage);
     }
 
-    public BlockDoesNotExistInMetafileInCurrentMasterMetatableException(String traceMessage,
+    public BlockNotExistInMetatableException(String traceMessage,
             Throwable cause) {
         super(traceMessage, cause);
     }
 
-    public BlockDoesNotExistInMetafileInCurrentMasterMetatableException(String traceMessage,
+    public BlockNotExistInMetatableException(String traceMessage,
             String errorMessage, Throwable cause) {
         super(traceMessage, errorMessage, cause);
     }
