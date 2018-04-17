@@ -16,6 +16,7 @@ package com.stnetix.ariaddna.allocateservice;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -77,6 +78,15 @@ public class AllocateServiceImplTest {
                 .getLocationForExistBlockByUuid(UUID.randomUUID().toString());
         assertNotNull(locations);
         assertEquals(3, locations.size());
+    }
+
+    @Test
+    public void setLocationForBlock() throws BlockDoesNotExistInMetafileException {
+        Set<String> allocationSet = new HashSet<>();
+        for (int i = 0; i < 3; i++) {
+            allocationSet.add(UUID.randomUUID().toString());
+        }
+        service.setLocationForBlock(allocationSet, UUID.randomUUID().toString());
     }
 
     private Block getNewBlockBySize(Long size) {
