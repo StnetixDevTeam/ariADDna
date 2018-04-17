@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+
 import com.stnetix.ariaddna.commonutils.dto.vufs.AllocationStrategy;
 import com.stnetix.ariaddna.commonutils.mavenutil.MavenUtil;
 import com.stnetix.ariaddna.persistence.services.IMetatableService;
@@ -111,14 +112,22 @@ public class VufsServiceImpl implements IVufsService {
     }
 
     @Override
-    public void setAllocationForBlockByUuid(String blockUuid, Set<String> allocationSet) {
+    public void setAllocationForBlockByUuid(String blockUuid, Set<String> allocationSet)
+            throws BlockNotExistInMetatableException {
+        boolean isAdded = false;
         for (Metafile metafile : currentMetatable.getMetafileSet()) {
             if (metafile.getBlockUuidList().contains(blockUuid)) {
+                isAdded = true;
                 for (String cloud : allocationSet) {
                     metafile.addBlockAllocation(blockUuid, cloud);
                 }
                 break;
             }
+        }
+        if (!isAdded) {
+            throw new BlockNotExistInMetatableException(MessageFormat.format(
+                    "Block with uuid: {0}, does not exist in currentMetatable with uuid: {1}, with type: {2}",
+                    blockUuid, currentMetatable.getUuid(), currentMetatable.getType()));
         }
     }
 

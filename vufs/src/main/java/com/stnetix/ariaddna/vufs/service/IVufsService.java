@@ -80,8 +80,11 @@ public interface IVufsService {
      * Method set to block uuid specified set of cloud uuid.
      * @param blockUuid uuid of existing block.
      * @param allocationSet set of cloud uuid.
+     * @throws BlockNotExistInMetatableException if block with blockUuid not exist in current
+     * metatable.
      * */
-    void setAllocationForBlockByUuid(String blockUuid, Set<String> allocationSet);
+    void setAllocationForBlockByUuid(String blockUuid, Set<String> allocationSet)
+            throws BlockNotExistInMetatableException;
 
     /**
      * Method add Metafile as child to parent Metafile.

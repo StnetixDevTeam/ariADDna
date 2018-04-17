@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+
 import com.stnetix.ariaddna.allocateservice.exception.AllocateServiceException;
 import com.stnetix.ariaddna.allocateservice.exception.AvailableSpaceNotExistException;
 import com.stnetix.ariaddna.allocateservice.exception.BlockDoesNotExistInMetafileException;
@@ -84,6 +85,19 @@ public class AllocateServiceImpl implements IAllocateService {
                                     blockUuid), e);
         }
         return locations;
+    }
+
+    @Override
+    public void setLocationForBlock(Set<String> allocations, String blockUuid)
+            throws BlockDoesNotExistInMetafileException {
+        try {
+            vufsService.setAllocationForBlockByUuid(blockUuid, allocations);
+        } catch (BlockNotExistInMetatableException e) {
+            throw new BlockDoesNotExistInMetafileException(
+                    MessageFormat
+                            .format("Exception by return location for existing block with uuid {0}. See more in inner exception.",
+                                    blockUuid), e);
+        }
     }
 
     private Set<String> calculateLocation(Map<String, Long> availableSpace,

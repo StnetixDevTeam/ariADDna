@@ -15,6 +15,7 @@ package com.stnetix.ariaddna.allocateservice.service;
 
 import java.util.Set;
 
+
 import com.stnetix.ariaddna.allocateservice.exception.AllocateServiceException;
 import com.stnetix.ariaddna.allocateservice.exception.AvailableSpaceNotExistException;
 import com.stnetix.ariaddna.allocateservice.exception.BlockDoesNotExistInMetafileException;
@@ -42,4 +43,13 @@ public interface IAllocateService {
      * @return collection of cloud uuid.
      * */
     Set<String> getLocationForExistBlockByUuid(String blockUuid) throws AllocateServiceException;
+
+    /**
+     * This method set the new allocation for block in VUFS.
+     * @param allocations {@link Set} of cloud uuid.
+     * @param blockUuid   uuid of {@link Block}.
+     * @throws BlockDoesNotExistInMetafileException if block not exist in current snapshot VUFS.
+     * */
+    void setLocationForBlock(Set<String> allocations, String blockUuid)
+            throws BlockDoesNotExistInMetafileException;
 }
