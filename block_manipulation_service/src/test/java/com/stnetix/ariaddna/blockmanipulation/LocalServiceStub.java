@@ -14,8 +14,13 @@
 package com.stnetix.ariaddna.blockmanipulation;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+
 
 import com.stnetix.ariaddna.localstoragemanager.localservice.LocalService;
 
@@ -44,8 +49,32 @@ public class LocalServiceStub implements LocalService {
         case "4":
             return workingDirectory.toFile();
 
+        case "5":
+            return workingDirectory.resolve("payload.dat").toFile();
+
+        case "6":
+            return workingDirectory.resolve("merge_file.dat").toFile();
         default:
             return null;
         }
+    }
+
+    @Override public Map<String, String> getFileAttributes(String fileUuid) {
+        File file = getLocalFileByUuid(fileUuid);
+        Path path = file.toPath();
+        Map<String, Object> mapAttributes = new HashMap<>();
+        Map<String, String> mapProperties = new HashMap<>();
+        try {
+            mapAttributes = Files.readAttributes(path, "*");
+            for (Map.Entry<String, Object> entry : mapAttributes.entrySet()) {
+                if (entry.getValue() != null) {
+                    mapProperties.put(entry.getKey(), entry.getValue().toString());
+                }
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mapProperties;
     }
 }
