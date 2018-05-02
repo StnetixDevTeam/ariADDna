@@ -41,7 +41,6 @@ public class BlockGenerate {
     private final int defaultBlockSize = 5242880;
     private int blockSize;
 
-    //private HashMap<File, Long> files = new HashMap<>();
     private LocalService localService;
 
     public BlockGenerate() {
@@ -76,7 +75,6 @@ public class BlockGenerate {
             return false;
         }
     }
-
 
     public Block getNextBlock(Metafile metafile) throws IOException {
         File localFile = localService.getLocalFileByUuid(metafile.getFileUuid());
@@ -117,7 +115,6 @@ public class BlockGenerate {
 
     private Block createBlockForEmptyFile(File localFile, String version, String fileUuid) {
         DateTime date = new DateTime();
-        //files.put(localFile, 0L);
         byte[] data = new byte[0];
         return new Block(version, 0L, fileUuid, data, date.getTimeInMillisec(), 0L);
     }
